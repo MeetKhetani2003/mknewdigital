@@ -29,12 +29,12 @@ export function Footer() {
               </div>
               <p className="mt-5 max-w-xs text-sm leading-relaxed text-white/60">
                 Crafting websites, AI-powered video reels, and design systems for
-                brands that want to stand out — built out of Mumbai, delivered
+                brands that want to stand out — built out of Junagadh, delivered
                 worldwide.
               </p>
               <div className="mt-6 inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-3 py-1.5 text-xs text-white/80">
                 <span className="h-1.5 w-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                MSME Registered · Mumbai, India
+                MSME Registered · Junagadh, India
               </div>
             </div>
 
@@ -75,13 +75,13 @@ export function Footer() {
                 </li>
                 <li className="flex items-center gap-2.5">
                   <Phone className="h-4 w-4 text-accent" />
-                  <a href="tel:+919000000000" className="hover:text-accent transition-colors">
-                    +91 90000 00000
+                  <a href="tel:+916353121773" className="hover:text-accent transition-colors">
+                    +91 63531 21773
                   </a>
                 </li>
                 <li className="flex items-start gap-2.5">
                   <MapPin className="h-4 w-4 text-accent mt-0.5" />
-                  <span>Andheri West, Mumbai, Maharashtra 400053</span>
+                  <span>Near Bhagwati Kalamandir, Kalvachok, Junagadh</span>
                 </li>
               </ul>
               <div className="mt-5 flex items-center gap-2">

@@ -4,10 +4,7 @@ import Link from "next/link";
 import { ArrowRight, ShieldCheck } from "lucide-react";
 
 const milestones = [
-  { year: "2021", title: "Founded in Mumbai", desc: "Started as a two-person studio shipping thumbnails and landing pages." },
-  { year: "2022", title: "First e-commerce launch", desc: "Delivered our first ₹1L/month storefront — and got hooked on the craft." },
-  { year: "2023", title: "AI reel engine", desc: "Launched our in-house AI video pipeline — scripted, voiced, exported in 4K." },
-  { year: "2024", title: "MSME registered", desc: "Officially registered and now serving 40+ active clients across 6 countries." },
+  { year: "2024", title: "Founded in Junagadh", desc: "Started our digital journey to help ambitious brands." },
   { year: "2025", title: "Studio scale", desc: "Expanded to a full-service studio across web, video, design, and paid growth." },
 ];
 
@@ -59,7 +56,7 @@ export default function About() {
             <div className="relative overflow-hidden rounded-3xl border border-slate-200 card-shadow">
               <img
                 src="/images/team-office.jpg"
-                alt="MK Digital Nexus studio in Mumbai"
+                alt="MK Digital Nexus studio in Junagadh"
                 loading="lazy"
                 className="aspect-[16/7] w-full object-cover"
               />
@@ -67,7 +64,7 @@ export default function About() {
               <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between text-white">
                 <div>
                   <div className="text-xs uppercase tracking-[0.22em] text-white/70">
-                    Mumbai · Andheri West
+                    Junagadh
                   </div>
                   <div className="mt-1 text-xl font-semibold">Our studio</div>
                 </div>
@@ -125,7 +122,7 @@ export default function About() {
                 Milestones
               </span>
               <h2 className="mt-3 text-4xl font-semibold tracking-tight text-navy-900 sm:text-5xl">
-                Five years of shipping.
+                Our journey so far.
               </h2>
             </div>
           </Reveal>

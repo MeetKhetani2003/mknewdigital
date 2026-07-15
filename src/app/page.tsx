@@ -133,7 +133,7 @@ export default function Home() {
               <div className="mt-20 flex items-center gap-12 border-t border-navy-900/10 pt-8 w-full max-w-[500px]">
                 <div>
                   <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-navy-900/40 mb-2">Location</div>
-                  <div className="text-[13px] font-medium text-navy-900">Mumbai / Global</div>
+                  <div className="text-[13px] font-medium text-navy-900">Junagadh / Global</div>
                 </div>
                 <div>
                   <div className="text-[10px] font-bold uppercase tracking-[0.2em] text-navy-900/40 mb-2">Availability</div>

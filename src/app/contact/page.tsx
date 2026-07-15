@@ -143,7 +143,7 @@ export default function Contact() {
                         <Send className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
                       </button>
                       <a
-                        href="https://wa.me/919000000000?text=Hi%20MK%20Digital%20Nexus%2C%20I'd%20like%20to%20discuss%20a%20project"
+                        href="https://wa.me/916353121773?text=Hi%20MK%20Digital%20Nexus%2C%20I'd%20like%20to%20discuss%20a%20project"
                         target="_blank"
                         rel="noopener noreferrer"
                         className="inline-flex items-center justify-center gap-2 rounded-full border border-[#25D366]/30 bg-[#25D366]/10 px-6 py-3.5 text-sm font-semibold text-[#128C7E] transition-all hover:bg-[#25D366] hover:text-white hover:-translate-y-0.5"
@@ -179,8 +179,8 @@ export default function Contact() {
                     <Phone className="mt-0.5 h-4 w-4 text-accent" />
                     <div>
                       <div className="font-medium text-navy-900">Phone</div>
-                      <a href="tel:+919000000000" className="text-muted hover:text-accent">
-                        +91 90000 00000
+                      <a href="tel:+916353121773" className="text-muted hover:text-accent">
+                        +91 63531 21773
                       </a>
                     </div>
                   </li>
@@ -189,7 +189,7 @@ export default function Contact() {
                     <div>
                       <div className="font-medium text-navy-900">Studio</div>
                       <span className="text-muted">
-                        Andheri West, Mumbai, Maharashtra 400053
+                        Near Bhagwati Kalamandir, Kalvachok, Junagadh
                       </span>
                     </div>
                   </li>
@@ -226,13 +226,13 @@ export default function Contact() {
             <Reveal delay={0.3}>
               <div className="overflow-hidden rounded-3xl border border-slate-200 card-shadow">
                 <iframe
-                  title="MK Digital Nexus location — Mumbai"
-                  src="https://www.openstreetmap.org/export/embed.html?bbox=72.8346%2C19.1136%2C72.8646%2C19.1336&layer=mapnik&marker=19.1236%2C72.8496"
+                  title="MK Digital Nexus location — Junagadh"
+                  src="https://www.openstreetmap.org/export/embed.html?bbox=70.43%2C21.50%2C70.47%2C21.54&layer=mapnik&marker=21.5222%2C70.4579"
                   loading="lazy"
                   className="h-64 w-full border-0"
                 />
                 <div className="bg-white p-4 text-xs text-muted">
-                  📍 Andheri West, Mumbai — by appointment only
+                  📍 Junagadh — by appointment only
                 </div>
               </div>
             </Reveal>
