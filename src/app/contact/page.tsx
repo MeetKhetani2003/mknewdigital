@@ -15,12 +15,25 @@ export default function Contact() {
 
   const onSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Construct WhatsApp pre-filled message text
+    const messageText = `Hi MK Digital Nexus,\n\nI would like to submit a project inquiry:\n\n*Name:* ${form.name}\n*Email:* ${form.email}\n*Service:* ${form.service}\n*Approximate Budget:* ${form.budget}\n*Project Details:* ${form.message}`;
+
+    const encodedText = encodeURIComponent(messageText);
+    const whatsappUrl = `https://wa.me/916353121773?text=${encodedText}`;
+
+    // Redirect to WhatsApp in a new tab
+    window.open(whatsappUrl, "_blank");
+
     setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 5000);
+    setTimeout(() => setSubmitted(false), 8000);
   };
 
   return (
     <>
+      <title>Contact Web Developers & Digital Marketers in Junagadh & Rajkot | MK Digital Nexus</title>
+      <meta name="description" content="Get in touch with the best website development service and digital marketing agency in Junagadh and Rajkot. Get your custom quote today." />
+
       <section className="relative overflow-hidden bg-offwhite pt-32 pb-14 sm:pt-40 sm:pb-20">
         <div className="grid-pattern absolute inset-0 -z-10 opacity-60" />
         <div className="mx-auto max-w-7xl px-5 sm:px-8">
@@ -31,17 +44,15 @@ export default function Contact() {
           </Reveal>
           <Reveal delay={0.1}>
             <h1 className="mt-3 max-w-3xl text-5xl font-semibold leading-[1.05] tracking-tight text-navy-900 sm:text-6xl">
-              Say hello.
+              Hire our agency.
               <span className="block italic font-serif font-normal text-accent">
-                We answer fast.
+                Junagadh & Rajkot.
               </span>
             </h1>
           </Reveal>
           <Reveal delay={0.2}>
             <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
-              Send a short brief — what you're building, your deadline, and your
-              budget. We'll come back with a scoped proposal within two hours during
-              business hours.
+              Need a top-rated website development service or digital marketing agency near Junagadh or Rajkot? Submit your inquiry brief, and we'll reply within two hours.
             </p>
           </Reveal>
         </div>
@@ -170,8 +181,8 @@ export default function Contact() {
                     <Mail className="mt-0.5 h-4 w-4 text-accent" />
                     <div>
                       <div className="font-medium text-navy-900">Email</div>
-                      <a href="mailto:hello@mkdigitalnexus.com" className="text-muted hover:text-accent">
-                        hello@mkdigitalnexus.com
+                      <a href="mailto:mkdigitalnexus@gmail.com" className="text-muted hover:text-accent">
+                        mkdigitalnexus@gmail.com
                       </a>
                     </div>
                   </li>

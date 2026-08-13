@@ -11,12 +11,26 @@ import { Metadata } from "next";
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.mkdigitalnexus.in"),
   title: {
-    default: "Premium Digital Agency | MK Digital Nexus",
+    default: "Website Development Service in Junagadh & Rajkot | MK Digital Nexus",
     template: "%s | MK Digital Nexus",
   },
   description:
-    "MK Digital Nexus is a boutique web development and digital agency in Rajkot, Gujarat. We engineer world-class websites, bespoke CRM systems, and AI-driven digital experiences for ambitious brands globally.",
-  keywords: ["web development", "digital agency", "Rajkot", "Junagadh", "manufacturing websites", "CRM dashboards", "UI/UX design", "premium web design", "India web agency"],
+    "Leading website development service in Junagadh and Rajkot. Top digital marketing agency near you providing custom web design, SEO optimization, and graphic design.",
+  keywords: [
+    "website development service in junagadh",
+    "website in junagadh",
+    "digital marketing agency in junagadh",
+    "web design in junagadh",
+    "graphic design in junagadh",
+    "website development in rajkot",
+    "digital marketing agency in rajkot",
+    "web design agency near junagadh",
+    "graphic designers in rajkot",
+    "SEO services in junagadh",
+    "near junagadh",
+    "near rajkot",
+    "web development agency Gujarat"
+  ],
   authors: [{ name: "MK Digital Nexus" }],
   creator: "MK Digital Nexus",
   publisher: "MK Digital Nexus",
@@ -69,6 +83,67 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className="scroll-smooth">
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              "@context": "https://schema.org",
+              "@type": "ProfessionalService",
+              "name": "MK Digital Nexus",
+              "image": "https://www.mkdigitalnexus.in/logo.png",
+              "@id": "https://www.mkdigitalnexus.in/#organization",
+              "url": "https://www.mkdigitalnexus.in",
+              "telephone": "+916353121773",
+              "priceRange": "₹2000 - " + "₹33999",
+              "address": {
+                "@type": "PostalAddress",
+                "streetAddress": "Near Bhagwati Kalamandir, Kalvachok",
+                "addressLocality": "Junagadh",
+                "addressRegion": "Gujarat",
+                "postalCode": "362001",
+                "addressCountry": "IN"
+              },
+              "geo": {
+                "@type": "GeoCoordinates",
+                "latitude": 21.5222,
+                "longitude": 70.4579
+              },
+              "openingHoursSpecification": {
+                "@type": "OpeningHoursSpecification",
+                "dayOfWeek": [
+                  "Monday",
+                  "Tuesday",
+                  "Wednesday",
+                  "Thursday",
+                  "Friday",
+                  "Saturday"
+                ],
+                "opens": "10:00",
+                "closes": "19:00"
+              },
+              "sameAs": [
+                "https://wa.me/916353121773"
+              ],
+              "areaServed": [
+                {
+                  "@type": "AdministrativeArea",
+                  "name": "Junagadh"
+                },
+                {
+                  "@type": "AdministrativeArea",
+                  "name": "Rajkot"
+                },
+                {
+                  "@type": "AdministrativeArea",
+                  "name": "Gujarat"
+                }
+              ],
+              "description": "Leading website development service in Junagadh and Rajkot. Top digital marketing agency offering custom SEO, web design, and graphic design near you."
+            })
+          }}
+        />
+      </head>
       <body className={`${inter.className} antialiased selection:bg-accent selection:text-white`}>
         <Navbar />
         <main className="min-h-screen pt-[72px] md:pt-[88px]">

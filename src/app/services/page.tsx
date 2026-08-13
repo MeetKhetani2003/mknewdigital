@@ -154,6 +154,9 @@ export default function Services() {
 
   return (
     <>
+      <title>Website Development Service & SEO in Junagadh & Rajkot | MK Digital Nexus</title>
+      <meta name="description" content="Affordable website development services in Junagadh and Rajkot. Leading digital marketing agency for custom web design, SEO, and graphic design near you." />
+
       {/* Header */}
       <section className="relative overflow-hidden bg-offwhite pt-32 pb-16 sm:pt-40 sm:pb-20">
         <div className="grid-pattern absolute inset-0 -z-10 opacity-60" />
@@ -165,17 +168,15 @@ export default function Services() {
           </Reveal>
           <Reveal delay={0.1}>
             <h1 className="mt-3 max-w-3xl text-5xl font-semibold leading-[1.05] tracking-tight text-navy-900 sm:text-6xl">
-              Transparent plans.
+              Website development &
               <span className="block italic font-serif font-normal text-accent">
-                No scope games.
+                digital marketing services.
               </span>
             </h1>
           </Reveal>
           <Reveal delay={0.2}>
             <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
-              Pick what you need — thumbnail, website, reels, or a full combo. Every
-              plan comes with a written scope, clear timelines, and a dedicated
-              point of contact.
+              Get premium website development service, graphic design, and digital marketing in Junagadh and Rajkot. Transparent pricing, clear deliverables, and optimized results near you.
             </p>
           </Reveal>
         </div>

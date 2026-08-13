@@ -49,10 +49,10 @@ const Contact = () => {
                 General Enquiries
               </p>
               <a
-                href="mailto:hello@mknexus.com"
+                href="mailto:mkdigitalnexus@gmail.com"
                 className="text-xl font-light text-primary hover:text-accent transition-colors"
               >
-                hello@mknexus.com
+                mkdigitalnexus@gmail.com
               </a>
             </div>
             <div className="minimal-reveal">
