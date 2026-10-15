@@ -1,42 +1,97 @@
 "use client";
 import { Reveal } from "@/components/ui/Reveal";
 import Link from "next/link";
-import { ArrowRight, ShieldCheck } from "lucide-react";
+import { 
+  ArrowRight, 
+  ShieldCheck, 
+  Phone, 
+  Mail, 
+  CheckCircle2, 
+  Sparkles, 
+  MapPin, 
+  ExternalLink,
+  Code2,
+  Cpu,
+  Layers,
+  HeartHandshake
+} from "lucide-react";
+import { triggerBookServiceModal } from "@/components/ui/FloatingActions";
 
 const milestones = [
-  { year: "2024", title: "Founded in Junagadh", desc: "Started our digital journey to help ambitious brands." },
-  { year: "2025", title: "Studio scale", desc: "Expanded to a full-service studio across web, video, design, and paid growth." },
+  { 
+    year: "2023", 
+    title: "Foundation in Junagadh", 
+    desc: "Founded by Meet Khetani at Talav Gate near Vanzari Chowk, Junagadh, to provide local businesses with modern, high-speed web architecture and custom software." 
+  },
+  { 
+    year: "2024", 
+    title: "MERN Stack & Industrial ERPs", 
+    desc: "Expanded into custom software engineering, inventory dashboards, and industrial B2B catalog platforms for manufacturers and exporters across Saurashtra and Gujarat." 
+  },
+  { 
+    year: "2025", 
+    title: "International Scale & AI Growth", 
+    desc: "Shipped enterprise deployments for international clients in Canada (GWGC, Green Wave Packaging), scaling full-service capabilities across Meta Ads and Google Profile SEO." 
+  },
+  { 
+    year: "2026", 
+    title: "100+ Deployments Milestone", 
+    desc: "Achieved 100+ live client launches worldwide with a verified 4.9★ Google Business Profile rating (68+ reviews), setting the regional benchmark in Saurashtra." 
+  },
+];
+
+const founderHighlights = [
+  {
+    icon: Code2,
+    title: "Full-Stack Software Architect",
+    desc: "Specialized in Next.js, React, Node.js, and scalable MongoDB systems."
+  },
+  {
+    icon: Layers,
+    title: "3+ Years in Junagadh",
+    desc: "Hands-on studio presence at Talav Gate serving Gujarat & global clients."
+  },
+  {
+    icon: CheckCircle2,
+    title: "100+ Shipped Deliveries",
+    desc: "Every project built with zero bloat, clean code, and guaranteed speed."
+  },
+  {
+    icon: HeartHandshake,
+    title: "Direct Founder Access",
+    desc: "No middlemen or junior account reps — work directly with Meet."
+  }
 ];
 
 const stackCategories = [
   {
-    title: "Web Development & Optimization",
-    desc: "Robust full-stack frameworks, databases, and optimized hosting used to deliver blazing-fast, secure, and SEO-optimized sites.",
+    title: "Web Development & Architecture",
+    desc: "Modern frameworks, reactive states, and edge hosting engineered for sub-second speeds and top Google PageSpeed scores.",
     tools: [
-      { name: "Next.js", role: "Better Optimization" },
-      { name: "React.js", role: "Frontend UI Library" },
+      { name: "Next.js", role: "SSR & Static Optimization" },
+      { name: "React.js", role: "Component Architecture" },
       { name: "Node.js", role: "Backend Runtime" },
-      { name: "Express.js", role: "API Framework" },
+      { name: "Express.js", role: "RESTful API Engine" },
       { name: "MongoDB", role: "NoSQL Database" },
-      { name: "Vercel", role: "Cloud Hosting" },
+      { name: "Vercel", role: "Global Edge CDN" },
     ]
   },
   {
     title: "AI Video Reels & Post-Production",
     desc: "AI voice synthesis, programmatic video workflows, and industry-grade editing suites to create high-performing social campaigns.",
     tools: [
-      { name: "Premiere Pro", role: "Premium Assets & Effects" },
-      { name: "Sarvam AI", role: "Voiceover Synth" },
-      { name: "Google Flow", role: "Video Generating" },
+      { name: "Premiere Pro", role: "4K Motion & Post" },
+      { name: "Sarvam AI", role: "Regional Voiceover Synth" },
+      { name: "Google Flow", role: "Video Generation" },
     ]
   },
   {
     title: "Graphic Design & AI Copywriting",
     desc: "Visual branding tools paired with leading language intelligence to build rich graphics and high-converting marketing copywriting.",
     tools: [
-      { name: "Photoshop", role: "Graphic Designing" },
+      { name: "Photoshop", role: "Creative Designing" },
       { name: "Canva", role: "Collateral Templates" },
-      { name: "ChatGPT", role: "Content Copywriting" },
+      { name: "ChatGPT", role: "Conversion Copywriting" },
     ]
   }
 ];
@@ -138,55 +193,211 @@ function TechIcon({ name }: { name: string }) {
 export default function About() {
   return (
     <>
-      <section className="relative overflow-hidden bg-offwhite pt-32 pb-16 sm:pt-40 sm:pb-20">
+      <title>About Meet Khetani & MK Digital Nexus | 3+ Years in Junagadh</title>
+      <meta
+        name="description"
+        content="Meet Khetani is the Founder and Lead Software Architect at MK Digital Nexus, working for the last 3+ years in Junagadh at Talav Gate. Over 100+ live projects delivered across India & Canada."
+      />
+      <meta
+        name="keywords"
+        content="Meet Khetani, Meet Khetani Junagadh, MK Digital Nexus owner, about MK Digital Nexus, website developer in junagadh, software developer in junagadh, web development company in junagadh, Talav Gate Vanzari Chowk web studio"
+      />
+      <link rel="canonical" href="https://www.mkdigitalnexus.in/about" />
+
+      {/* Hero Header */}
+      <section className="relative overflow-hidden bg-offwhite pt-32 pb-16 sm:pt-44 sm:pb-24">
         <div className="grid-pattern absolute inset-0 -z-10 opacity-60" />
         <div className="mx-auto max-w-7xl px-5 sm:px-8">
           <Reveal>
-            <span className="text-xs font-semibold uppercase tracking-[0.22em] text-accent">
-              About the studio
-            </span>
+            <div className="flex flex-wrap items-center gap-3">
+              <span className="inline-flex items-center gap-2 rounded-full bg-accent/10 px-4 py-1.5 text-xs sm:text-sm font-bold uppercase tracking-[0.25em] text-accent">
+                3+ Years in Junagadh · 100+ Deliveries
+              </span>
+              <span className="inline-flex items-center gap-1.5 rounded-full border border-slate-200 bg-white px-3.5 py-1 text-xs font-bold text-navy-900 shadow-xs">
+                <span className="h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+                Talav Gate Studio HQ
+              </span>
+            </div>
           </Reveal>
           <Reveal delay={0.1}>
-            <h1 className="mt-3 max-w-3xl text-5xl font-semibold leading-[1.05] tracking-tight text-navy-900 sm:text-6xl">
-              A small, senior team.
-              <span className="block italic font-serif font-normal text-accent">
-                Big-studio output.
+            <h1 className="mt-6 max-w-4xl text-5xl font-extrabold leading-[1.05] tracking-tight text-navy-900 sm:text-7xl lg:text-8xl">
+              Junagadh's Premier
+              <span className="block italic font-serif font-normal text-accent mt-2">
+                Web & Software Studio.
               </span>
             </h1>
           </Reveal>
           <Reveal delay={0.2}>
-            <p className="mt-6 max-w-2xl text-lg leading-relaxed text-muted">
-              We started MK Digital Nexus because most agencies either under-deliver
-              or over-charge. We wanted to build a studio where the work is sharp,
-              the timelines are honest, and the people you talk to are the ones
-              doing the work.
+            <p className="mt-8 max-w-3xl text-xl sm:text-2xl leading-relaxed text-muted">
+              Headquartered at Talav Gate near Vanzari Chowk in Junagadh, MK Digital Nexus was founded by <strong className="text-navy-900 font-bold">Meet Khetani</strong>. 
+              Over the last 3 years, we have engineered 100+ live Next.js websites, custom business ERPs, Google Maps 3-Pack rankings, and high-ROAS ad campaigns for businesses in Saurashtra, Gujarat, and worldwide.
             </p>
           </Reveal>
         </div>
       </section>
 
-      {/* Studio image */}
-      <section className="bg-white py-6">
+      {/* FOUNDER & LEADERSHIP SPOTLIGHT: MEET KHETANI */}
+      <section className="bg-white py-16 sm:py-24 border-y border-slate-200/80">
+        <div className="mx-auto max-w-7xl px-5 sm:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center">
+            
+            {/* Left Column: Founder Photo & Badge */}
+            <div className="lg:col-span-5">
+              <Reveal>
+                <div className="relative mx-auto max-w-md lg:max-w-none">
+                  {/* Decorative background glow & frame */}
+                  <div className="absolute -inset-4 rounded-3xl bg-gradient-to-r from-accent/20 via-amber-500/10 to-orange-500/20 blur-xl opacity-75" />
+                  
+                  <div className="relative overflow-hidden rounded-3xl border-2 border-slate-200 bg-white p-3 shadow-2xl">
+                    <div className="overflow-hidden rounded-2xl bg-slate-900">
+                      <img
+                        src="/owner.png"
+                        alt="Meet Khetani - Founder & Lead Software Architect at MK Digital Nexus, Junagadh"
+                        className="w-full aspect-[4/5] object-cover object-top transition-transform duration-700 hover:scale-105"
+                      />
+                    </div>
+
+                    {/* Overlay Identity Card */}
+                    <div className="mt-4 p-4 rounded-xl bg-slate-50 border border-slate-200/80">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <div className="text-xl font-extrabold text-navy-900">Meet Khetani</div>
+                          <div className="text-xs font-bold uppercase tracking-wider text-accent mt-0.5">
+                            Founder & Lead Full-Stack Engineer
+                          </div>
+                        </div>
+                        <span className="inline-flex items-center rounded-full bg-emerald-50 border border-emerald-200 px-3 py-1 text-xs font-bold text-emerald-700">
+                          3+ Yrs Active
+                        </span>
+                      </div>
+
+                      <div className="mt-3.5 pt-3.5 border-t border-slate-200/70 flex items-center justify-between text-xs text-muted">
+                        <span className="flex items-center gap-1 font-medium text-slate-700">
+                          <MapPin className="h-3.5 w-3.5 text-accent" /> Junagadh, Gujarat
+                        </span>
+                        <a
+                          href="https://www.linkedin.com/company/mk-digital-nexus/"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="font-bold text-navy-900 hover:text-accent flex items-center gap-1 transition-colors"
+                        >
+                          LinkedIn Profile <ExternalLink className="h-3 w-3" />
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </Reveal>
+            </div>
+
+            {/* Right Column: Founder's Story & Vision */}
+            <div className="lg:col-span-7">
+              <Reveal delay={0.1}>
+                <span className="inline-flex items-center gap-2 rounded-full bg-accent/10 px-4 py-1.5 text-xs sm:text-sm font-bold uppercase tracking-[0.25em] text-accent">
+                  Meet The Founder & Architect
+                </span>
+                <h2 className="mt-5 text-3xl sm:text-5xl font-extrabold tracking-tight text-navy-900 leading-[1.15]">
+                  "We build software and websites that produce real revenue, not empty aesthetics."
+                </h2>
+
+                <div className="mt-6 space-y-4 text-base sm:text-lg leading-relaxed text-muted">
+                  <p>
+                    I founded <strong className="text-navy-900 font-semibold">MK Digital Nexus</strong> with a clear observation: most local companies in Junagadh and Saurashtra were either overpaying metro agencies for bloated WordPress templates or struggling with freelancers who disappeared after delivery.
+                  </p>
+                  <p>
+                    For the past <strong className="text-navy-900 font-semibold">3+ years</strong>, operating straight out of our studio at <strong className="text-navy-900 font-semibold">Talav Gate near Vanzari Chowk</strong>, I have worked directly with factory owners, clinicians, retail brands, and global exporters. We architect every Next.js site and custom MERN software application ourselves — with 100% clean code, fast load times, and guaranteed code ownership.
+                  </p>
+                  <p className="text-navy-900 font-semibold italic border-l-4 border-accent pl-4 py-1">
+                    "When you work with MK Digital Nexus, you communicate directly with senior engineers who understand both technical code and your local market economics."
+                  </p>
+                </div>
+
+                {/* 4 Feature Badges */}
+                <div className="mt-8 grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {founderHighlights.map((item, idx) => {
+                    const Icon = item.icon;
+                    return (
+                      <div key={idx} className="rounded-2xl border border-slate-200/90 bg-slate-50/70 p-4 transition-all hover:bg-white hover:shadow-md">
+                        <div className="flex items-center gap-3">
+                          <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-navy-900 text-white">
+                            <Icon className="h-5 w-5 text-accent" />
+                          </div>
+                          <div>
+                            <div className="text-sm font-bold text-navy-900">{item.title}</div>
+                            <div className="text-xs text-muted mt-0.5 leading-snug">{item.desc}</div>
+                          </div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+
+                {/* Direct Action Connect Bar */}
+                <div className="mt-9 flex flex-wrap items-center gap-4 pt-4 border-t border-slate-200">
+                  <button
+                    onClick={() => triggerBookServiceModal()}
+                    className="inline-flex h-14 items-center justify-center gap-2 rounded-full bg-navy-900 px-7 text-sm sm:text-base font-bold text-white transition-all hover:bg-accent hover:-translate-y-0.5 hover:shadow-xl cursor-pointer"
+                  >
+                    <Sparkles className="h-4 w-4 text-amber-400" />
+                    <span>Book Consultation with Meet</span>
+                  </button>
+
+                  <a
+                    href="tel:+916353121773"
+                    className="inline-flex h-14 items-center justify-center gap-2 rounded-full border border-slate-300 bg-white px-6 text-sm sm:text-base font-bold text-navy-900 transition-all hover:bg-slate-50 hover:border-navy-900 hover:-translate-y-0.5"
+                  >
+                    <Phone className="h-4 w-4 text-emerald-600" />
+                    <span>+91 63531 21773</span>
+                  </a>
+
+                  <a
+                    href="mailto:hello@mkdigitalnexus.in"
+                    className="inline-flex h-14 items-center justify-center gap-2 rounded-full border border-slate-200 bg-slate-50 px-5 text-sm font-bold text-slate-700 transition-all hover:bg-white hover:text-navy-900"
+                  >
+                    <Mail className="h-4 w-4 text-accent" />
+                    <span>hello@mkdigitalnexus.in</span>
+                  </a>
+                </div>
+              </Reveal>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      {/* Studio Location & Google Maps Verification */}
+      <section className="bg-white py-16">
         <div className="mx-auto max-w-7xl px-5 sm:px-8">
           <Reveal>
-            <div className="relative overflow-hidden rounded-3xl border border-slate-200 card-shadow">
+            <div className="relative overflow-hidden rounded-3xl border border-slate-200 card-shadow shadow-xl">
               <img
                 src="/images/team-office.jpg"
-                alt="MK Digital Nexus studio in Junagadh"
+                alt="MK Digital Nexus studio headquarters at Talav Gate, Junagadh"
                 loading="lazy"
                 className="aspect-[16/7] w-full object-cover"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-navy-900/50 to-transparent" />
-              <div className="absolute bottom-6 left-6 right-6 flex items-end justify-between text-white">
+              <div className="absolute inset-0 bg-gradient-to-t from-navy-950/90 via-navy-900/40 to-transparent" />
+              <div className="absolute bottom-6 left-6 right-6 sm:bottom-8 sm:left-8 sm:right-8 flex flex-col sm:flex-row sm:items-end justify-between gap-4 text-white">
                 <div>
-                  <div className="text-xs uppercase tracking-[0.22em] text-white/70">
-                    Junagadh
+                  <div className="text-xs sm:text-sm uppercase tracking-[0.25em] text-white/80 font-bold flex items-center gap-2">
+                    <MapPin className="h-4 w-4 text-accent" /> First Floor, Shyam Apt, Shop 5, Near Vanzari Chowk, Talav Gate, Junagadh 362001
                   </div>
-                  <div className="mt-1 text-xl font-semibold">Our studio</div>
+                  <div className="mt-2 text-2xl sm:text-3xl font-extrabold">Our Studio & Engineering Headquarters</div>
                 </div>
-                <div className="hidden items-center gap-2 rounded-full border border-white/20 bg-white/10 px-3 py-1.5 text-xs backdrop-blur sm:inline-flex">
-                  <ShieldCheck className="h-3.5 w-3.5 text-accent" />
-                  MSME Registered
+                <div className="flex flex-wrap items-center gap-3">
+                  <a
+                    href="https://share.google/VqmKOhc9O8q5wXUvg"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 rounded-full border border-white/30 bg-white/20 px-5 py-2.5 text-sm font-bold text-white backdrop-blur hover:bg-white hover:text-navy-950 transition-all shadow-lg"
+                  >
+                    <span>View on Google Profile (4.9★ / 68+ Reviews)</span>
+                    <ArrowRight className="h-4 w-4" />
+                  </a>
+                  <div className="hidden sm:inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-2 text-sm backdrop-blur">
+                    <ShieldCheck className="h-4 w-4 text-accent" />
+                    MSME Registered Studio
+                  </div>
                 </div>
               </div>
             </div>
@@ -194,74 +405,42 @@ export default function About() {
         </div>
       </section>
 
-      {/* Story / mission */}
-      <section className="bg-white py-20 sm:py-28">
-        <div className="mx-auto grid max-w-7xl gap-12 px-5 sm:px-8 lg:grid-cols-2">
-          <Reveal>
-            <div>
-              <span className="text-xs font-semibold uppercase tracking-[0.22em] text-accent">
-                Our mission
-              </span>
-              <h2 className="mt-3 text-4xl font-semibold tracking-tight text-navy-900 sm:text-5xl">
-                Make premium digital work accessible to ambitious small brands.
-              </h2>
-            </div>
-          </Reveal>
-          <Reveal delay={0.1}>
-            <div className="space-y-5 text-base leading-relaxed text-muted">
-              <p>
-                The best work in our industry used to be gated behind ₹5L+ retainers.
-                We build tools, templates, and AI workflows that let us deliver
-                senior-quality output at a price a bootstrapped founder can actually
-                justify.
-              </p>
-              <p>
-                We don't chase awards. We chase launches. Every project ships with a
-                written scope, a dedicated PM, and a post-launch review — because
-                the work only matters if it goes live.
-              </p>
-              <p className="text-ink/85">
-                If you're building something you're proud of, we'd love to help you
-                make it look the part.
-              </p>
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* Timeline */}
+      {/* 3-Year Milestones Timeline */}
       <section className="bg-offwhite py-20 sm:py-28">
         <div className="mx-auto max-w-5xl px-5 sm:px-8">
           <Reveal>
             <div className="text-center">
-              <span className="text-xs font-semibold uppercase tracking-[0.22em] text-accent">
-                Milestones
+              <span className="inline-flex items-center gap-2 rounded-full bg-accent/10 px-4 py-1.5 text-xs sm:text-sm font-bold uppercase tracking-[0.25em] text-accent">
+                Our 3-Year Track Record
               </span>
-              <h2 className="mt-3 text-4xl font-semibold tracking-tight text-navy-900 sm:text-5xl">
-                Our journey so far.
+              <h2 className="mt-5 text-4xl font-extrabold tracking-tight text-navy-900 sm:text-6xl">
+                The journey so far in Junagadh.
               </h2>
+              <p className="mt-4 text-lg text-muted max-w-2xl mx-auto">
+                How Meet Khetani built MK Digital Nexus from a dedicated Junagadh coding desk into an internationally deployed agency.
+              </p>
             </div>
           </Reveal>
-          <div className="relative mt-14">
+          <div className="relative mt-16">
             <div className="absolute left-4 top-0 bottom-0 w-px bg-navy-900/10 md:left-1/2 md:-translate-x-1/2" />
-            <div className="space-y-10">
+            <div className="space-y-12">
               {milestones.map((m, i) => (
                 <Reveal key={m.year} delay={i * 0.06}>
-                  <div className={`relative flex flex-col gap-4 md:flex-row md:items-center ${i % 2 === 0 ? "" : "md:flex-row-reverse"}`}>
+                  <div className={`relative flex flex-col gap-6 md:flex-row md:items-center ${i % 2 === 0 ? "" : "md:flex-row-reverse"}`}>
                     <div className="md:w-1/2 md:px-8">
-                      <div className="rounded-2xl border border-slate-200 bg-white p-6 card-shadow">
-                        <div className="text-xs font-semibold uppercase tracking-wider text-accent">
-                          {m.year}
+                      <div className="rounded-3xl border border-slate-200 bg-white p-8 sm:p-9 card-shadow shadow-md transition-all hover:shadow-xl hover:-translate-y-1">
+                        <div className="inline-flex items-center gap-2 rounded-full bg-accent/10 px-3.5 py-1 text-xs font-extrabold uppercase tracking-wider text-accent">
+                          Year {m.year}
                         </div>
-                        <h3 className="mt-2 text-xl font-semibold tracking-tight text-navy-900">
+                        <h3 className="mt-3 text-2xl font-bold tracking-tight text-navy-900">
                           {m.title}
                         </h3>
-                        <p className="mt-2 text-sm leading-relaxed text-muted">
+                        <p className="mt-3 text-base sm:text-lg leading-relaxed text-muted">
                           {m.desc}
                         </p>
                       </div>
                     </div>
-                    <div className="absolute left-4 h-3 w-3 -translate-x-1/2 rounded-full border-2 border-white bg-accent md:left-1/2" />
+                    <div className="absolute left-4 h-4 w-4 -translate-x-1/2 rounded-full border-2 border-white bg-accent shadow-md md:left-1/2" />
                     <div className="hidden md:block md:w-1/2" />
                   </div>
                 </Reveal>
@@ -271,48 +450,48 @@ export default function About() {
         </div>
       </section>
 
-      {/* Tool stack */}
+      {/* Tool Stack */}
       <section className="bg-white py-20 sm:py-28">
         <div className="mx-auto max-w-7xl px-5 sm:px-8">
           <Reveal>
-            <div className="mx-auto max-w-2xl text-center">
-              <span className="text-xs font-semibold uppercase tracking-[0.22em] text-accent">
-                Tool stack
+            <div className="mx-auto max-w-3xl text-center">
+              <span className="inline-flex items-center gap-2 rounded-full bg-accent/10 px-4 py-1.5 text-xs sm:text-sm font-bold uppercase tracking-[0.25em] text-accent">
+                Engineering Stack
               </span>
-              <h2 className="mt-3 text-4xl font-semibold tracking-tight text-navy-900 sm:text-5xl">
+              <h2 className="mt-5 text-4xl font-extrabold tracking-tight text-navy-900 sm:text-6xl">
                 The technologies we master.
               </h2>
-              <p className="mt-4 text-base text-muted max-w-lg mx-auto">
-                Categorized tool stacks we leverage daily to build high-performance web products and viral social campaigns.
+              <p className="mt-5 text-xl leading-relaxed text-muted max-w-2xl mx-auto">
+                Modern software languages and frameworks leveraged by Meet Khetani and our team to guarantee speed, SEO dominance, and reliability.
               </p>
             </div>
           </Reveal>
 
-          <div className="mt-20 space-y-16">
+          <div className="mt-16 space-y-16">
             {stackCategories.map((cat, catIdx) => (
-              <div key={cat.title} className="space-y-6">
+              <div key={cat.title} className="space-y-8">
                 <Reveal delay={catIdx * 0.1}>
-                  <div className="border-l-4 border-accent pl-4">
-                    <h3 className="text-xl font-semibold text-navy-900 sm:text-2xl">
+                  <div className="border-l-4 border-accent pl-5">
+                    <h3 className="text-2xl sm:text-3xl font-bold text-navy-900">
                       {cat.title}
                     </h3>
-                    <p className="mt-1.5 text-sm text-muted max-w-3xl">
+                    <p className="mt-2 text-base sm:text-lg text-muted max-w-3xl">
                       {cat.desc}
                     </p>
                   </div>
                 </Reveal>
 
-                <div className="grid grid-cols-2 gap-4 sm:grid-cols-3 md:grid-cols-6">
+                <div className="grid grid-cols-2 gap-5 sm:grid-cols-3 md:grid-cols-6">
                   {cat.tools.map((t, toolIdx) => (
                     <Reveal key={t.name} delay={toolIdx * 0.04}>
-                      <div className="rounded-2xl border border-slate-200 bg-white p-5 text-center card-shadow transition-all duration-300 hover:-translate-y-1 hover:card-shadow-hover flex flex-col justify-between h-full group">
+                      <div className="rounded-3xl border border-slate-200 bg-white p-6 sm:p-7 text-center card-shadow shadow-xs transition-all duration-300 hover:-translate-y-1.5 hover:shadow-xl flex flex-col justify-between h-full group">
                         <div className="flex flex-col items-center">
-                          <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-xl bg-slate-50 border border-slate-100 p-2.5 transition-transform duration-300 group-hover:scale-110">
+                          <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-2xl bg-slate-50 border border-slate-100 p-3 transition-transform duration-300 group-hover:scale-110 shadow-inner">
                             <TechIcon name={t.name} />
                           </div>
-                          <div className="mt-4 text-sm font-semibold text-navy-900">{t.name}</div>
+                          <div className="mt-4 text-base font-bold text-navy-900">{t.name}</div>
                         </div>
-                        <div className="mt-2 text-[11px] text-muted leading-tight">{t.role}</div>
+                        <div className="mt-3 text-xs font-medium text-muted leading-tight">{t.role}</div>
                       </div>
                     </Reveal>
                   ))}
@@ -324,19 +503,35 @@ export default function About() {
       </section>
 
       {/* CTA */}
-      <section className="circuit-bg relative overflow-hidden py-20 sm:py-24">
-        <div className="grid-pattern-light absolute inset-0" />
-        <div className="relative mx-auto max-w-3xl px-5 text-center sm:px-8">
+      <section className="circuit-bg relative overflow-hidden py-24 sm:py-32">
+        <div className="grid-pattern-light absolute inset-0 opacity-70" />
+        <div className="relative mx-auto max-w-4xl px-5 text-center sm:px-8">
           <Reveal>
-            <h2 className="text-4xl font-semibold tracking-tight text-white sm:text-5xl">
-              Let's build something worth bookmarking.
+            <h2 className="text-4xl font-extrabold tracking-tight text-white sm:text-6xl md:text-7xl leading-tight">
+              Ready to work directly with Junagadh's top software architect?
             </h2>
-            <Link
-              href="/contact"
-              className="mt-8 inline-flex items-center gap-2 rounded-full bg-white px-6 py-3.5 text-sm font-semibold text-navy-900 transition-all hover:bg-accent hover:text-white hover:-translate-y-0.5 hover:shadow-xl"
-            >
-              Start a project <ArrowRight className="h-4 w-4" />
-            </Link>
+            <p className="mx-auto mt-6 max-w-2xl text-xl sm:text-2xl leading-relaxed text-white/80">
+              Meet Khetani and the MK Digital Nexus team will scope your project with a guaranteed quotation within 2 hours.
+            </p>
+            <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+              <button
+                onClick={() => triggerBookServiceModal()}
+                className="inline-flex h-16 items-center gap-3 rounded-full bg-white px-10 text-base sm:text-lg font-bold text-navy-900 transition-all hover:bg-accent hover:text-white hover:-translate-y-1 hover:shadow-2xl cursor-pointer"
+              >
+                <span>Book Service Consultation</span>
+                <ArrowRight className="h-5 w-5" />
+              </button>
+
+              <a
+                href="https://wa.me/916353121773?text=Hi%20Meet%20Khetani%2C%20I'd%20like%20to%20discuss%20a%20project%20for%20my%20business"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex h-16 items-center gap-2 rounded-full border-2 border-emerald-400 bg-emerald-500/20 backdrop-blur px-8 text-base font-bold text-white hover:bg-emerald-500 transition-all"
+              >
+                <span>WhatsApp Meet Khetani</span>
+                <span className="text-emerald-400 font-bold">●</span>
+              </a>
+            </div>
           </Reveal>
         </div>
       </section>

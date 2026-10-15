@@ -59,9 +59,19 @@ const Contact = () => {
               <p className="text-[9px] font-black uppercase tracking-[0.3em] text-primary/30 mb-3">
                 Office Location
               </p>
-              <p className="text-xl font-light text-primary leading-relaxed">
-                Junagadh, Gujarat <br /> India
+              <p className="text-base font-light text-primary/90 leading-relaxed">
+                First floor, Shyam Apt, Shop no. 5, road, <br />
+                near Vanzari chowk, Nava Nagarwada, <br />
+                Talav Gate, Junagadh, Gujarat 362001
               </p>
+              <a
+                href="https://share.google/VqmKOhc9O8q5wXUvg"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="mt-3 inline-flex items-center gap-1.5 text-xs font-semibold text-accent hover:underline"
+              >
+                <span>View Google Profile & Directions →</span>
+              </a>
             </div>
           </div>
 

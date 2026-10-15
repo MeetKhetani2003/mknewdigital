@@ -21,16 +21,16 @@ export interface Project {
 
 const rawProjects = [
   // INDUSTRIAL
+  { id: "gwgc", title: "GWGC", cat: "Industrial", url: "https://www.gwgc.ca/", img: "/websites/gwgc.png", desc: "Canadian industrial service provider website highlighting specialized industrial projects." },
+  { id: "anvil", title: "Anvil Techno Forge", cat: "Industrial", url: "https://www.anviltechnoforge.co.in", img: "/websites/AnvilTechno.png", desc: "Precision forging and heavy-duty industrial components manufacturer website." },
+  { id: "ravi-prakash-industries", title: "Ravi Prakash Industries", cat: "Industrial", url: "https://www.raviprakashindustries.in/", img: "/websites/RaviprakashIndustries.png", desc: "Manufacturing company site showcasing chemical and processing equipment." },
+  { id: "green-wave-packaging", title: "Green Wave Packaging", cat: "Industrial", url: "https://www.greenwavepackaging.ca/", img: "/websites/GreenWavePackaging.png", desc: "Sustainable industrial packaging supplier with detailed products showcase." },
   { id: "daftari-industries", title: "Daftari Industries", cat: "Industrial", url: "https://daftariindustries.vercel.app/", img: "/images/portfolio/daftari-industries.png", desc: "Leading industrial enterprise landing page with products catalog and inquiry setup." },
-  { id: "gwgc", title: "GWGC", cat: "Industrial", url: "https://www.gwgc.ca/", img: "/images/portfolio/gwgc.png", desc: "Canadian industrial service provider website highlighting specialized industrial projects." },
-  { id: "green-wave-packaging", title: "Green Wave Packaging", cat: "Industrial", url: "https://www.greenwavepackaging.ca/", img: "/images/portfolio/green-wave-packaging.png", desc: "Sustainable industrial packaging supplier with detailed products showcase." },
   { id: "rickey-exports", title: "Rickey Exports", cat: "Industrial", url: "https://www.rickeyexports.com/", img: "/images/portfolio/rickey-exports.png", desc: "Global exports business portal showing manufacturing and global shipping solutions." },
   { id: "dk-enterprise", title: "DK Enterprise", cat: "Industrial", url: "https://dk-enterprise.vercel.app/", img: "/images/portfolio/dk-enterprise.png", desc: "High-performance industrial machinery and tools directory." },
   { id: "gravity", title: "Gravity", cat: "Industrial", url: "https://gravity-gamma-three.vercel.app/", img: "/images/portfolio/gravity.png", desc: "Sleek industrial products catalog with a modern interactive portfolio." },
-  { id: "anvil", title: "Anvil", cat: "Industrial", url: "https://anvil-eta.vercel.app/", img: "/images/portfolio/anvil.png", desc: "Rugged and modern industrial components showcase for heavy machinery." },
   { id: "swastik", title: "Swastik", cat: "Industrial", url: "https://swastik-pi.vercel.app/", img: "/images/portfolio/swastik.png", desc: "Industrial parts manufacturer portal showcasing precision machining." },
   { id: "ajanta-motors", title: "Ajanta Motors", cat: "Industrial", url: "https://ajantamotors.vercel.app/", img: "/images/portfolio/ajanta-motors.png", desc: "Automotive and industrial motor parts supplier directory." },
-  { id: "ravi-prakash-industries", title: "Ravi Prakash Industries", cat: "Industrial", url: "https://raviprakashindustries.in/", img: "/images/portfolio/ravi-prakash-industries.png", desc: "Manufacturing company site showcasing chemical and processing equipment." },
 
   // HEALTHCARE
   { id: "arshad-dr", title: "Arshad Dr.", cat: "Healthcare", url: "https://arshad-dr.vercel.app/", img: "/images/portfolio/arshad-dr.png", desc: "Professional doctor portfolio with direct appointment request systems." },
@@ -54,10 +54,11 @@ const rawProjects = [
   { id: "suntesto-ecommerce", title: "Suntesto E-commerce", cat: "E-commerce", url: "https://suntesto-ecom.vercel.app/", img: "/images/portfolio/suntesto-ecommerce.png", desc: "Dynamic product platform under development with order requests." },
 
   // BUSINESS
+  { id: "groovy-cafe", title: "Groovy Cafe", cat: "Business", url: "https://groovycafe.in/", img: "/websites/GroovyCafe.png", desc: "Restaurant and cafe website with interactive food menu and booking." },
+  { id: "bsr-worldwide", title: "BSR Worldwide", cat: "Business", url: "https://www.bsrworldwide.in/", img: "/websites/bsr.png", desc: "Import-export consultancy website highlighting global trade lanes." },
+  { id: "shynex-detailing", title: "Shynex Detailing", cat: "Business", url: "https://www.shynexdetailing.ca/", img: "/websites/shynex.png", desc: "Premium car detailing and automotive protection studio website." },
   { id: "mashru", title: "Mashru", cat: "Business", url: "https://mashru2.vercel.app/", img: "/images/portfolio/mashru.png", desc: "Premium local textiles business landing page." },
   { id: "bansi", title: "Bansi", cat: "Business", url: "https://bansi-zp2a.vercel.app/", img: "/images/portfolio/bansi.png", desc: "Corporate business website highlighting services and client success." },
-  { id: "groovy-cafe", title: "Groovy Cafe", cat: "Business", url: "https://groovycafe.in/", img: "/images/portfolio/groovy-cafe.png", desc: "Restaurant and cafe website with interactive food menu and booking." },
-  { id: "bsr-worldwide", title: "BSR Worldwide", cat: "Business", url: "https://www.bsrworldwide.in/", img: "/images/portfolio/bsr-worldwide.png", desc: "Import-export consultancy website highlighting global trade lanes." },
   { id: "mahatvi", title: "Mahatvi", cat: "Business", url: "https://www.mahatvi.com/", img: "/images/portfolio/mahatvi.png", desc: "Modern business website showcasing corporate solutions." },
   { id: "palera-design", title: "Palera Design", cat: "Business", url: "https://www.paleradesign.com/", img: "/images/portfolio/palera-design.png", desc: "Bespoke design studio portfolio showcasing high-end interior architecture." },
   { id: "shynex-detailing", title: "Shynex Detailing", cat: "Business", url: "https://www.shynexdetailing.ca/", img: "/images/portfolio/shynex-detailing.png", desc: "Premium car detailing and automotive protection studio website." },
@@ -72,8 +73,7 @@ const rawProjects = [
   { id: "opal", title: "Opal", cat: "Business", url: "https://opal-ivory-ten.vercel.app/", img: "/images/portfolio/opal.png", desc: "Bespoke business consulting and advisory portal." },
   { id: "raisha-textiles", title: "Raisha Textiles", cat: "Business", url: "https://raisha-taxtiles.vercel.app/", desc: "Textile manufacturer business website displaying product line." },
 
-  // INSTITUTIONAL
-  { id: "rsd-institute", title: "RSD Institute", cat: "Institutional", url: "https://www.rsdminstitute.com/", img: "/images/portfolio/rsd-institute.png", desc: "Higher education institute portal with admissions, courses, and faculty." },
+  { id: "rsd-institute", title: "RSD Institute", cat: "Institutional", url: "https://www.rsdminstitute.com/", img: "/websites/rsdm.png", desc: "Higher education institute portal with admissions, courses, and faculty." },
   { id: "mahakali-tuition", title: "Mahakali Tuition", cat: "Institutional", url: "https://mahakali-tution.vercel.app/", img: "/images/portfolio/mahakali-tuition.png", desc: "Coaching center website with student portals and course listings." },
   { id: "grow-with-amit", title: "Grow With Amit", cat: "Institutional", url: "https://growwithamit.mkdigitalnexus.in/", img: "/images/portfolio/grow-with-amit.png", desc: "E-learning and educational coaching consultancy." },
   { id: "viren-surati", title: "Viren Surati", cat: "Institutional", url: "https://www.virensurati.in", img: "/images/portfolio/viren-surati.png", desc: "Educational speaker and career counselor profile site." },

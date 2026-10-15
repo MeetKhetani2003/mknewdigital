@@ -22,7 +22,7 @@ export async function POST(req) {
 
     await transporter.sendMail({
       from: `"MK Digital Nexus Website" <${process.env.EMAIL_USER}>`,
-      to: "mkdigitalnexus@gmail.com",
+      to: "hello@mkdigitalnexus.in",
       subject: `New Contact Form Submission - ${service || "General Inquiry"}`,
       html: `
         <h2>New Quotation Request</h2>
