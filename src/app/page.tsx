@@ -108,16 +108,6 @@ const junagadhFaqs = [
 
 const heroFeaturedProjects = [
   {
-    id: "gwgc",
-    title: "GWGC",
-    tabName: "GWGC.ca",
-    tag: "Industrial Service",
-    url: "https://www.gwgc.ca/",
-    img: "/websites/gwgc.png",
-    stat: "99.8% Speed",
-    client: "Canadian Industrial Provider",
-  },
-  {
     id: "anvil",
     title: "Anvil Techno Forge",
     tabName: "Anvil Techno",
@@ -138,14 +128,24 @@ const heroFeaturedProjects = [
     client: "Processing Equipment Producer",
   },
   {
-    id: "green-wave-packaging",
-    title: "Green Wave Packaging",
-    tabName: "Green Wave",
-    tag: "Eco Packaging",
-    url: "https://www.greenwavepackaging.ca/",
-    img: "/websites/GreenWavePackaging.png",
-    stat: "Eco Packaging",
-    client: "Canadian Supplier",
+    id: "bsr-worldwide",
+    title: "BSR Worldwide",
+    tabName: "BSR World",
+    tag: "Global Trade",
+    url: "https://www.bsrworldwide.in/",
+    img: "/websites/bsr.png",
+    stat: "Trade Corridors",
+    client: "Import-Export Consultancy",
+  },
+  {
+    id: "shynex-detailing",
+    title: "Shynex Detailing",
+    tabName: "Shynex",
+    tag: "Auto Care",
+    url: "https://www.shynexdetailing.ca/",
+    img: "/websites/shynex.png",
+    stat: "99.9% Speed",
+    client: "Canadian Detailing Studio",
   },
   {
     id: "groovy-cafe",
@@ -490,15 +490,7 @@ export default function Home() {
           </p>
           <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-8 opacity-75 hover:opacity-100 transition-opacity text-xs sm:text-sm font-bold text-navy-900 select-none">
             <span className="flex items-center gap-1.5">
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" /> GWGC (Canada)
-            </span>
-            <span className="text-slate-300">/</span>
-            <span className="flex items-center gap-1.5">
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" /> Anvil Techno Forge
-            </span>
-            <span className="text-slate-300">/</span>
-            <span className="flex items-center gap-1.5">
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" /> Green Wave Packaging
             </span>
             <span className="text-slate-300">/</span>
             <span className="flex items-center gap-1.5">
@@ -510,7 +502,15 @@ export default function Home() {
             </span>
             <span className="text-slate-300">/</span>
             <span className="flex items-center gap-1.5">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" /> Shynex Detailing (Canada)
+            </span>
+            <span className="text-slate-300">/</span>
+            <span className="flex items-center gap-1.5">
               <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" /> Groovy Cafe
+            </span>
+            <span className="text-slate-300">/</span>
+            <span className="flex items-center gap-1.5">
+              <span className="h-1.5 w-1.5 rounded-full bg-emerald-500" /> RSD Institute
             </span>
           </div>
         </div>

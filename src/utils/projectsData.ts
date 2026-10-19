@@ -21,10 +21,8 @@ export interface Project {
 
 const rawProjects = [
   // INDUSTRIAL
-  { id: "gwgc", title: "GWGC", cat: "Industrial", url: "https://www.gwgc.ca/", img: "/websites/gwgc.png", desc: "Canadian industrial service provider website highlighting specialized industrial projects." },
   { id: "anvil", title: "Anvil Techno Forge", cat: "Industrial", url: "https://www.anviltechnoforge.co.in", img: "/websites/AnvilTechno.png", desc: "Precision forging and heavy-duty industrial components manufacturer website." },
   { id: "ravi-prakash-industries", title: "Ravi Prakash Industries", cat: "Industrial", url: "https://www.raviprakashindustries.in/", img: "/websites/RaviprakashIndustries.png", desc: "Manufacturing company site showcasing chemical and processing equipment." },
-  { id: "green-wave-packaging", title: "Green Wave Packaging", cat: "Industrial", url: "https://www.greenwavepackaging.ca/", img: "/websites/GreenWavePackaging.png", desc: "Sustainable industrial packaging supplier with detailed products showcase." },
   { id: "daftari-industries", title: "Daftari Industries", cat: "Industrial", url: "https://daftariindustries.vercel.app/", img: "/images/portfolio/daftari-industries.png", desc: "Leading industrial enterprise landing page with products catalog and inquiry setup." },
   { id: "rickey-exports", title: "Rickey Exports", cat: "Industrial", url: "https://www.rickeyexports.com/", img: "/images/portfolio/rickey-exports.png", desc: "Global exports business portal showing manufacturing and global shipping solutions." },
   { id: "dk-enterprise", title: "DK Enterprise", cat: "Industrial", url: "https://dk-enterprise.vercel.app/", img: "/images/portfolio/dk-enterprise.png", desc: "High-performance industrial machinery and tools directory." },

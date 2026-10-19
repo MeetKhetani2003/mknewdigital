@@ -31,7 +31,7 @@ const milestones = [
   { 
     year: "2025", 
     title: "International Scale & AI Growth", 
-    desc: "Shipped enterprise deployments for international clients in Canada (GWGC, Green Wave Packaging), scaling full-service capabilities across Meta Ads and Google Profile SEO." 
+    desc: "Shipped enterprise deployments for international clients in Canada and global trade corridors, scaling full-service capabilities across Meta Ads and Google Profile SEO." 
   },
   { 
     year: "2026", 

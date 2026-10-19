@@ -22,7 +22,7 @@ const reviews = [
   },
   {
     name: "Rohan Mehta",
-    role: "Founder, GreenWave",
+    role: "Director, BSR Worldwide",
     content:
       "Professional, fast, and scalable web development services. They built a powerful digital foundation for our company.",
   },

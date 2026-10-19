@@ -8,8 +8,6 @@ const outputDir = path.join(__dirname, 'public', 'images', 'portfolio');
 const projects = [
   // INDUSTRIAL
   { id: "daftari-industries", title: "Daftari Industries", cat: "Industrial", url: "https://daftariindustries.vercel.app/", desc: "Leading industrial enterprise landing page with products catalog and inquiry setup." },
-  { id: "gwgc", title: "GWGC", cat: "Industrial", url: "https://www.gwgc.ca/", desc: "Canadian industrial service provider website highlighting specialized industrial projects." },
-  { id: "green-wave-packaging", title: "Green Wave Packaging", cat: "Industrial", url: "https://www.greenwavepackaging.ca/", desc: "Sustainable industrial packaging supplier with detailed products showcase." },
   { id: "rickey-exports", title: "Rickey Exports", cat: "Industrial", url: "https://www.rickeyexports.com/", desc: "Global exports business portal showing manufacturing and global shipping solutions." },
   { id: "dk-enterprise", title: "DK Enterprise", cat: "Industrial", url: "https://dk-enterprise.vercel.app/", desc: "High-performance industrial machinery and tools directory." },
   { id: "gravity", title: "Gravity", cat: "Industrial", url: "https://gravity-gamma-three.vercel.app/", desc: "Sleek industrial products catalog with a modern interactive portfolio." },

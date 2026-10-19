@@ -36,19 +36,9 @@ const serviceData = {
     ],
     liveLinks: [
       {
-        name: "GWGC",
-        url: "https://www.gwgc.ca/",
-        img: "/websites/gwgc.png",
-      },
-      {
         name: "Anvil Techno Forge",
         url: "https://www.anviltechnoforge.co.in",
         img: "/websites/AnvilTechno.png",
-      },
-      {
-        name: "Green Wave Packaging",
-        url: "https://www.greenwavepackaging.ca/",
-        img: "/websites/GreenWavePackaging.png",
       },
       {
         name: "Ravi Prakash Industries",
@@ -56,9 +46,19 @@ const serviceData = {
         img: "/websites/RaviprakashIndustries.png",
       },
       {
+        name: "BSR Worldwide",
+        url: "https://www.bsrworldwide.in/",
+        img: "/websites/bsr.png",
+      },
+      {
         name: "Groovy Cafe",
         url: "https://www.groovycafe.in/",
         img: "/websites/GroovyCafe.png",
+      },
+      {
+        name: "Shynex Detailing",
+        url: "https://www.shynexdetailing.ca/",
+        img: "/websites/shynex.png",
       },
       {
         name: "RSDM Institute",
@@ -197,14 +197,14 @@ const serviceData = {
     ],
     liveLinks: [
       {
-        name: "GWGC",
-        url: "https://www.gwgc.ca/",
-        img: "/websites/gwgc.png",
-      },
-      {
         name: "Anvil Techno Forge",
         url: "https://www.anviltechnoforge.co.in",
         img: "/websites/AnvilTechno.png",
+      },
+      {
+        name: "BSR Worldwide",
+        url: "https://www.bsrworldwide.in/",
+        img: "/websites/bsr.png",
       },
     ],
   },
