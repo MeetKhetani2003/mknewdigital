@@ -115,22 +115,23 @@ export default async function BusinessPublicPage({ params, searchParams }) {
     category: activeCategory,
   };
 
+  // Fallback to draftVersion if publishedVersion has no sections so preview demos always display seamlessly
+  const effectiveWebsite = website
+    ? {
+        ...website,
+        publishedVersion:
+          website.publishedVersion?.sections?.length > 0
+            ? website.publishedVersion
+            : website.draftVersion || { sections: [] },
+      }
+    : { publishedVersion: { sections: [] } };
+
   return (
-    <>
-      {isPreview && (
-        <div className="sticky top-0 z-50 bg-amber-500 text-slate-950 font-semibold text-xs py-2 px-4 text-center shadow flex items-center justify-center gap-2">
-          <span>⚠️ You are previewing an unpublished draft of this business website.</span>
-          <Link href="/business/admin" className="underline font-bold">
-            Return to Admin Builder
-          </Link>
-        </div>
-      )}
-      <BusinessRenderer
-        business={enrichedBusiness}
-        website={website || { publishedVersion: { sections: [] } }}
-        isEditing={false}
-      />
-    </>
+    <BusinessRenderer
+      business={enrichedBusiness}
+      website={effectiveWebsite}
+      isEditing={false}
+    />
   );
 }
 

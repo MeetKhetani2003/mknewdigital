@@ -61,7 +61,6 @@ const WebsiteSchema = new mongoose.Schema(
   }
 );
 
-WebsiteSchema.index({ businessId: 1 });
 
 export default mongoose.models.Website || mongoose.model("Website", WebsiteSchema);
 

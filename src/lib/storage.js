@@ -112,7 +112,7 @@ export async function getBusinessById(id) {
   if (dbOk) {
     try {
       const b = await Business.findById(id).lean();
-      if (b) return { ...b, id: b._id.toString() };
+      return b ? { ...b, id: b._id.toString() } : null;
     } catch (err) {
       console.warn("[Storage] Mongoose getBusinessById fallback:", err.message);
     }
@@ -130,7 +130,7 @@ export async function getBusinessBySlug(slug) {
   if (dbOk) {
     try {
       const b = await Business.findOne({ slug: cleanSlug }).lean();
-      if (b) return { ...b, id: b._id.toString() };
+      return b ? { ...b, id: b._id.toString() } : null;
     } catch (err) {
       console.warn("[Storage] Mongoose getBusinessBySlug fallback:", err.message);
     }
@@ -218,7 +218,7 @@ export async function updateBusiness(id, updates) {
   if (dbOk) {
     try {
       const updated = await Business.findByIdAndUpdate(id, cleanUpdates, { new: true }).lean();
-      if (updated) return { ...updated, id: updated._id.toString() };
+      return updated ? { ...updated, id: updated._id.toString() } : null;
     } catch (err) {
       console.warn("[Storage] Mongoose updateBusiness fallback:", err.message);
     }
@@ -239,6 +239,7 @@ export async function deleteBusiness(id) {
     try {
       await Business.findByIdAndDelete(id);
       await Website.deleteMany({ businessId: id });
+      return true;
     } catch (err) {
       console.warn("[Storage] Mongoose deleteBusiness fallback:", err.message);
     }
@@ -301,7 +302,7 @@ export async function getWebsite(businessId) {
   if (dbOk) {
     try {
       const site = await Website.findOne({ businessId }).lean();
-      if (site) return { ...site, id: site._id.toString() };
+      return site ? { ...site, id: site._id.toString() } : null;
     } catch (err) {
       console.warn("[Storage] Mongoose getWebsite fallback:", err.message);
     }

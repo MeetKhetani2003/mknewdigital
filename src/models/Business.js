@@ -104,9 +104,7 @@ const BusinessSchema = new mongoose.Schema(
   }
 );
 
-BusinessSchema.index({ slug: 1 });
 BusinessSchema.index({ city: 1, category: 1 });
-BusinessSchema.index({ status: 1 });
 
 export default mongoose.models.Business || mongoose.model("Business", BusinessSchema);
 
