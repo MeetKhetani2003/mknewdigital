@@ -1,7 +1,11 @@
 import { MetadataRoute } from "next";
 import { projects } from "@/utils/projectsData";
+import { getBusinesses } from "@/lib/storage";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = "https://www.mkdigitalnexus.in";
   const currentDate = new Date().toISOString();
 
@@ -70,5 +74,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.75,
   }));
 
-  return [...staticRoutes, ...serviceRoutes, ...portfolioRoutes];
+  // Dynamic published business routes
+  let businessRoutes: MetadataRoute.Sitemap = [];
+  try {
+    const published = await getBusinesses({ status: "published" });
+    businessRoutes = published.map((b: any) => ({
+      url: `${baseUrl}/business/${b.slug}?city=${encodeURIComponent(b.city || "")}&category=${encodeURIComponent(b.category || "")}`,
+      lastModified: b.updatedAt || currentDate,
+      changeFrequency: "weekly" as const,
+      priority: 0.85,
+    }));
+  } catch (e: any) {
+    console.error("Sitemap error:", e?.message);
+    businessRoutes = [];
+  }
+
+  return [...staticRoutes, ...serviceRoutes, ...portfolioRoutes, ...businessRoutes];
 }

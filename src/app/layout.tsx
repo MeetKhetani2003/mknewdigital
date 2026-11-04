@@ -1,8 +1,6 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
-import { Navbar } from "@/components/layout/Navbar";
-import { Footer } from "@/components/layout/Footer";
-import { FloatingActions } from "@/components/ui/FloatingActions";
+import { AgencyShell } from "@/components/layout/AgencyShell";
 import { Metadata } from "next";
 
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
@@ -286,12 +284,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         />
       </head>
       <body className={`${inter.className} antialiased selection:bg-accent selection:text-white`}>
-        <Navbar />
-        <main className="min-h-screen pt-[72px] md:pt-[88px]">
-          {children}
-        </main>
-        <FloatingActions />
-        <Footer />
+        <AgencyShell>{children}</AgencyShell>
       </body>
     </html>
   );
