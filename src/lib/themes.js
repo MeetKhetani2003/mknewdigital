@@ -186,6 +186,23 @@ export const PREDEFINED_THEMES = {
     sectionSpacing: "spacious",
     containerWidth: "1240px",
   },
+  "sacred-astrology": {
+    id: "sacred-astrology",
+    name: "Sacred Astrology & Tarot Sanctuary",
+    description: "Deep celestial cosmic violet, radiant gold emblems, and enlightened spiritual aesthetics.",
+    primaryColor: "#E5B84C",
+    secondaryColor: "#1B0B2E",
+    accentColor: "#F59E0B",
+    backgroundColor: "#130722",
+    textColor: "#FDFCF8",
+    headingFont: "Playfair Display",
+    bodyFont: "Inter",
+    buttonStyle: "rounded-full",
+    cardStyle: "glass",
+    borderRadius: "24px",
+    sectionSpacing: "spacious",
+    containerWidth: "1200px",
+  },
 };
 
 export const AVAILABLE_FONTS = [

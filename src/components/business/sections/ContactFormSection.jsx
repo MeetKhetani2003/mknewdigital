@@ -20,9 +20,28 @@ export function ContactFormSection({
   const whatsapp = (business.contactDetails?.whatsapp || "+91 98765 43210").replace(/[^0-9]/g, "");
   const primaryColor = theme.primaryColor || "#1B6FD6";
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitted(true);
+
+    // Save inquiry into MongoDB database for client settings portal
+    try {
+      fetch("/api/business/inquiries", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          businessId: business.id,
+          slug: business.slug,
+          name: formData.fullName,
+          phone: formData.phone,
+          service: formData.service || "Consultation Request",
+          message: formData.message,
+          source: "website",
+        }),
+      });
+    } catch (err) {
+      console.warn("Inquiry DB save failed:", err);
+    }
 
     // Also trigger WhatsApp redirect with lead message
     const msg = `New Inquiry from Website:%0A• Name: ${encodeURIComponent(formData.fullName)}%0A• Phone: ${encodeURIComponent(formData.phone)}%0A• Service: ${encodeURIComponent(formData.service || "General")}%0A• Message: ${encodeURIComponent(formData.message || "Please call me.")}`;

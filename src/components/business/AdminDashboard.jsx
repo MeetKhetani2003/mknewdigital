@@ -18,9 +18,14 @@ import {
   RefreshCw,
   Share2,
   Eye,
+  Key,
+  X,
+  Check,
 } from "lucide-react";
 import { NewBusinessModal } from "./NewBusinessModal";
 import { VisualBuilder } from "./VisualBuilder";
+import { DigitalCardBuilder } from "./DigitalCardBuilder";
+import Link from "next/link";
 
 export function AdminDashboard() {
   const [authenticated, setAuthenticated] = useState(false);
@@ -42,7 +47,15 @@ export function AdminDashboard() {
   const [newModalOpen, setNewModalOpen] = useState(false);
   const [activeBuilderBusiness, setActiveBuilderBusiness] = useState(null);
   const [activeBuilderWebsite, setActiveBuilderWebsite] = useState(null);
+  const [activeCardBuilderBusiness, setActiveCardBuilderBusiness] = useState(null);
+  const [activeCardBuilderData, setActiveCardBuilderData] = useState(null);
   const [deleteConfirmId, setDeleteConfirmId] = useState(null);
+
+  // Client Password Admin Change State
+  const [passwordModalBusiness, setPasswordModalBusiness] = useState(null);
+  const [newClientPassword, setNewClientPassword] = useState("");
+  const [passwordSaving, setPasswordSaving] = useState(false);
+  const [passwordSaveSuccess, setPasswordSaveSuccess] = useState(false);
 
   // Check auth session on mount
   useEffect(() => {
@@ -135,6 +148,17 @@ export function AdminDashboard() {
     }
   };
 
+  const handleOpenCardBuilder = async (business) => {
+    try {
+      const res = await fetch(`/api/business/digitalcard/${business.id}`);
+      const data = await res.json();
+      setActiveCardBuilderBusiness(business);
+      setActiveCardBuilderData(data.card);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
   const handleDuplicate = async (id) => {
     if (confirm("Duplicate this business website?")) {
       try {
@@ -183,6 +207,43 @@ export function AdminDashboard() {
     }
   };
 
+  const handleOpenPasswordModal = (biz) => {
+    setPasswordModalBusiness(biz);
+    setNewClientPassword(biz.clientPassword || "sacred2026");
+    setPasswordSaveSuccess(false);
+  };
+
+  const handleSaveClientPassword = async (e) => {
+    e.preventDefault();
+    if (!passwordModalBusiness || !newClientPassword.trim()) return;
+    setPasswordSaving(true);
+    try {
+      const res = await fetch(`/api/business/businesses/${passwordModalBusiness.id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ clientPassword: newClientPassword.trim() }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setPasswordSaveSuccess(true);
+        setBusinesses((prev) =>
+          prev.map((b) =>
+            b.id === passwordModalBusiness.id ? { ...b, clientPassword: newClientPassword.trim() } : b
+          )
+        );
+        setTimeout(() => {
+          setPasswordModalBusiness(null);
+        }, 1200);
+      } else {
+        alert(data.message || "Failed to update password");
+      }
+    } catch (err) {
+      alert("Error updating client password: " + err.message);
+    } finally {
+      setPasswordSaving(false);
+    }
+  };
+
   // If in Visual Builder mode, show VisualBuilder component!
   if (activeBuilderBusiness) {
     return (
@@ -193,6 +254,33 @@ export function AdminDashboard() {
           setActiveBuilderBusiness(null);
           setActiveBuilderWebsite(null);
           loadBusinesses();
+        }}
+        onSwitchToCardBuilder={async () => {
+          const biz = activeBuilderBusiness;
+          setActiveBuilderBusiness(null);
+          setActiveBuilderWebsite(null);
+          handleOpenCardBuilder(biz);
+        }}
+      />
+    );
+  }
+
+  // If in Digital Card Builder mode, show DigitalCardBuilder component!
+  if (activeCardBuilderBusiness) {
+    return (
+      <DigitalCardBuilder
+        initialBusiness={activeCardBuilderBusiness}
+        initialCard={activeCardBuilderData}
+        onExit={() => {
+          setActiveCardBuilderBusiness(null);
+          setActiveCardBuilderData(null);
+          loadBusinesses();
+        }}
+        onSwitchToWebsiteBuilder={async () => {
+          const biz = activeCardBuilderBusiness;
+          setActiveCardBuilderBusiness(null);
+          setActiveCardBuilderData(null);
+          handleOpenBuilder(biz);
         }}
       />
     );
@@ -357,15 +445,15 @@ export function AdminDashboard() {
           </div>
 
           <div className="p-6 rounded-3xl bg-white border border-slate-200/80 shadow-sm">
-            <span className="text-xs font-bold uppercase tracking-wider text-amber-600">Draft Websites</span>
-            <p className="text-3xl sm:text-4xl font-black text-amber-600 mt-2">{draftCount}</p>
+            <span className="text-xs font-bold uppercase tracking-wider text-amber-600">Digital Cards Ready</span>
+            <p className="text-3xl sm:text-4xl font-black text-amber-600 mt-2">{totalBusinesses}</p>
           </div>
 
           <div className="p-6 rounded-3xl bg-white border border-slate-200/80 shadow-sm">
-            <span className="text-xs font-bold uppercase tracking-wider text-blue-600">Active Rendering Engine</span>
+            <span className="text-xs font-bold uppercase tracking-wider text-indigo-600">Product Packaging</span>
             <p className="text-sm font-bold text-slate-800 mt-3 flex items-center gap-1.5">
-              <CheckCircle className="w-4 h-4 text-emerald-500" />
-              <span>26 Dynamic Sections</span>
+              <Sparkles className="w-4 h-4 text-amber-500" />
+              <span>Website + Card Combos</span>
             </p>
           </div>
         </div>
@@ -501,65 +589,138 @@ export function AdminDashboard() {
                       </div>
                     </div>
 
-                    {/* Slug & Details */}
-                    <div className="mt-4 pt-4 border-t border-slate-100 text-[11px] space-y-1.5 text-slate-500 font-mono">
-                      <p className="truncate text-slate-700 font-semibold">
-                        /business/{biz.slug}
-                      </p>
-                      <p className="text-[10px] text-slate-400">
-                        Theme: {biz.theme?.preset || "Modern Business"}
-                      </p>
+                    {/* Combo Links & Details */}
+                    <div className="mt-4 pt-4 border-t border-slate-100 text-[11px] space-y-1.5 font-mono">
+                      <div className="flex items-center justify-between">
+                        <span className="text-slate-400 font-sans text-[10px] uppercase font-bold">Website:</span>
+                        <a
+                          href={publicUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="truncate text-blue-600 hover:underline font-semibold max-w-[200px]"
+                        >
+                          /business/{biz.slug}
+                        </a>
+                      </div>
+
+                      <div className="flex items-center justify-between">
+                        <span className="text-amber-600 font-sans text-[10px] uppercase font-bold">Card:</span>
+                        <a
+                          href={`/business/${biz.slug}/digitalcard`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="truncate text-amber-600 hover:underline font-semibold max-w-[200px]"
+                        >
+                          /business/{biz.slug}/digitalcard
+                        </a>
+                      </div>
+
+                      <div className="flex items-center justify-between">
+                        <span className="text-emerald-600 font-sans text-[10px] uppercase font-bold">Client Portal:</span>
+                        <div className="flex items-center gap-1.5">
+                          <Link
+                            href={`/business/${biz.slug}/settings`}
+                            target="_blank"
+                            className="text-emerald-600 hover:underline font-semibold text-[11px]"
+                          >
+                            /settings
+                          </Link>
+                          <button
+                            onClick={() => handleOpenPasswordModal(biz)}
+                            title="Click to Change Client Password as Admin"
+                            className="px-2 py-0.5 rounded-md bg-emerald-50 hover:bg-emerald-100 border border-emerald-300 text-emerald-800 font-mono text-[10px] font-bold inline-flex items-center gap-1 transition-colors cursor-pointer group/key"
+                          >
+                            <Key className="w-2.5 h-2.5 text-emerald-600 group-hover/key:rotate-45 transition-transform" />
+                            <span>{biz.clientPassword || "sacred2026"}</span>
+                            <span className="text-[9px] text-emerald-600 underline ml-0.5">Edit</span>
+                          </button>
+                        </div>
+                      </div>
                     </div>
                   </div>
 
-                  {/* Actions Bar */}
-                  <div className="p-4 bg-slate-50/70 border-t border-slate-100 flex items-center justify-between gap-2">
-                    <button
-                      onClick={() => handleOpenBuilder(biz)}
-                      className="flex-1 py-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs flex items-center justify-center gap-1.5 shadow-sm transition-all"
-                    >
-                      <Edit3 className="w-3.5 h-3.5" />
-                      <span>Open Builder</span>
-                    </button>
-
-                    <div className="flex items-center gap-1">
+                  {/* Actions Bar with Website & Card Builders */}
+                  <div className="p-3.5 bg-slate-50/80 border-t border-slate-100 flex flex-col gap-2">
+                    <div className="flex items-center gap-2">
                       <button
-                        onClick={() => handleTogglePublish(biz)}
-                        title={isPub ? "Unpublish Website" : "Publish Live Website"}
-                        className={`p-2 rounded-xl border text-xs font-semibold transition-colors ${
-                          isPub
-                            ? "border-emerald-200 text-emerald-600 hover:bg-emerald-50"
-                            : "border-slate-200 text-slate-600 hover:bg-slate-100"
-                        }`}
+                        onClick={() => handleOpenBuilder(biz)}
+                        className="flex-1 py-2 px-2 rounded-xl bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs flex items-center justify-center gap-1 shadow-sm transition-all"
+                        title="Open Website Visual Builder"
                       >
-                        <Globe className="w-4 h-4" />
-                      </button>
-
-                      <a
-                        href={`${publicUrl}&preview=true`}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        title="Preview Public Website"
-                        className="p-2 rounded-xl border border-slate-200 hover:bg-slate-100 text-slate-600 transition-colors"
-                      >
-                        <Eye className="w-4 h-4" />
-                      </a>
-
-                      <button
-                        onClick={() => handleDuplicate(biz.id)}
-                        title="Duplicate Website"
-                        className="p-2 rounded-xl border border-slate-200 hover:bg-slate-100 text-slate-600 transition-colors"
-                      >
-                        <Copy className="w-4 h-4" />
+                        <Edit3 className="w-3.5 h-3.5" />
+                        <span>Website</span>
                       </button>
 
                       <button
-                        onClick={() => setDeleteConfirmId(biz.id)}
-                        title="Delete Business"
-                        className="p-2 rounded-xl border border-slate-200 hover:bg-red-50 text-red-500 transition-colors"
+                        onClick={() => handleOpenCardBuilder(biz)}
+                        className="flex-1 py-2 px-2 rounded-xl bg-gradient-to-r from-amber-500 to-orange-500 hover:from-amber-400 hover:to-orange-400 text-slate-950 font-black text-xs flex items-center justify-center gap-1 shadow-sm transition-all"
+                        title="Open Digital Card Builder"
                       >
-                        <Trash2 className="w-4 h-4" />
+                        <Sparkles className="w-3.5 h-3.5" />
+                        <span>Digital Card</span>
                       </button>
+
+                      <Link
+                        href={`/business/admin/${biz.slug}`}
+                        className="py-2 px-2.5 rounded-xl bg-slate-200/80 hover:bg-slate-300 text-slate-800 font-bold text-xs flex items-center justify-center gap-1 transition-all"
+                        title="Open Business Combo Hub"
+                      >
+                        <span>Combo</span>
+                      </Link>
+                    </div>
+
+                    <div className="flex items-center justify-between pt-2 border-t border-slate-200/50 text-slate-500">
+                      <div className="flex items-center gap-1">
+                        <button
+                          onClick={() => handleTogglePublish(biz)}
+                          title={isPub ? "Unpublish Website" : "Publish Live Website"}
+                          className={`p-1.5 rounded-lg border text-xs font-semibold transition-colors ${
+                            isPub
+                              ? "border-emerald-200 text-emerald-600 hover:bg-emerald-50"
+                              : "border-slate-200 text-slate-600 hover:bg-slate-100"
+                          }`}
+                        >
+                          <Globe className="w-3.5 h-3.5" />
+                        </button>
+
+                        <a
+                          href={publicUrl}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          title="Preview Public Website"
+                          className="p-1.5 rounded-lg border border-slate-200 hover:bg-slate-100 text-slate-600 transition-colors"
+                        >
+                          <Eye className="w-3.5 h-3.5" />
+                        </a>
+
+                        <a
+                          href={`/business/${biz.slug}/digitalcard`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          title="Preview Digital Card"
+                          className="p-1.5 rounded-lg border border-amber-200 bg-amber-50/50 hover:bg-amber-100 text-amber-700 transition-colors"
+                        >
+                          <Sparkles className="w-3.5 h-3.5 text-amber-600" />
+                        </a>
+                      </div>
+
+                      <div className="flex items-center gap-1">
+                        <button
+                          onClick={() => handleDuplicate(biz.id)}
+                          title="Duplicate Website"
+                          className="p-1.5 rounded-lg border border-slate-200 hover:bg-slate-100 text-slate-600 transition-colors"
+                        >
+                          <Copy className="w-3.5 h-3.5" />
+                        </button>
+
+                        <button
+                          onClick={() => setDeleteConfirmId(biz.id)}
+                          title="Delete Business"
+                          className="p-1.5 rounded-lg border border-slate-200 hover:bg-red-50 text-red-500 transition-colors"
+                        >
+                          <Trash2 className="w-3.5 h-3.5" />
+                        </button>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -604,6 +765,93 @@ export function AdminDashboard() {
                 Delete
               </button>
             </div>
+          </div>
+        </div>
+      )}
+      {/* Change Client Password Modal (Admin Feature) */}
+      {passwordModalBusiness && (
+        <div className="fixed inset-0 z-50 bg-slate-950/70 backdrop-blur-sm flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl max-w-sm w-full p-6 shadow-2xl border border-slate-200 text-left animate-fade-in relative">
+            <button
+              onClick={() => setPasswordModalBusiness(null)}
+              className="absolute top-4 right-4 p-1.5 rounded-full hover:bg-slate-100 text-slate-400 hover:text-slate-600 transition-colors"
+            >
+              <X className="w-4 h-4" />
+            </button>
+
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center border border-emerald-200">
+                <Key className="w-5 h-5" />
+              </div>
+              <div>
+                <h3 className="text-base font-black text-slate-900">Change Client Password</h3>
+                <p className="text-xs text-slate-500">{passwordModalBusiness.businessName}</p>
+              </div>
+            </div>
+
+            <p className="text-xs text-slate-500 mb-4 leading-relaxed">
+              Set the password protecting the client's <span className="font-mono text-emerald-700">/settings</span> portal. The client uses this key to view customer inquiries and manage their website & card assets.
+            </p>
+
+            {passwordSaveSuccess ? (
+              <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-center space-y-1 my-3">
+                <Check className="w-6 h-6 text-emerald-600 mx-auto" />
+                <p className="text-xs font-bold text-emerald-800">Password Updated Successfully!</p>
+              </div>
+            ) : (
+              <form onSubmit={handleSaveClientPassword} className="space-y-4">
+                <div>
+                  <label className="block text-xs font-bold text-slate-700 mb-1">
+                    New Portal Password *
+                  </label>
+                  <div className="flex gap-2">
+                    <input
+                      type="text"
+                      required
+                      value={newClientPassword}
+                      onChange={(e) => setNewClientPassword(e.target.value)}
+                      placeholder="e.g. sacred2026"
+                      className="flex-1 px-3.5 py-2.5 rounded-xl border border-slate-300 font-mono text-xs text-slate-900 focus:outline-none focus:border-emerald-600"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const random = `${passwordModalBusiness.slug.split("-")[0] || "client"}${Math.floor(1000 + Math.random() * 9000)}`;
+                        setNewClientPassword(random);
+                      }}
+                      className="px-2.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-[11px] font-semibold text-slate-600"
+                      title="Auto-generate a secure memorable key"
+                    >
+                      Gen
+                    </button>
+                  </div>
+                </div>
+
+                <div className="pt-2 flex gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setPasswordModalBusiness(null)}
+                    className="flex-1 py-2.5 rounded-xl border border-slate-200 font-semibold text-xs text-slate-600 hover:bg-slate-50"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={passwordSaving || !newClientPassword.trim()}
+                    className="flex-1 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow-md transition-all flex items-center justify-center gap-1.5 disabled:opacity-50"
+                  >
+                    {passwordSaving ? (
+                      <span>Saving...</span>
+                    ) : (
+                      <>
+                        <Key className="w-3.5 h-3.5" />
+                        <span>Update Password</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+              </form>
+            )}
           </div>
         </div>
       )}

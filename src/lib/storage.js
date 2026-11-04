@@ -3,10 +3,13 @@ import path from "path";
 import { connectDB, isDbConnected } from "./db.js";
 import Business from "../models/Business.js";
 import Website from "../models/Website.js";
+import DigitalCard from "../models/DigitalCard.js";
+import { generateDefaultDigitalCard } from "./digital-card-defaults.js";
 
 const DATA_DIR = path.join(process.cwd(), "data");
 const BUSINESSES_FILE = path.join(DATA_DIR, "businesses.json");
 const WEBSITES_FILE = path.join(DATA_DIR, "websites.json");
+const DIGITAL_CARDS_FILE = path.join(DATA_DIR, "digitalcards.json");
 
 function ensureDataFiles() {
   if (!fs.existsSync(DATA_DIR)) {
@@ -17,6 +20,9 @@ function ensureDataFiles() {
   }
   if (!fs.existsSync(WEBSITES_FILE)) {
     fs.writeFileSync(WEBSITES_FILE, JSON.stringify([], null, 2), "utf8");
+  }
+  if (!fs.existsSync(DIGITAL_CARDS_FILE)) {
+    fs.writeFileSync(DIGITAL_CARDS_FILE, JSON.stringify([], null, 2), "utf8");
   }
 }
 
@@ -217,7 +223,7 @@ export async function updateBusiness(id, updates) {
   const dbOk = await connectDB();
   if (dbOk) {
     try {
-      const updated = await Business.findByIdAndUpdate(id, cleanUpdates, { new: true }).lean();
+      const updated = await Business.findByIdAndUpdate(id, cleanUpdates, { returnDocument: 'after' }).lean();
       return updated ? { ...updated, id: updated._id.toString() } : null;
     } catch (err) {
       console.warn("[Storage] Mongoose updateBusiness fallback:", err.message);
@@ -417,7 +423,7 @@ export async function publishWebsite(businessId) {
       const updated = await Website.findOneAndUpdate(
         { businessId },
         { publishedVersion: publishedData, updatedAt: now },
-        { new: true }
+        { returnDocument: 'after' }
       ).lean();
       if (updated) return { ...updated, id: updated._id.toString() };
     } catch (err) {
@@ -435,4 +441,154 @@ export async function publishWebsite(businessId) {
   }
   return null;
 }
+
+// ==========================================
+// DIGITAL BUSINESS CARD ENGINE (Combo Product)
+// ==========================================
+
+export async function getDigitalCard(businessId) {
+  const dbOk = await connectDB();
+  if (dbOk) {
+    try {
+      let card = await DigitalCard.findOne({ businessId }).lean();
+      if (card && (card.publishedVersion?.cards || card.draftVersion?.cards)) {
+        return { ...card, id: card._id.toString() };
+      }
+
+      // If no card exists or it's uninitialized, auto-generate default from business
+      const business = await getBusinessById(businessId);
+      if (business) {
+        const defaultData = generateDefaultDigitalCard(business);
+        const newCard = await DigitalCard.findOneAndUpdate(
+          { businessId },
+          {
+            businessId,
+            slug: business.slug,
+            status: "published",
+            draftVersion: defaultData,
+            publishedVersion: defaultData,
+            publishedAt: new Date(),
+          },
+          { upsert: true, returnDocument: 'after' }
+        ).lean();
+        return { ...newCard, id: newCard._id.toString() };
+      }
+    } catch (err) {
+      console.warn("[Storage] Mongoose getDigitalCard fallback:", err.message);
+    }
+  }
+
+  // Local fallback
+  const list = readJsonFile(DIGITAL_CARDS_FILE);
+  let card = list.find((c) => c.businessId === businessId);
+  if (!card) {
+    const business = await getBusinessById(businessId);
+    if (business) {
+      const defaultData = generateDefaultDigitalCard(business);
+      card = {
+        id: generateId("card"),
+        businessId,
+        slug: business.slug,
+        status: "published",
+        draftVersion: defaultData,
+        publishedVersion: defaultData,
+        publishedAt: new Date().toISOString(),
+        createdAt: new Date().toISOString(),
+        updatedAt: new Date().toISOString(),
+      };
+      list.push(card);
+      writeJsonFile(DIGITAL_CARDS_FILE, list);
+    }
+  }
+  return card || null;
+}
+
+export async function getDigitalCardBySlug(slug) {
+  if (!slug) return null;
+  const business = await getBusinessBySlug(slug);
+  if (!business) return null;
+  const card = await getDigitalCard(business.id);
+  return { card, business };
+}
+
+export async function saveDraftDigitalCard(businessId, draftData) {
+  const now = new Date().toISOString();
+  const dbOk = await connectDB();
+  if (dbOk) {
+    try {
+      const updated = await DigitalCard.findOneAndUpdate(
+        { businessId },
+        { draftVersion: draftData, updatedAt: now },
+        { upsert: true, returnDocument: 'after' }
+      ).lean();
+      return { ...updated, id: updated._id.toString() };
+    } catch (err) {
+      console.warn("[Storage] Mongoose saveDraftDigitalCard fallback:", err.message);
+    }
+  }
+
+  const list = readJsonFile(DIGITAL_CARDS_FILE);
+  let index = list.findIndex((c) => c.businessId === businessId);
+  if (index === -1) {
+    const newCard = {
+      id: generateId("card"),
+      businessId,
+      status: "draft",
+      draftVersion: draftData,
+      publishedVersion: draftData,
+      createdAt: now,
+      updatedAt: now,
+    };
+    list.push(newCard);
+    writeJsonFile(DIGITAL_CARDS_FILE, list);
+    return newCard;
+  } else {
+    list[index].draftVersion = draftData;
+    list[index].updatedAt = now;
+    writeJsonFile(DIGITAL_CARDS_FILE, list);
+    return list[index];
+  }
+}
+
+export async function publishDigitalCard(businessId, optionalData = null) {
+  const now = new Date().toISOString();
+  const existingCard = await getDigitalCard(businessId);
+  if (!existingCard) throw new Error("Digital Card not found to publish");
+
+  const dataToPublish = optionalData || existingCard.draftVersion || existingCard.publishedVersion || {};
+
+  const dbOk = await connectDB();
+  if (dbOk) {
+    try {
+      const updated = await DigitalCard.findOneAndUpdate(
+        { businessId },
+        {
+          publishedVersion: dataToPublish,
+          draftVersion: dataToPublish,
+          status: "published",
+          publishedAt: now,
+          updatedAt: now,
+        },
+        { upsert: true, returnDocument: 'after' }
+      ).lean();
+      return { ...updated, id: updated._id.toString() };
+    } catch (err) {
+      console.warn("[Storage] Mongoose publishDigitalCard fallback:", err.message);
+    }
+  }
+
+  const list = readJsonFile(DIGITAL_CARDS_FILE);
+  let index = list.findIndex((c) => c.businessId === businessId);
+  if (index !== -1) {
+    list[index].publishedVersion = dataToPublish;
+    list[index].draftVersion = dataToPublish;
+    list[index].status = "published";
+    list[index].publishedAt = now;
+    list[index].updatedAt = now;
+    writeJsonFile(DIGITAL_CARDS_FILE, list);
+    return list[index];
+  }
+  return null;
+}
+
 

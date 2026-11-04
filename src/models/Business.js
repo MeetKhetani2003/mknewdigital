@@ -98,6 +98,10 @@ const BusinessSchema = new mongoose.Schema(
       type: Date,
       default: null,
     },
+    clientPassword: {
+      type: String,
+      default: "client2026",
+    },
   },
   {
     timestamps: true,

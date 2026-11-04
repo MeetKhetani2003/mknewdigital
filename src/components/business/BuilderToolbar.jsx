@@ -15,6 +15,7 @@ import {
   ArrowLeft,
   Share2,
   ExternalLink,
+  Sparkles,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -34,6 +35,7 @@ export function BuilderToolbar({
   onPublish = () => {},
   isPublishing = false,
   onExit = () => {},
+  onSwitchToCardBuilder = null,
 }) {
   const [copied, setCopied] = useState(false);
 
@@ -162,6 +164,18 @@ export function BuilderToolbar({
               : "Saved"}
           </span>
         </div>
+
+        {/* Switch to Digital Card Builder (Combo) */}
+        {onSwitchToCardBuilder && (
+          <button
+            onClick={onSwitchToCardBuilder}
+            className="px-2.5 py-1.5 rounded-lg bg-amber-500/10 hover:bg-amber-500/20 text-amber-800 border border-amber-300 font-bold text-xs flex items-center gap-1.5 transition-all shadow-xs"
+            title="Switch to Digital Card Builder"
+          >
+            <Sparkles className="w-3.5 h-3.5 text-amber-600" />
+            <span className="hidden md:inline">Digital Card</span>
+          </button>
+        )}
 
         {/* Save Draft Button */}
         <button

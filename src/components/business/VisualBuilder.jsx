@@ -10,6 +10,7 @@ export function VisualBuilder({
   initialBusiness = {},
   initialWebsite = {},
   onExit = () => {},
+  onSwitchToCardBuilder = null,
 }) {
   const [business, setBusiness] = useState(initialBusiness);
   const [sections, setSections] = useState(
@@ -273,6 +274,7 @@ export function VisualBuilder({
         onPublish={handlePublish}
         isPublishing={isPublishing}
         onExit={onExit}
+        onSwitchToCardBuilder={onSwitchToCardBuilder}
       />
 
       {/* 2. THREE-PANEL WORKSPACE */}

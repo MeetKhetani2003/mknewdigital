@@ -91,13 +91,6 @@ export default async function BusinessPublicPage({ params, searchParams }) {
               <ArrowLeft className="w-4 h-4" />
               <span>Back to MK Digital Nexus</span>
             </Link>
-
-            <Link
-              href="/business/admin"
-              className="w-full py-3 rounded-xl border border-slate-200 text-slate-700 font-semibold text-sm hover:bg-slate-50 transition-colors"
-            >
-              Admin Builder Dashboard
-            </Link>
           </div>
         </div>
       </div>
