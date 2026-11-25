@@ -104,7 +104,7 @@ export default function Portfolio() {
             <p className="mt-8 max-w-3xl text-xl sm:text-2xl leading-relaxed text-muted">
               Browse our comprehensive archive of websites, storefronts, and brand portals 
               we've launched for operators across India, Canada, and global trade lanes. 
-              <strong className="text-navy-900 font-bold"> {projects.length} live projects</strong> and counting.
+              <strong className="text-navy-900 font-bold"> {projects.length} selected projects</strong> and counting.
             </p>
           </Reveal>
         </div>
