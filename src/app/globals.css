@@ -1,19 +1,37 @@
 @import "tailwindcss";
 
 @theme {
-  --color-navy-950: #071A33;
-  --color-navy-900: #0B2447;
-  --color-navy-800: #13325F;
-  --color-navy-700: #1D4278;
-  --color-navy-100: #E8EEF7;
-  --color-navy-50: #F1F4FA;
-  --color-accent: #1B6FD6;
-  --color-accent-hover: #1558AE;
-  --color-offwhite: #F7F9FC;
-  --color-ink: #0A1628;
-  --color-muted: #5A6B82;
-  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  /* Strict MK Digital Nexus Brand Tokens */
+  --color-primary-bg: #FFFFFF;
+  --color-primary-text: #111827;
+  --color-secondary-text: #667085;
+  --color-brand-navy: #0D1B2A;
+  --color-brand-blue: #2563EB;
+  --color-brand-blue-hover: #1D4ED8;
+  --color-soft-bg: #F5F7FA;
+  --color-border: #E7EAF0;
+  --color-border-subtle: #F1F3F7;
+  --color-hover-bg: #F1F5F9;
+
+  /* Legacy aliases for backward compatibility with existing components */
+  --color-navy-950: #0D1B2A;
+  --color-navy-900: #0D1B2A;
+  --color-navy-800: #1B2A4A;
+  --color-navy-700: #2C3E5A;
+  --color-navy-100: #E7EAF0;
+  --color-navy-50: #F5F7FA;
+  --color-accent: #2563EB;
+  --color-accent-hover: #1D4ED8;
+  --color-offwhite: #F5F7FA;
+  --color-ink: #111827;
+  --color-muted: #667085;
+
+  /* Typography */
+  --font-sans: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   --font-serif: "Instrument Serif", ui-serif, Georgia, serif;
+
+  /* Container & Spacing scale */
+  --spacing-container-max: 1320px;
 }
 
 html {
@@ -21,16 +39,16 @@ html {
 }
 
 body {
-  font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
-  color: #0A1628;
-  background: #FFFFFF;
+  font-family: var(--font-sans);
+  color: var(--color-primary-text);
+  background: var(--color-primary-bg);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
 }
 
 ::selection {
-  background: #1B6FD6;
+  background: var(--color-brand-blue);
   color: #FFFFFF;
 }
 
@@ -61,13 +79,16 @@ body {
   width: 10px;
   height: 10px;
 }
+
 ::-webkit-scrollbar-track {
   background: #F7F9FC;
 }
+
 ::-webkit-scrollbar-thumb {
   background: #13325F;
   border-radius: 8px;
 }
+
 ::-webkit-scrollbar-thumb:hover {
   background: #0B2447;
 }
@@ -76,6 +97,7 @@ body {
 .no-scrollbar::-webkit-scrollbar {
   display: none;
 }
+
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
@@ -83,7 +105,10 @@ body {
 
 /* Respect reduced motion */
 @media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
+
+  *,
+  *::before,
+  *::after {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
@@ -110,18 +135,32 @@ body {
 
 /* Marquee */
 @keyframes marquee {
-  0% { transform: translateX(0); }
-  100% { transform: translateX(-50%); }
+  0% {
+    transform: translateX(0);
+  }
+
+  100% {
+    transform: translateX(-50%);
+  }
 }
+
 .animate-marquee {
   animation: marquee 40s linear infinite;
 }
 
 /* Subtle float */
 @keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-8px); }
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-8px);
+  }
 }
+
 .animate-float {
   animation: float 6s ease-in-out infinite;
 }

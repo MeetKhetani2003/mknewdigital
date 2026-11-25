@@ -1,38 +1,79 @@
 "use client";
+
 import { useState } from "react";
 import { Reveal } from "@/components/ui/Reveal";
-import { Mail, Phone, MapPin, Clock, MessageCircle, Send, CheckCircle2, ExternalLink, Copy, Check } from "lucide-react";
+import { 
+  Mail, 
+  Phone, 
+  MapPin, 
+  Clock, 
+  MessageCircle, 
+  Send, 
+  CheckCircle2, 
+  ExternalLink, 
+  Copy, 
+  Check, 
+  Globe2,
+  ShieldCheck,
+  Calendar
+} from "lucide-react";
 
 export default function Contact() {
   const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [copied, setCopied] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const [form, setForm] = useState({
     name: "",
+    businessName: "",
     email: "",
-    service: "Website Development",
-    budget: "₹5K – ₹25K",
+    country: "USA",
+    phone: "",
+    service: "Custom Website Development",
+    budget: "$1,500 – $5,000",
     message: "",
   });
 
-  const onSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
+    setErrorMessage("");
 
-    // Construct WhatsApp pre-filled message text
-    const messageText = `Hi MK Digital Nexus,\n\nI would like to submit a project inquiry:\n\n*Name:* ${form.name}\n*Email:* ${form.email}\n*Service:* ${form.service}\n*Approximate Budget:* ${form.budget}\n*Project Details:* ${form.message}`;
+    try {
+      // 1. Submit to existing Next.js backend API
+      const res = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: `${form.name} (${form.businessName || "Individual"})`,
+          email: form.email,
+          service: `${form.service} [Budget: ${form.budget}, Country: ${form.country}, Phone: ${form.phone}]`,
+          message: form.message,
+        }),
+      });
 
-    const encodedText = encodeURIComponent(messageText);
-    const whatsappUrl = `https://wa.me/916353121773?text=${encodedText}`;
+      const data = await res.json().catch(() => ({}));
 
-    // Redirect to WhatsApp in a new tab
-    window.open(whatsappUrl, "_blank");
+      // Also construct pre-filled WhatsApp link for direct fast tracking
+      const whatsappMsg = `Hi MK Digital Nexus,\n\nI submitted an inquiry on your website:\n*Name:* ${form.name}\n*Business:* ${form.businessName}\n*Email:* ${form.email}\n*Country:* ${form.country}\n*Service:* ${form.service}\n*Budget:* ${form.budget}\n*Project Overview:* ${form.message}`;
+      const encoded = encodeURIComponent(whatsappMsg);
+      const waUrl = `https://wa.me/916353121773?text=${encoded}`;
 
-    setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 8000);
+      setSubmitted(true);
+      setLoading(false);
+
+      // Offer opening WhatsApp for direct dispatch if preferred
+    } catch (err: any) {
+      console.error(err);
+      // Even if email service is momentarily offline, offer fallback
+      setSubmitted(true);
+      setLoading(false);
+    }
   };
 
   const handleCopyAddress = () => {
     navigator.clipboard.writeText(
-      "First floor, Shyam Apt, Shop no. 5, road, near Vanzari chowk, Vanzari Chowk, Nava Nagarwada, Talav Gate, Junagadh, Gujarat 362001"
+      "First floor, Shyam Apt, Shop no. 5, Near Vanzari Chowk, Talav Gate, Junagadh, Gujarat 362001, India"
     );
     setCopied(true);
     setTimeout(() => setCopied(false), 2500);
@@ -40,320 +81,351 @@ export default function Contact() {
 
   return (
     <>
-      <title>Contact Website Developers & Digital Marketers in Junagadh | MK Digital Nexus</title>
+      <title>Contact Studio | MK Digital Nexus | Web & Software Inquiry</title>
       <meta
         name="description"
-        content="Contact MK Digital Nexus at First floor, Shyam Apt, near Vanzari Chowk, Talav Gate, Junagadh. #1 website development, custom software, Meta Ads, and Google Profile SEO in Junagadh & Rajkot."
+        content="Contact MK Digital Nexus for custom web development and digital solutions inquiries. Working with businesses in the USA, Canada, and India. Guaranteed 24-hour response."
       />
       <meta
         name="keywords"
-        content="contact website developer junagadh, software development company junagadh, digital marketing agency junagadh, vanzari chowk talav gate junagadh web agency, hire web developer in junagadh, MK Digital Nexus address"
+        content="contact MK Digital Nexus, hire Next.js developers, custom software quote, website inquiry India, USA Canada web development agency"
       />
       <link rel="canonical" href="https://www.mkdigitalnexus.in/contact" />
 
-      <section className="relative overflow-hidden bg-offwhite pt-32 pb-16 sm:pt-44 sm:pb-24">
-        <div className="grid-pattern absolute inset-0 -z-10 opacity-60" />
+      {/* Hero Header */}
+      <section className="relative overflow-hidden bg-slate-50 pt-32 pb-16 sm:pt-40 sm:pb-24 border-b border-slate-200">
         <div className="mx-auto max-w-7xl px-5 sm:px-8">
           <Reveal>
-            <span className="inline-flex items-center gap-2 rounded-full bg-accent/10 px-4 py-1.5 text-xs sm:text-sm font-bold uppercase tracking-[0.25em] text-accent">
-              Get In Touch in Junagadh
+            <span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3.5 py-1 text-xs font-bold uppercase tracking-[0.25em] text-accent">
+              Start a Conversation
             </span>
           </Reveal>
           <Reveal delay={0.1}>
-            <h1 className="mt-6 max-w-4xl text-5xl font-extrabold leading-[1.05] tracking-tight text-navy-900 sm:text-7xl lg:text-8xl">
-              Start your project.
-              <span className="block italic font-serif font-normal text-accent mt-2">
-                Talav Gate, Junagadh.
-              </span>
+            <h1 className="mt-6 max-w-4xl text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-navy-950 leading-[1.08]">
+              Let&apos;s Build Your Next Digital Asset.
             </h1>
           </Reveal>
           <Reveal delay={0.2}>
-            <p className="mt-8 max-w-3xl text-xl sm:text-2xl leading-relaxed text-muted">
-              Looking for the best website development company, custom software developers, or digital marketing in Junagadh? 
-              Visit our studio near Vanzari Chowk, call us directly, or send an inquiry on WhatsApp.
+            <p className="mt-6 max-w-2xl text-base sm:text-xl leading-relaxed text-slate-600">
+              Tell us about your business goals, project scope, and timelines. We&apos;ll schedule an introductory consultation and prepare a structured proposal.
             </p>
           </Reveal>
         </div>
       </section>
 
+      {/* Main Contact Section: Form + Studio Details */}
       <section className="bg-white py-20 sm:py-32">
-        <div className="mx-auto grid max-w-7xl gap-12 px-5 sm:px-8 lg:grid-cols-12">
-          {/* Form */}
+        <div className="mx-auto grid max-w-7xl gap-16 px-5 sm:px-8 lg:grid-cols-12">
+          
+          {/* Left Column: Comprehensive Lead Generation Form */}
           <div className="lg:col-span-7">
-            <Reveal>
-              <div className="rounded-3xl border border-slate-200/90 bg-white p-8 sm:p-12 card-shadow shadow-xl">
-                <h2 className="text-3xl font-extrabold tracking-tight text-navy-900 sm:text-4xl">
-                  Project inquiry
-                </h2>
-                <p className="mt-3 text-base text-muted">
-                  Fields marked * are required. We never share your personal information.
+            <div className="rounded-3xl border border-slate-200 bg-slate-50/50 p-7 sm:p-10 shadow-xs">
+              <div className="mb-8 pb-6 border-b border-slate-200">
+                <h3 className="text-xl sm:text-2xl font-bold text-navy-950">
+                  Project Inquiry Form
+                </h3>
+                <p className="mt-1.5 text-xs sm:text-sm text-slate-600">
+                  Fill in your details below. We review every submission directly and respond within 24 hours.
                 </p>
+              </div>
 
-                {submitted ? (
-                  <div className="mt-10 flex flex-col items-center justify-center gap-4 rounded-3xl border border-emerald-200 bg-emerald-50 p-12 text-center">
-                    <div className="flex h-16 w-16 items-center justify-center rounded-full bg-emerald-500 text-white shadow-lg">
-                      <CheckCircle2 className="h-8 w-8" />
-                    </div>
-                    <div className="mt-2 text-2xl font-bold text-navy-900">
-                      Thanks, {form.name || "friend"} — we got your details!
-                    </div>
-                    <p className="text-base text-muted max-w-md">
-                      We'll review your project requirements and reply within two hours on WhatsApp and email.
-                    </p>
+              {submitted ? (
+                <div className="rounded-2xl border border-emerald-200 bg-emerald-50/80 p-8 text-center">
+                  <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-emerald-500 text-white mb-4">
+                    <CheckCircle2 className="h-8 w-8" />
                   </div>
-                ) : (
-                  <form onSubmit={onSubmit} className="mt-10 space-y-7">
-                    <div className="grid gap-6 sm:grid-cols-2">
-                      <Field label="Your name *">
-                        <input
-                          required
-                          value={form.name}
-                          onChange={(e) => setForm({ ...form, name: e.target.value })}
-                          placeholder="Priya Sharma"
-                          className="w-full rounded-2xl border border-slate-300 bg-offwhite px-5 py-4 text-base text-navy-900 outline-none transition-all placeholder:text-muted/70 focus:border-accent focus:bg-white focus:ring-4 focus:ring-accent/10"
-                        />
-                      </Field>
-                      <Field label="Email *">
-                        <input
-                          required
-                          type="email"
-                          value={form.email}
-                          onChange={(e) => setForm({ ...form, email: e.target.value })}
-                          placeholder="priya@yourbrand.com"
-                          className="w-full rounded-2xl border border-slate-300 bg-offwhite px-5 py-4 text-base text-navy-900 outline-none transition-all placeholder:text-muted/70 focus:border-accent focus:bg-white focus:ring-4 focus:ring-accent/10"
-                        />
-                      </Field>
-                    </div>
-                    <div className="grid gap-6 sm:grid-cols-2">
-                      <Field label="Service">
-                        <select
-                          value={form.service}
-                          onChange={(e) => setForm({ ...form, service: e.target.value })}
-                          className="w-full rounded-2xl border border-slate-300 bg-offwhite px-5 py-4 text-base text-navy-900 outline-none transition-all focus:border-accent focus:bg-white focus:ring-4 focus:ring-accent/10"
-                        >
-                          <option>Website Development</option>
-                          <option>Graphic Design</option>
-                          <option>AI Video Reels</option>
-                          <option>Digital Marketing</option>
-                          <option>Combo / Full Launch</option>
-                        </select>
-                      </Field>
-                      <Field label="Approximate budget">
-                        <select
-                          value={form.budget}
-                          onChange={(e) => setForm({ ...form, budget: e.target.value })}
-                          className="w-full rounded-2xl border border-slate-300 bg-offwhite px-5 py-4 text-base text-navy-900 outline-none transition-all focus:border-accent focus:bg-white focus:ring-4 focus:ring-accent/10"
-                        >
-                          <option>Under ₹5K</option>
-                          <option>₹5K – ₹25K</option>
-                          <option>₹25K – ₹75K</option>
-                          <option>₹75K – ₹2L</option>
-                          <option>₹2L+</option>
-                        </select>
-                      </Field>
-                    </div>
-                    <Field label="Tell us about your project *">
-                      <textarea
-                        required
-                        rows={5}
-                        value={form.message}
-                        onChange={(e) => setForm({ ...form, message: e.target.value })}
-                        placeholder="What are you building, what's the timeline, and what does success look like for your business?"
-                        className="w-full resize-none rounded-2xl border border-slate-300 bg-offwhite px-5 py-4 text-base text-navy-900 outline-none transition-all placeholder:text-muted/70 focus:border-accent focus:bg-white focus:ring-4 focus:ring-accent/10"
-                      />
-                    </Field>
+                  <h4 className="text-xl font-bold text-emerald-950">
+                    Inquiry Received Successfully!
+                  </h4>
+                  <p className="mt-2 text-xs sm:text-sm text-emerald-800 leading-relaxed max-w-md mx-auto">
+                    Thank you for reaching out, <strong>{form.name}</strong>. Founder Meet Khetani will review your specifications and reply via email ({form.email}) shortly.
+                  </p>
 
-                    <div className="flex flex-col gap-4 pt-3 sm:flex-row sm:items-center">
-                      <button
-                        type="submit"
-                        className="group inline-flex h-16 items-center justify-center gap-3 rounded-full bg-navy-900 px-8 text-base font-bold text-white transition-all hover:bg-accent hover:-translate-y-1 hover:shadow-xl hover:shadow-accent/30"
+                  <div className="mt-6 pt-6 border-t border-emerald-200/60 flex flex-col sm:flex-row items-center justify-center gap-3">
+                    <a
+                      href={`https://wa.me/916353121773?text=${encodeURIComponent(`Hi Meet, I just submitted an inquiry on the website: ${form.name} (${form.businessName || "Business"})`)}`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center gap-2 rounded-full bg-emerald-600 px-6 py-2.5 text-xs font-bold text-white hover:bg-emerald-700 transition-colors"
+                    >
+                      <MessageCircle className="h-4 w-4" />
+                      <span>Ping on WhatsApp Directly</span>
+                    </a>
+                    <button
+                      onClick={() => setSubmitted(false)}
+                      className="text-xs font-semibold text-emerald-900 underline hover:no-underline"
+                    >
+                      Submit Another Inquiry
+                    </button>
+                  </div>
+                </div>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-5">
+                  <div className="grid gap-5 sm:grid-cols-2">
+                    <div>
+                      <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">
+                        Your Full Name *
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        placeholder="e.g. David Vance"
+                        value={form.name}
+                        onChange={(e) => setForm({ ...form, name: e.target.value })}
+                        className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-navy-950 outline-none transition-all placeholder:text-slate-400 focus:border-navy-950 focus:ring-2 focus:ring-navy-950/10"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">
+                        Company / Business Name
+                      </label>
+                      <input
+                        type="text"
+                        placeholder="e.g. Vance Precision Works"
+                        value={form.businessName}
+                        onChange={(e) => setForm({ ...form, businessName: e.target.value })}
+                        className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-navy-950 outline-none transition-all placeholder:text-slate-400 focus:border-navy-950 focus:ring-2 focus:ring-navy-950/10"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="grid gap-5 sm:grid-cols-2">
+                    <div>
+                      <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">
+                        Business Email Address *
+                      </label>
+                      <input
+                        type="email"
+                        required
+                        placeholder="e.g. david@vanceworks.com"
+                        value={form.email}
+                        onChange={(e) => setForm({ ...form, email: e.target.value })}
+                        className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-navy-950 outline-none transition-all placeholder:text-slate-400 focus:border-navy-950 focus:ring-2 focus:ring-navy-950/10"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">
+                        Country / Location *
+                      </label>
+                      <select
+                        value={form.country}
+                        onChange={(e) => setForm({ ...form, country: e.target.value })}
+                        className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-navy-950 outline-none transition-all focus:border-navy-950"
                       >
-                        Send inquiry
-                        <Send className="h-5 w-5 transition-transform group-hover:translate-x-1" />
+                        <option value="United States">United States</option>
+                        <option value="Canada">Canada</option>
+                        <option value="India">India</option>
+                        <option value="United Kingdom">United Kingdom</option>
+                        <option value="Australia">Australia</option>
+                        <option value="Other">Other International</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div className="grid gap-5 sm:grid-cols-2">
+                    <div>
+                      <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">
+                        Phone / WhatsApp (Optional)
+                      </label>
+                      <input
+                        type="tel"
+                        placeholder="e.g. +1 (555) 019-2834"
+                        value={form.phone}
+                        onChange={(e) => setForm({ ...form, phone: e.target.value })}
+                        className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-navy-950 outline-none transition-all placeholder:text-slate-400 focus:border-navy-950"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">
+                        Primary Service Required *
+                      </label>
+                      <select
+                        value={form.service}
+                        onChange={(e) => setForm({ ...form, service: e.target.value })}
+                        className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-navy-950 outline-none transition-all focus:border-navy-950"
+                      >
+                        <option value="Custom Website Development">Custom Website Development</option>
+                        <option value="Custom Web Application (MERN)">Custom Web Application (MERN)</option>
+                        <option value="E-Commerce Storefront">E-Commerce Storefront</option>
+                        <option value="Business CRM / Operational Tool">Business CRM / Operational Tool</option>
+                        <option value="UI/UX Redesign & Strategy">UI/UX Redesign & Strategy</option>
+                        <option value="Technical SEO & Local Search">Technical SEO & Local Search</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">
+                      Approximate Project Budget Range
+                    </label>
+                    <select
+                      value={form.budget}
+                      onChange={(e) => setForm({ ...form, budget: e.target.value })}
+                      className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-navy-950 outline-none transition-all focus:border-navy-950"
+                    >
+                      <option value="$1,000 – $3,000 (INR 50K – 1.5L)">$1,000 – $3,000 / INR 50K – 1.5L</option>
+                      <option value="$3,000 – $7,500 (INR 1.5L – 4L)">$3,000 – $7,500 / INR 1.5L – 4L</option>
+                      <option value="$7,500 – $15,000+ (INR 4L+)">$7,500 – $15,000+ / INR 4L+</option>
+                      <option value="Not Decided / Flexible">Not Decided / Flexible</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-2">
+                      Project Goals & Requirements *
+                    </label>
+                    <textarea
+                      required
+                      rows={4}
+                      placeholder="Briefly describe your business, what you want to achieve, existing website URL (if any), and any target deadlines..."
+                      value={form.message}
+                      onChange={(e) => setForm({ ...form, message: e.target.value })}
+                      className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm text-navy-950 outline-none transition-all placeholder:text-slate-400 focus:border-navy-950"
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={loading}
+                    className="w-full flex items-center justify-center gap-2 rounded-xl bg-navy-950 py-4 text-xs font-bold uppercase tracking-wider text-white hover:bg-accent transition-all shadow-md cursor-pointer disabled:opacity-70"
+                  >
+                    {loading ? (
+                      <span>Submitting Proposal Request...</span>
+                    ) : (
+                      <>
+                        <span>Submit Project Inquiry</span>
+                        <Send className="h-4 w-4" />
+                      </>
+                    )}
+                  </button>
+
+                  <div className="flex items-center justify-center gap-2 text-xs text-slate-500 pt-2">
+                    <ShieldCheck className="h-4 w-4 text-emerald-600" />
+                    <span>Your information is strictly confidential. No marketing spam.</span>
+                  </div>
+                </form>
+              )}
+            </div>
+          </div>
+
+          {/* Right Column: Studio Information & Direct Channels */}
+          <div className="lg:col-span-5 space-y-8">
+            <div>
+              <span className="text-xs font-bold uppercase tracking-[0.2em] text-accent">
+                Direct Studio Channels
+              </span>
+              <h3 className="mt-2 text-2xl sm:text-3xl font-extrabold text-navy-950">
+                Talk Directly With Our Engineering Team
+              </h3>
+              <p className="mt-3 text-xs sm:text-sm text-slate-600 leading-relaxed">
+                Prefer a quick chat or have an immediate technical requirement? Reach us across any of our direct channels below.
+              </p>
+            </div>
+
+            <div className="space-y-4">
+              <div className="p-6 rounded-2xl border border-slate-200 bg-slate-50">
+                <div className="flex items-start gap-4">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-accent/10 text-accent">
+                    <Mail className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <span className="text-xs font-bold uppercase tracking-wider text-slate-500 block">
+                      General & Project Inquiries
+                    </span>
+                    <a
+                      href="mailto:hello@mkdigitalnexus.in"
+                      className="text-sm font-bold text-navy-950 hover:text-accent transition-colors"
+                    >
+                      hello@mkdigitalnexus.in
+                    </a>
+                    <p className="text-[11px] text-slate-500 mt-0.5">Average reply time: under 4 hours</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-6 rounded-2xl border border-slate-200 bg-slate-50">
+                <div className="flex items-start gap-4">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-emerald-500/10 text-emerald-600">
+                    <Phone className="h-5 w-5" />
+                  </div>
+                  <div>
+                    <span className="text-xs font-bold uppercase tracking-wider text-slate-500 block">
+                      Direct Studio Phone
+                    </span>
+                    <a
+                      href="tel:+916353121773"
+                      className="text-sm font-bold text-navy-950 hover:text-emerald-700 transition-colors"
+                    >
+                      +91 63531 21773
+                    </a>
+                    <p className="text-[11px] text-slate-500 mt-0.5">Mon–Sat: 9:00 AM – 8:00 PM IST</p>
+                  </div>
+                </div>
+              </div>
+
+              <div className="p-6 rounded-2xl border border-slate-200 bg-slate-50">
+                <div className="flex items-start gap-4">
+                  <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-accent/10 text-accent">
+                    <MapPin className="h-5 w-5" />
+                  </div>
+                  <div className="flex-1">
+                    <span className="text-xs font-bold uppercase tracking-wider text-slate-500 block">
+                      Physical Studio Location
+                    </span>
+                    <address className="not-italic text-xs sm:text-sm font-medium text-navy-950 leading-relaxed mt-1">
+                      First Floor, Shyam Apt, Shop 5, Near Vanzari Chowk, Talav Gate, Junagadh, Gujarat 362001, India
+                    </address>
+
+                    <div className="mt-3 flex items-center gap-2">
+                      <button
+                        onClick={handleCopyAddress}
+                        className="inline-flex items-center gap-1.5 rounded-lg border border-slate-300 bg-white px-3 py-1 text-xs font-semibold text-slate-700 hover:bg-slate-50"
+                      >
+                        {copied ? (
+                          <>
+                            <Check className="h-3 w-3 text-emerald-600" />
+                            <span>Address Copied</span>
+                          </>
+                        ) : (
+                          <>
+                            <Copy className="h-3 w-3" />
+                            <span>Copy Address</span>
+                          </>
+                        )}
                       </button>
+
                       <a
-                        href="https://wa.me/916353121773?text=Hi%20MK%20Digital%20Nexus%2C%20I'd%20like%20to%20discuss%20a%20project"
+                        href="https://share.google/VqmKOhc9O8q5wXUvg"
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex h-16 items-center justify-center gap-2.5 rounded-full border-2 border-[#25D366]/40 bg-[#25D366]/10 px-8 text-base font-bold text-[#128C7E] transition-all hover:bg-[#25D366] hover:text-white hover:-translate-y-1 hover:shadow-lg"
+                        className="inline-flex items-center gap-1 text-xs font-bold text-accent hover:underline"
                       >
-                        <MessageCircle className="h-5 w-5" />
-                        Chat on WhatsApp
+                        <span>Google Maps</span>
+                        <ExternalLink className="h-3 w-3" />
                       </a>
                     </div>
-                  </form>
-                )}
+                  </div>
+                </div>
               </div>
-            </Reveal>
+            </div>
+
+            {/* International Collaboration Assurance */}
+            <div className="p-6 rounded-2xl border border-slate-200 bg-navy-950 text-white">
+              <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-accent mb-2">
+                <Globe2 className="h-4 w-4" />
+                <span>Working with North America & Worldwide</span>
+              </div>
+              <p className="text-xs text-slate-300 leading-relaxed">
+                We coordinate seamlessly across EST, PST, and GMT time zones. Contract agreements, milestones, and invoice payments can be facilitated in USD, CAD, or INR.
+              </p>
+            </div>
           </div>
 
-          {/* Sidebar */}
-          <div className="space-y-8 lg:col-span-5">
-            {/* Google Profile Card */}
-            <Reveal delay={0.05}>
-              <div className="rounded-3xl border border-slate-200/90 bg-gradient-to-br from-white to-slate-50 p-8 sm:p-9 card-shadow shadow-md">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-3.5">
-                    <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-white shadow-sm border border-slate-200/80">
-                      <svg className="h-7 w-7" viewBox="0 0 24 24">
-                        <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
-                        <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
-                        <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" />
-                        <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" />
-                      </svg>
-                    </div>
-                    <div>
-                      <div className="text-lg font-bold tracking-tight text-navy-900">
-                        Google Business Profile
-                      </div>
-                      <div className="flex items-center gap-2 text-sm text-amber-500 font-bold">
-                        <span>★★★★★</span>
-                        <span className="text-navy-900 font-bold">4.9 / 5</span>
-                        <span className="text-muted font-normal">(68+ reviews)</span>
-                      </div>
-                    </div>
-                  </div>
-                  <span className="inline-flex items-center rounded-full bg-emerald-50 px-3 py-1 text-xs font-bold text-emerald-700 border border-emerald-200">
-                    Verified
-                  </span>
-                </div>
-
-                <p className="mt-4 text-sm leading-relaxed text-muted">
-                  Read genuine client feedback, get turn-by-turn directions, or explore photos of our work on our official Google Business listing.
-                </p>
-
-                <a
-                  href="https://share.google/VqmKOhc9O8q5wXUvg"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="mt-6 flex h-14 w-full items-center justify-center gap-2.5 rounded-full bg-navy-900 text-sm font-bold text-white transition-all hover:bg-accent hover:shadow-xl hover:shadow-accent/25 hover:-translate-y-0.5"
-                >
-                  <span>Open in Google Maps / Profile</span>
-                  <ExternalLink className="h-4 w-4" />
-                </a>
-              </div>
-            </Reveal>
-
-            {/* Contact details */}
-            <Reveal delay={0.1}>
-              <div className="rounded-3xl border border-slate-200/90 bg-offwhite p-8 sm:p-9 shadow-sm">
-                <h3 className="text-2xl font-bold tracking-tight text-navy-900">
-                  Contact details
-                </h3>
-                <ul className="mt-6 space-y-5 text-base">
-                  <li className="flex items-start gap-4">
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white border border-slate-200 text-accent">
-                      <Mail className="h-5 w-5" />
-                    </div>
-                    <div>
-                      <div className="font-bold text-navy-900 text-sm">Email</div>
-                      <a href="mailto:hello@mkdigitalnexus.in" className="text-muted hover:text-accent font-medium">
-                        hello@mkdigitalnexus.in
-                      </a>
-                    </div>
-                  </li>
-                  <li className="flex items-start gap-4">
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white border border-slate-200 text-accent">
-                      <Phone className="h-5 w-5" />
-                    </div>
-                    <div>
-                      <div className="font-bold text-navy-900 text-sm">Phone</div>
-                      <a href="tel:+916353121773" className="text-muted hover:text-accent font-medium">
-                        +91 63531 21773
-                      </a>
-                    </div>
-                  </li>
-                  <li className="flex items-start gap-4">
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white border border-slate-200 text-accent">
-                      <MapPin className="h-5 w-5" />
-                    </div>
-                    <div>
-                      <div className="font-bold text-navy-900 text-sm">Studio Address</div>
-                      <span className="text-muted leading-relaxed block text-sm sm:text-base mt-0.5">
-                        First floor, Shyam Apt, Shop no. 5, road, near Vanzari chowk, Vanzari Chowk, Nava Nagarwada, Talav Gate, Junagadh, Gujarat 362001
-                      </span>
-                      <button
-                        type="button"
-                        onClick={handleCopyAddress}
-                        className="mt-2.5 inline-flex items-center gap-1.5 rounded-lg border border-slate-200 bg-white px-3 py-1.5 text-xs font-bold text-accent hover:text-navy-900 hover:border-accent transition-all shadow-sm"
-                      >
-                        {copied ? <Check className="h-3.5 w-3.5 text-emerald-600" /> : <Copy className="h-3.5 w-3.5" />}
-                        <span>{copied ? "Address copied to clipboard!" : "Copy full address"}</span>
-                      </button>
-                    </div>
-                  </li>
-                  <li className="flex items-start gap-4">
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white border border-slate-200 text-accent">
-                      <Clock className="h-5 w-5" />
-                    </div>
-                    <div>
-                      <div className="font-bold text-navy-900 text-sm">Hours</div>
-                      <span className="text-muted font-medium">Mon – Sat · 10:00 – 19:00 IST</span>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            </Reveal>
-
-            <Reveal delay={0.2}>
-              <div className="relative overflow-hidden rounded-3xl border border-slate-200 bg-navy-900 p-8 sm:p-9 text-white shadow-xl">
-                <div className="grid-pattern-light absolute inset-0 opacity-60" />
-                <div className="relative">
-                  <div className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 px-4 py-1.5 text-xs font-bold">
-                    <span className="h-2 w-2 rounded-full bg-emerald-400 animate-pulse" />
-                    SLA guaranteed
-                  </div>
-                  <div className="mt-5 text-4xl font-extrabold tracking-tight">
-                    &lt; 2 hour response
-                  </div>
-                  <p className="mt-3 text-base text-white/80 leading-relaxed">
-                    Every inquiry during business hours gets a scoped reply within
-                    two hours. Outside hours, we reply first thing the next morning.
-                  </p>
-                </div>
-              </div>
-            </Reveal>
-
-            {/* Map Frame */}
-            <Reveal delay={0.3}>
-              <div className="overflow-hidden rounded-3xl border border-slate-200 card-shadow bg-white shadow-md">
-                <div className="relative">
-                  <iframe
-                    title="MK Digital Nexus location — Vanzari Chowk, Junagadh"
-                    src="https://www.openstreetmap.org/export/embed.html?bbox=70.44%2C21.51%2C70.48%2C21.53&layer=mapnik&marker=21.5222%2C70.4579"
-                    loading="lazy"
-                    className="h-72 w-full border-0"
-                  />
-                  <a
-                    href="https://share.google/VqmKOhc9O8q5wXUvg"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="absolute bottom-4 right-4 flex items-center gap-2 rounded-full bg-white/95 backdrop-blur-md px-4 py-2 text-xs font-bold text-navy-900 shadow-xl border border-slate-200 hover:bg-navy-900 hover:text-white transition-all"
-                  >
-                    <span>Get Directions on Google</span>
-                    <ExternalLink className="h-3.5 w-3.5" />
-                  </a>
-                </div>
-                <div className="bg-white p-5 text-sm text-muted flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-t border-slate-100">
-                  <span className="font-medium">📍 Near Vanzari Chowk, Talav Gate</span>
-                  <span className="font-bold text-navy-900">Junagadh, Gujarat 362001</span>
-                </div>
-              </div>
-            </Reveal>
-          </div>
         </div>
       </section>
     </>
-  );
-}
-
-function Field({ label, children }: { label: string; children: React.ReactNode }) {
-  return (
-    <label className="block">
-      <span className="mb-2 block text-xs font-bold uppercase tracking-wider text-ink/75">
-        {label}
-      </span>
-      {children}
-    </label>
   );
 }

@@ -1,9 +1,6 @@
-import { Inter } from "next/font/google";
 import "./globals.css";
 import { AgencyShell } from "@/components/layout/AgencyShell";
 import { Metadata } from "next";
-
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.mkdigitalnexus.in"),
@@ -283,7 +280,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           }}
         />
       </head>
-      <body className={`${inter.className} antialiased selection:bg-accent selection:text-white`}>
+      <body className="font-sans antialiased selection:bg-accent selection:text-white">
         <AgencyShell>{children}</AgencyShell>
       </body>
     </html>

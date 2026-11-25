@@ -1,9 +1,12 @@
 "use client";
+
 import { useState } from "react";
+import Link from "next/link";
 import { Reveal } from "@/components/ui/Reveal";
 import { ProjectCarousel } from "@/components/ui/ProjectCarousel";
 import { ProjectCardCompact } from "@/components/ui/ProjectCardCompact";
-import { Search, X, ArrowLeft } from "lucide-react";
+import { Search, X, ArrowUpRight, ArrowRight, Sparkles, Filter as FilterIcon } from "lucide-react";
+import { triggerBookServiceModal } from "@/components/ui/FloatingActions";
 import { projects } from "@/utils/projectsData";
 
 type Filter = "All" | "Industrial" | "Healthcare" | "E-commerce" | "Business" | "Institutional" | "Other";
@@ -14,42 +17,42 @@ const categoryGroups = [
   {
     key: "Industrial" as Filter,
     title: "Industrial & Manufacturing",
-    desc: "Precision forging, heavy machinery, Canadian industrial services, and specialized equipment supplier portals.",
+    desc: "Precision forging, heavy machinery, technical catalog platforms, and industrial exporter websites.",
     categoryTag: "Heavy Industry & Manufacturing",
     items: projects.filter((p) => p.cat === "Industrial"),
   },
   {
     key: "E-commerce" as Filter,
-    title: "E-Commerce & Online Storefronts",
-    desc: "Conversion-optimized stores, multi-category catalogs, and fast WhatsApp order routers.",
+    title: "E-Commerce & Digital Storefronts",
+    desc: "Conversion-optimized online stores, catalog systems, and rapid checkout order flows.",
     categoryTag: "E-Commerce Engines",
     items: projects.filter((p) => p.cat === "E-commerce"),
   },
   {
     key: "Healthcare" as Filter,
-    title: "Healthcare & Clinical Portals",
+    title: "Healthcare & Clinical Systems",
     desc: "Doctor profiles, patient onboarding, and clinical booking systems.",
     categoryTag: "Medical & Health",
     items: projects.filter((p) => p.cat === "Healthcare"),
   },
   {
     key: "Business" as Filter,
-    title: "Corporate & Business Services",
-    desc: "Service agency sites, hospitality & cafes, import-export consultants, and corporate portals.",
+    title: "Corporate & Professional Services",
+    desc: "Consultancies, logistics networks, automotive studios (Canada), and corporate portals.",
     categoryTag: "Business & Corporate",
     items: projects.filter((p) => p.cat === "Business"),
   },
   {
     key: "Institutional" as Filter,
     title: "Institutional & Consultancies",
-    desc: "Higher education institutes, coaching centers, and educational consulting advisors.",
+    desc: "Higher education institutes, coaching centers, and educational consulting portals.",
     categoryTag: "Institutes & Learning",
     items: projects.filter((p) => p.cat === "Institutional"),
   },
   {
     key: "Other" as Filter,
-    title: "Specialised Platforms & Non-Profits",
-    desc: "Real estate, hospitality suites, interior studios, and community NGO platforms.",
+    title: "Specialized Platforms & Non-Profits",
+    desc: "Real estate directories, interior design studios, hospitality suites, and foundations.",
     categoryTag: "Specialized Verticals",
     items: projects.filter((p) => p.cat === "Other"),
   },
@@ -72,59 +75,52 @@ export default function Portfolio() {
 
   return (
     <>
-      <title>Website & Software Portfolio | 61 Selected Projects in Junagadh | MK Digital Nexus</title>
+      <title>Work & Live Portfolio | 100+ Digital Deployments | MK Digital Nexus</title>
       <meta
         name="description"
-        content="Explore 61 selected websites, e-commerce stores, and digital experiences delivered by MK Digital Nexus for businesses in Junagadh, Rajkot, and worldwide."
+        content="Browse our verified archive of 100+ live websites, custom software, and e-commerce platforms engineered for businesses in the USA, Canada, and India by MK Digital Nexus."
       />
       <meta
         name="keywords"
-        content="website development portfolio junagadh, software development projects junagadh, live website examples gujarat, web design case studies junagadh, MK Digital Nexus projects, ecommerce sites junagadh"
+        content="web development portfolio, custom software projects, Next.js live websites, client case studies, MK Digital Nexus portfolio"
       />
       <link rel="canonical" href="https://www.mkdigitalnexus.in/portfolio" />
 
       {/* Hero Header */}
-      <section className="relative overflow-hidden bg-offwhite pt-32 pb-16 sm:pt-44 sm:pb-24">
-        <div className="grid-pattern absolute inset-0 -z-10 opacity-60" />
+      <section className="relative overflow-hidden bg-slate-50 pt-32 pb-16 sm:pt-40 sm:pb-24 border-b border-slate-200">
         <div className="mx-auto max-w-7xl px-5 sm:px-8">
           <Reveal>
-            <span className="inline-flex items-center gap-2 rounded-full bg-accent/10 px-4 py-1.5 text-xs sm:text-sm font-bold uppercase tracking-[0.25em] text-accent">
-              Selected Work & Case Studies
+            <span className="inline-flex items-center gap-2 rounded-full border border-slate-200 bg-white px-3.5 py-1 text-xs font-bold uppercase tracking-[0.25em] text-accent">
+              Studio Proof of Execution
             </span>
           </Reveal>
           <Reveal delay={0.1}>
-            <h1 className="mt-6 max-w-4xl text-5xl font-extrabold leading-[1.05] tracking-tight text-navy-900 sm:text-7xl lg:text-8xl">
-              A studio that ships.
-              <span className="block italic font-serif font-normal text-accent mt-2">
-                Here's the proof.
-              </span>
+            <h1 className="mt-6 max-w-4xl text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-navy-950 leading-[1.08]">
+              Proven Digital Experiences. <br />
+              <span className="text-slate-500 font-normal">Real Code. Real Results.</span>
             </h1>
           </Reveal>
           <Reveal delay={0.2}>
-            <p className="mt-8 max-w-3xl text-xl sm:text-2xl leading-relaxed text-muted">
-              Browse our comprehensive archive of websites, storefronts, and brand portals 
-              we've launched for operators across India, Canada, and global trade lanes. 
-              <strong className="text-navy-900 font-bold"> {projects.length} selected projects</strong> and counting.
+            <p className="mt-6 max-w-2xl text-base sm:text-xl leading-relaxed text-slate-600">
+              Explore our portfolio of approximately 100 websites and custom applications built for manufacturing companies, medical clinics, export houses, and direct-to-consumer brands across North America and India.
             </p>
           </Reveal>
         </div>
       </section>
 
       {/* Filter & Search Bar */}
-      <section className="sticky top-[72px] z-30 border-y border-slate-200 bg-white/95 backdrop-blur-xl shadow-xs">
-        <div className="mx-auto flex max-w-7xl flex-col gap-4 px-5 py-4 sm:px-8 md:flex-row md:items-center md:justify-between">
+      <section className="sticky top-[68px] z-30 border-b border-slate-200 bg-white/95 backdrop-blur-xl shadow-xs py-3.5">
+        <div className="mx-auto flex max-w-7xl flex-col gap-3 px-5 sm:px-8 md:flex-row md:items-center md:justify-between">
           {/* Categories Tab list */}
-          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar py-1">
+          <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar py-0.5">
             {filters.map((f) => (
               <button
                 key={f}
-                onClick={() => {
-                  setActive(f);
-                }}
-                className={`shrink-0 rounded-full border px-4 py-2 text-xs sm:text-sm font-bold transition-all ${
+                onClick={() => setActive(f)}
+                className={`shrink-0 rounded-full px-4 py-1.5 text-xs font-bold transition-all cursor-pointer ${
                   active === f
-                    ? "border-navy-900 bg-navy-900 text-white shadow-md scale-[1.02]"
-                    : "border-slate-200 bg-white text-ink/75 hover:border-navy-900/30 hover:text-navy-900"
+                    ? "bg-navy-950 text-white shadow-xs"
+                    : "bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-navy-950"
                 }`}
               >
                 {f}
@@ -133,33 +129,32 @@ export default function Portfolio() {
           </div>
 
           {/* Search bar */}
-          <div className="relative w-full md:max-w-sm">
-            <Search className="absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-muted" />
+          <div className="relative w-full md:max-w-xs">
+            <Search className="absolute left-3.5 top-1/2 h-3.5 w-3.5 -translate-y-1/2 text-slate-400" />
             <input
               type="text"
-              placeholder="Search by title, tag, or industry..."
+              placeholder="Search by name, sector..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full rounded-full border border-slate-300 bg-white py-2.5 pl-11 pr-10 text-sm outline-none transition-all placeholder:text-muted focus:border-navy-900 focus:ring-2 focus:ring-navy-900/10 shadow-xs"
+              className="w-full rounded-full border border-slate-200 bg-slate-50/70 py-1.5 pl-9 pr-9 text-xs outline-none transition-all placeholder:text-slate-400 focus:border-navy-950 focus:bg-white"
             />
             {searchQuery && (
               <button
                 onClick={() => setSearchQuery("")}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-muted hover:text-navy-900 p-1"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-navy-950"
                 aria-label="Clear search"
               >
-                <X className="h-4 w-4" />
+                <X className="h-3.5 w-3.5" />
               </button>
             )}
           </div>
         </div>
       </section>
 
-      {/* Portfolio Projects Section */}
+      {/* Portfolio Grid / Carousel Content */}
       <section className="bg-white py-16 sm:py-24">
         <div className="mx-auto max-w-7xl px-5 sm:px-8">
           {isCarouselView ? (
-            /* Mode 1: Single Carousel Format for each category (5-10 projects per category) */
             <div className="space-y-20">
               {categoryGroups.map((group, idx) => (
                 <Reveal key={group.key} delay={idx * 0.05}>
@@ -168,71 +163,126 @@ export default function Portfolio() {
                     desc={group.desc}
                     categoryTag={group.categoryTag}
                     projects={group.items}
-                    maxItems={100}
+                    maxItems={10}
                     onViewCategory={() => {
                       setActive(group.key);
-                      window.scrollTo({ top: 380, behavior: "smooth" });
+                      window.scrollTo({ top: 340, behavior: "smooth" });
                     }}
                   />
                 </Reveal>
               ))}
             </div>
           ) : (
-            /* Mode 2: Compact Card Grid when filtering or searching */
             <div>
-              <div className="mb-8 flex flex-wrap items-center justify-between gap-4 border-b border-slate-200 pb-4">
-                <div>
-                  <div className="flex items-center gap-2">
-                    <h2 className="text-2xl sm:text-3xl font-extrabold text-navy-900">
-                      {searchQuery ? `Search Results` : `${active} Projects`}
-                    </h2>
-                    <span className="rounded-full bg-navy-900/10 px-3 py-1 text-xs font-bold text-navy-900">
-                      {filtered.length} {filtered.length === 1 ? "project" : "projects"}
-                    </span>
-                  </div>
-                  {searchQuery && (
-                    <p className="text-sm text-muted mt-1">
-                      Matching "{searchQuery}" across categories
-                    </p>
-                  )}
-                </div>
-
-                <button
-                  onClick={() => {
-                    setActive("All");
-                    setSearchQuery("");
-                  }}
-                  className="inline-flex items-center gap-1.5 text-xs font-bold text-navy-900 hover:text-accent transition-colors"
-                >
-                  <ArrowLeft className="h-4 w-4" /> Back to All Category Carousels
-                </button>
+              <div className="mb-8 flex items-center justify-between border-b border-slate-100 pb-4">
+                <span className="text-xs font-semibold uppercase tracking-wider text-slate-500">
+                  Showing {filtered.length} matching deployments
+                </span>
+                {active !== "All" && (
+                  <button
+                    onClick={() => setActive("All")}
+                    className="text-xs font-bold text-accent hover:underline cursor-pointer"
+                  >
+                    Reset Filter
+                  </button>
+                )}
               </div>
 
-              {filtered.length > 0 ? (
-                <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 xl:grid-cols-4">
-                  {filtered.map((p, i) => (
-                    <Reveal key={p.id + active} delay={(i % 6) * 0.03}>
-                      <ProjectCardCompact p={p} isGrid={true} />
-                    </Reveal>
-                  ))}
-                </div>
-              ) : (
-                <div className="py-24 text-center">
-                  <p className="text-2xl font-bold text-navy-900">No projects found matching "{searchQuery}"</p>
-                  <p className="text-base text-muted mt-2">Try searching with a different keyword or category.</p>
+              {filtered.length === 0 ? (
+                <div className="py-20 text-center">
+                  <p className="text-base font-semibold text-slate-600">
+                    No projects found matching &ldquo;{searchQuery}&rdquo;.
+                  </p>
                   <button
                     onClick={() => {
                       setSearchQuery("");
                       setActive("All");
                     }}
-                    className="mt-6 rounded-full bg-navy-900 px-8 py-3 text-base font-bold text-white transition-all hover:bg-accent hover:shadow-lg"
+                    className="mt-4 inline-flex items-center gap-1.5 rounded-full bg-navy-950 px-5 py-2 text-xs font-bold text-white"
                   >
-                    Reset filters
+                    Reset Search
                   </button>
+                </div>
+              ) : (
+                <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+                  {filtered.map((item) => (
+                    <div
+                      key={item.id}
+                      className="group flex flex-col justify-between overflow-hidden rounded-2xl border border-slate-200 bg-white transition-all duration-300 hover:border-slate-300 hover:shadow-lg"
+                    >
+                      <div className="relative aspect-[16/10] overflow-hidden bg-slate-100">
+                        <img
+                          src={item.img}
+                          alt={item.title}
+                          className="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-105"
+                        />
+                        <div className="absolute top-3 left-3 rounded-full bg-navy-950/80 backdrop-blur px-2.5 py-0.5 text-[10px] font-semibold text-white">
+                          {item.cat}
+                        </div>
+                      </div>
+
+                      <div className="p-6 flex flex-col flex-1 justify-between">
+                        <div>
+                          <h3 className="text-lg font-bold text-navy-950 group-hover:text-accent transition-colors">
+                            {item.title}
+                          </h3>
+                          <p className="mt-2 text-xs sm:text-sm text-slate-600 line-clamp-2 leading-relaxed">
+                            {item.desc}
+                          </p>
+                        </div>
+
+                        <div className="mt-6 flex items-center justify-between border-t border-slate-100 pt-4">
+                          <Link
+                            href={`/portfolio/${item.id}`}
+                            className="inline-flex items-center gap-1 text-xs font-bold text-navy-950 hover:text-accent"
+                          >
+                            <span>Case Study</span>
+                            <ArrowRight className="h-3.5 w-3.5" />
+                          </Link>
+
+                          <a
+                            href={item.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1 text-xs font-medium text-slate-500 hover:text-navy-950"
+                          >
+                            <span>Live Site</span>
+                            <ArrowUpRight className="h-3 w-3" />
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               )}
             </div>
           )}
+        </div>
+      </section>
+
+      {/* Inquiry CTA */}
+      <section className="bg-slate-50 py-20 border-t border-slate-200 text-center">
+        <div className="mx-auto max-w-3xl px-5">
+          <h2 className="text-2xl sm:text-4xl font-extrabold text-navy-950">
+            Need a similar custom website for your business?
+          </h2>
+          <p className="mt-3 text-sm sm:text-base text-slate-600">
+            We provide structured, milestone-based quotes and guaranteed delivery schedules.
+          </p>
+          <div className="mt-8 flex justify-center gap-4">
+            <button
+              onClick={() => triggerBookServiceModal()}
+              className="rounded-full bg-navy-950 px-7 py-3 text-xs font-bold uppercase tracking-wider text-white hover:bg-accent transition-colors cursor-pointer"
+            >
+              Start Project Inquiry
+            </button>
+            <Link
+              href="/contact"
+              className="rounded-full border border-slate-300 bg-white px-7 py-3 text-xs font-bold uppercase tracking-wider text-navy-950 hover:bg-slate-100 transition-colors"
+            >
+              Contact Studio
+            </Link>
+          </div>
         </div>
       </section>
     </>

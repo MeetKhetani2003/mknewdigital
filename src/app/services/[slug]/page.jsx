@@ -1,4 +1,14 @@
+import { redirect } from "next/navigation";
 import ServiceDetailClient from "./service-client.jsx";
+
+const legacyRedirects = {
+  "web-development": "/services/web-development",
+  "software-development": "/services/custom-web-applications",
+  "digital-marketing-agency-junagadh": "/services/digital-marketing-seo",
+  "meta-ads-google-ads-junagadh": "/services/digital-marketing-seo",
+  "google-profile-local-seo-junagadh": "/services/digital-marketing-seo",
+  "crm-inventory-dashboard": "/services/crm-business-software",
+};
 
 const serviceData = {
   "web-development": {
@@ -332,6 +342,10 @@ export async function generateMetadata({ params }) {
 
 export default async function Page({ params }) {
   const { slug } = await params;
+
+  if (legacyRedirects[slug]) {
+    redirect(legacyRedirects[slug]);
+  }
 
   const data = serviceData[slug];
 
