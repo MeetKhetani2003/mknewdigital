@@ -16,42 +16,42 @@ const categoryGroups = [
     title: "Industrial & Manufacturing",
     desc: "Precision forging, heavy machinery, Canadian industrial services, and specialized equipment supplier portals.",
     categoryTag: "Heavy Industry & Manufacturing",
-    items: projects.filter((p) => p.cat === "Industrial").slice(0, 10),
+    items: projects.filter((p) => p.cat === "Industrial"),
   },
   {
     key: "E-commerce" as Filter,
     title: "E-Commerce & Online Storefronts",
     desc: "Conversion-optimized stores, multi-category catalogs, and fast WhatsApp order routers.",
     categoryTag: "E-Commerce Engines",
-    items: projects.filter((p) => p.cat === "E-commerce").slice(0, 10),
+    items: projects.filter((p) => p.cat === "E-commerce"),
   },
   {
     key: "Healthcare" as Filter,
     title: "Healthcare & Clinical Portals",
     desc: "Doctor profiles, patient onboarding, and clinical booking systems.",
     categoryTag: "Medical & Health",
-    items: projects.filter((p) => p.cat === "Healthcare").slice(0, 10),
+    items: projects.filter((p) => p.cat === "Healthcare"),
   },
   {
     key: "Business" as Filter,
     title: "Corporate & Business Services",
     desc: "Service agency sites, hospitality & cafes, import-export consultants, and corporate portals.",
     categoryTag: "Business & Corporate",
-    items: projects.filter((p) => p.cat === "Business").slice(0, 10),
+    items: projects.filter((p) => p.cat === "Business"),
   },
   {
     key: "Institutional" as Filter,
     title: "Institutional & Consultancies",
     desc: "Higher education institutes, coaching centers, and educational consulting advisors.",
     categoryTag: "Institutes & Learning",
-    items: projects.filter((p) => p.cat === "Institutional").slice(0, 10),
+    items: projects.filter((p) => p.cat === "Institutional"),
   },
   {
     key: "Other" as Filter,
     title: "Specialised Platforms & Non-Profits",
     desc: "Real estate, hospitality suites, interior studios, and community NGO platforms.",
     categoryTag: "Specialized Verticals",
-    items: projects.filter((p) => p.cat === "Other").slice(0, 10),
+    items: projects.filter((p) => p.cat === "Other"),
   },
 ];
 
@@ -72,10 +72,10 @@ export default function Portfolio() {
 
   return (
     <>
-      <title>Website & Software Portfolio | 100+ Live Projects in Junagadh | MK Digital Nexus</title>
+      <title>Website & Software Portfolio | 61 Selected Projects in Junagadh | MK Digital Nexus</title>
       <meta
         name="description"
-        content="Explore 100+ live production websites, e-commerce stores, custom software, and digital marketing deployments shipped by MK Digital Nexus for businesses in Junagadh, Rajkot, and worldwide."
+        content="Explore 61 selected websites, e-commerce stores, and digital experiences delivered by MK Digital Nexus for businesses in Junagadh, Rajkot, and worldwide."
       />
       <meta
         name="keywords"
@@ -168,7 +168,7 @@ export default function Portfolio() {
                     desc={group.desc}
                     categoryTag={group.categoryTag}
                     projects={group.items}
-                    maxItems={10}
+                    maxItems={100}
                     onViewCategory={() => {
                       setActive(group.key);
                       window.scrollTo({ top: 380, behavior: "smooth" });
