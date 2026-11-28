@@ -1,6 +1,7 @@
 import { MetadataRoute } from "next";
 import { projects } from "@/utils/projectsData";
 import { getBusinesses } from "@/lib/storage";
+import { articles } from "@/data/articlesData";
 
 export const dynamic = "force-dynamic";
 export const revalidate = 0;
@@ -25,6 +26,18 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
     {
       url: `${baseUrl}/portfolio`,
+      lastModified: currentDate,
+      changeFrequency: "weekly",
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/process`,
+      lastModified: currentDate,
+      changeFrequency: "weekly",
+      priority: 0.85,
+    },
+    {
+      url: `${baseUrl}/insights`,
       lastModified: currentDate,
       changeFrequency: "weekly",
       priority: 0.9,
@@ -89,5 +102,13 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     businessRoutes = [];
   }
 
-  return [...staticRoutes, ...serviceRoutes, ...portfolioRoutes, ...businessRoutes];
+  // Insights & Blog article detail routes
+  const articleRoutes: MetadataRoute.Sitemap = articles.map((article) => ({
+    url: `${baseUrl}/insights/${article.slug}`,
+    lastModified: article.date,
+    changeFrequency: "monthly",
+    priority: 0.8,
+  }));
+
+  return [...staticRoutes, ...serviceRoutes, ...portfolioRoutes, ...articleRoutes, ...businessRoutes];
 }

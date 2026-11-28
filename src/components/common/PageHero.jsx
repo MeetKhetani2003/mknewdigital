@@ -23,6 +23,8 @@ export function PageHero({
     text: "Explore Our Work",
     href: "/portfolio",
   },
+  visual = null,
+  children = null,
 }) {
   const containerRef = useRef(null);
 
@@ -182,6 +184,15 @@ export function PageHero({
                 <span>{secondaryCta.text}</span>
               </Link>
             )}
+          </div>
+        )}
+
+        {/* =========================================
+            OPTIONAL CRAFTSMANSHIP / TECH VISUAL
+           ========================================= */}
+        {(visual || children) && (
+          <div className="page-hero-fade mt-8 sm:mt-10 lg:mt-12 text-left">
+            {visual || children}
           </div>
         )}
 

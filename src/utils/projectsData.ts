@@ -2,6 +2,7 @@ export interface Project {
   id: string;
   title: string;
   cat: string;
+  sector: string;
   url: string;
   img: string;
   desc: string;
@@ -19,75 +20,773 @@ export interface Project {
   };
 }
 
-const rawProjects = [
-  { id: "daftari-industries", title: "Daftari Industries", cat: "Industrial", url: "https://daftariindustries.vercel.app/", img: "/images/portfolio/daftari-industries.png", desc: "Leading industrial enterprise landing page with products catalog and inquiry setup." },
-  { id: "gwgc", title: "GWGC", cat: "Industrial", url: "https://www.gwgc.ca/", img: "/images/portfolio/gwgc.png", desc: "Industrial and manufacturing website showcasing products, capabilities and business inquiries." },
-  { id: "green-wave-packaging", title: "Green Wave Packaging", cat: "Industrial", url: "https://www.greenwavepackaging.ca/", img: "/images/portfolio/green-wave-packaging.png", desc: "Industrial and manufacturing website showcasing products, capabilities and business inquiries." },
-  { id: "rickey-exports", title: "Rickey Exports", cat: "Industrial", url: "https://www.rickeyexports.com/", img: "/images/portfolio/rickey-exports.png", desc: "Global exports business portal showing manufacturing and global shipping solutions." },
-  { id: "dk-enterprise", title: "DK Enterprise", cat: "Industrial", url: "https://dk-enterprise.vercel.app/", img: "/images/portfolio/dk-enterprise.png", desc: "High-performance industrial machinery and tools directory." },
-  { id: "gravity", title: "Gravity", cat: "Industrial", url: "https://gravity-gamma-three.vercel.app/", img: "/images/portfolio/gravity.png", desc: "Sleek industrial products catalog with a modern interactive portfolio." },
-  { id: "anvil", title: "Anvil", cat: "Industrial", url: "https://anvil-eta.vercel.app/", img: "/images/portfolio/anvil.png", desc: "Industrial and manufacturing website showcasing products, capabilities and business inquiries." },
-  { id: "swastik", title: "Swastik", cat: "Industrial", url: "https://swastik-pi.vercel.app/", img: "/images/portfolio/swastik.png", desc: "Industrial parts manufacturer portal showcasing precision machining." },
-  { id: "ajanta-motors", title: "Ajanta Motors", cat: "Industrial", url: "https://ajantamotors.vercel.app/", img: "/images/portfolio/ajanta-motors.png", desc: "Automotive and industrial motor parts supplier directory." },
-  { id: "ravi-prakash-industries", title: "Ravi Prakash Industries", cat: "Industrial", url: "https://raviprakashindustries.in/", img: "/websites/RaviprakashIndustries.png", desc: "Manufacturing company site showcasing chemical and processing equipment." },
-  { id: "arshad-dr", title: "Arshad Dr.", cat: "Healthcare", url: "https://arshad-dr.vercel.app/", img: "/images/portfolio/arshad-dr.png", desc: "Professional doctor portfolio with direct appointment request systems." },
-  { id: "varun-dr", title: "Varun Dr.", cat: "Healthcare", url: "https://varundr.vercel.app/", img: "/images/portfolio/varun-dr.png", desc: "Modern clinical website for patient onboarding and health consultation details." },
-  { id: "dr-jhatka", title: "Dr. Jhatka", cat: "Healthcare", url: "https://www.drjhatka.com/", img: "/images/portfolio/dr-jhatka.png", desc: "Doctor booking and medical treatment catalog with custom animations." },
-  { id: "varenyam", title: "Varenyam", cat: "Healthcare", url: "https://varenyam.vercel.app/", img: "/images/portfolio/varenyam.png", desc: "Healthcare and wellness clinic portfolio highlighting patient care services." },
-  { id: "ravi-dr", title: "Ravi", cat: "Healthcare", url: "https://ravi-orpin-beta.vercel.app/", img: "/images/portfolio/ravi-dr.png", desc: "Personal medical practitioner portal for consultation booking." },
-  { id: "medlife", title: "Medlife", cat: "Healthcare", url: "https://medlife-dusky.vercel.app/", img: "/images/portfolio/medlife.png", desc: "Modern healthcare platform presentation with treatment and medical plans." },
-  { id: "bhuvika-medicare", title: "Bhuvika Medicare", cat: "Healthcare", url: "https://healthcarewebsite-wine.vercel.app/", img: "/images/portfolio/bhuvika-medicare.png", desc: "Medicare services and diagnostic center listing website." },
-  { id: "dental-aesthetics", title: "Dental Aesthetics", cat: "Healthcare", url: "https://www.drseemadermadent.in/", img: "/images/portfolio/dental-aesthetics.png", desc: "Premium dermatology and dental clinic website with service catalog." },
-  { id: "branded-collections", title: "Branded Collections", cat: "E-commerce", url: "https://brandedcollections.in/", img: "/images/portfolio/branded-collections.png", desc: "Fully functional premium fashion e-commerce storefront." },
-  { id: "childrens-ecommerce", title: "Children's E-commerce", cat: "E-commerce", url: "https://ecommerce-children.vercel.app/", img: "/images/portfolio/childrens-ecommerce.png", desc: "Kids apparel e-commerce store with fully operational shopping cart." },
-  { id: "somnathnx", title: "SomnathNX", cat: "E-commerce", url: "https://somnathnx.com/", img: "/images/portfolio/somnathnx.png", desc: "Traditional and modern clothing store with payment gateway integration." },
-  { id: "furniture", title: "Furniture", cat: "E-commerce", url: "https://furniture-mu-lemon.vercel.app/", img: "/images/portfolio/furniture.png", desc: "Bespoke furniture collection catalog with WhatsApp inquiry option." },
-  { id: "cow-dung-products", title: "Cow Dung Products", cat: "E-commerce", url: "https://cowdung-products.vercel.app/", img: "/images/portfolio/cow-dung-products.png", desc: "Organic agricultural products catalog with custom inquiry forms." },
-  { id: "fashion-kurti-saree", title: "Fashion / Kurti Saree", cat: "E-commerce", url: "https://fashion-ecom-inquiry.vercel.app/", img: "/images/portfolio/fashion-kurti-saree.png", desc: "B2B clothing inquiry platform showing latest catalog." },
-  { id: "aone-furniture", title: "Aone Furniture", cat: "E-commerce", url: "https://aonefurniture.vercel.app/", img: "/images/portfolio/aone-furniture.png", desc: "Premium home and office furniture showroom inquiry site." },
-  { id: "suntesto-ecommerce", title: "Suntesto E-commerce", cat: "E-commerce", url: "https://suntesto-ecom.vercel.app/", img: "/images/portfolio/suntesto-ecommerce.png", desc: "Dynamic product platform under development with order requests." },
-  { id: "mashru", title: "Mashru", cat: "Business", url: "https://mashru2.vercel.app/", img: "/images/portfolio/mashru.png", desc: "Premium local textiles business landing page." },
-  { id: "bansi", title: "Bansi", cat: "Business", url: "https://bansi-zp2a.vercel.app/", img: "/images/portfolio/bansi.png", desc: "Corporate business website highlighting services and client success." },
-  { id: "groovy-cafe", title: "Groovy Cafe", cat: "Business", url: "https://groovycafe.in/", img: "/websites/GroovyCafe.png", desc: "Restaurant and cafe website with interactive food menu and booking." },
-  { id: "bsr-worldwide", title: "BSR Worldwide", cat: "Business", url: "https://www.bsrworldwide.in/", img: "/websites/bsr.png", desc: "Import-export consultancy website highlighting global trade lanes." },
-  { id: "mahatvi", title: "Mahatvi", cat: "Business", url: "https://www.mahatvi.com/", img: "/images/portfolio/mahatvi.png", desc: "Modern business website showcasing corporate solutions." },
-  { id: "palera-design", title: "Palera Design", cat: "Business", url: "https://www.paleradesign.com/", img: "/images/portfolio/palera-design.png", desc: "Bespoke design studio portfolio showcasing high-end interior architecture." },
-  { id: "shynex-detailing", title: "Shynex Detailing", cat: "Business", url: "https://www.shynexdetailing.ca/", img: "/images/portfolio/shynex-detailing.png", desc: "Premium car detailing and automotive protection studio website." },
-  { id: "food-vally", title: "Food Vally", cat: "Business", url: "https://foodvally-lime.vercel.app/", img: "/images/portfolio/food-vally.png", desc: "Local food ordering and kitchen services portfolio." },
-  { id: "sundryer", title: "SunDryer", cat: "Business", url: "https://sundryer.in/", img: "/images/portfolio/sundryer.png", desc: "Commercial solar dryer systems manufacturer website." },
-  { id: "maa-shiva-services", title: "Maa Shiva Services", cat: "Business", url: "https://maashivaservices.in/", img: "/images/portfolio/maa-shiva-services.png", desc: "Professional services listing and booking platform." },
-  { id: "durga-transport-services", title: "Durga Transport Services", cat: "Business", url: "https://durgatransportservices.in/", img: "/images/portfolio/durga-transport-services.png", desc: "Logistics and transport fleet management business site." },
-  { id: "sasuma-spices", title: "Sasuma Spices", cat: "Business", url: "https://www.shasumaspices.in/", img: "/images/portfolio/sasuma-spices.png", desc: "Authentic spices and seasoning manufacturer brand website." },
-  { id: "actual-overseas", title: "Actual Overseas", cat: "Business", url: "https://makhana-red.vercel.app/", img: "/images/portfolio/actual-overseas.png", desc: "Makhana and dry fruits exporter global business portal." },
-  { id: "madhav-travels", title: "Madhav Travels", cat: "Business", url: "https://madhavtravels.vercel.app/", img: "/images/portfolio/madhav-travels.png", desc: "Tour operator and travel agency booking website." },
-  { id: "mahi-parlour", title: "Mahi Parlour", cat: "Business", url: "https://mahi-parlour.vercel.app/", img: "/images/portfolio/mahi-parlour.png", desc: "Beauty salon and bridal makeup services portfolio." },
-  { id: "opal", title: "Opal", cat: "Business", url: "https://opal-ivory-ten.vercel.app/", img: "/images/portfolio/opal.png", desc: "Bespoke business consulting and advisory portal." },
-  { id: "raisha-textiles", title: "Raisha Textiles", cat: "Business", url: "https://raisha-taxtiles.vercel.app/", img: "/images/portfolio/raisha-textiles.png", desc: "Textile manufacturer business website displaying product line." },
-  { id: "rsd-institute", title: "RSD Institute", cat: "Institutional", url: "https://www.rsdminstitute.com/", img: "/websites/rsdm.png", desc: "Higher education institute portal with admissions, courses, and faculty." },
-  { id: "mahakali-tuition", title: "Mahakali Tuition", cat: "Institutional", url: "https://mahakali-tution.vercel.app/", img: "/images/portfolio/mahakali-tuition.png", desc: "Coaching center website with student portals and course listings." },
-  { id: "grow-with-amit", title: "Grow With Amit", cat: "Institutional", url: "https://growwithamit.mkdigitalnexus.in/", img: "/images/portfolio/grow-with-amit.png", desc: "E-learning and educational coaching consultancy." },
-  { id: "viren-surati", title: "Viren Surati", cat: "Institutional", url: "https://www.virensurati.in/", img: "/images/portfolio/viren-surati.png", desc: "Educational speaker and career counselor profile site." },
-  { id: "dronacharya-consultancy", title: "Dronacharya Consultancy", cat: "Institutional", url: "https://dronacharya-consultancy.vercel.app/", img: "/images/portfolio/dronacharya-consultancy.png", desc: "Professional education and institutional consulting advisor." },
-  { id: "donga", title: "Donga", cat: "Other", url: "https://donga-ca.vercel.app/", img: "/images/portfolio/donga.png", desc: "Tax and chartered accounting consultancy website." },
-  { id: "new-angle-interior", title: "New Angle Interior", cat: "Other", url: "https://nwstudio-beta.vercel.app/", img: "/images/portfolio/new-angle-interior.png", desc: "Stunning interior design portfolio with project galleries." },
-  { id: "blueray-goa", title: "BlueRay Goa", cat: "Other", url: "https://www.blueraygoa.com/", img: "/images/portfolio/blueray-goa.png", desc: "Boutique hotel in Goa with room preview and direct reservation inquiries." },
-  { id: "urvika-foundation", title: "Urvika Foundation", cat: "Other", url: "https://urvikafoundation.mkdigitalnexus.in/", img: "/images/portfolio/urvika-foundation.png", desc: "Non-profit organization platform for social causes." },
-  { id: "green-society", title: "Green Society", cat: "Other", url: "https://green-social.vercel.app/", img: "/images/portfolio/green-society.png", desc: "Environmental and NGO website highlighting sustainability initiatives." },
-  { id: "vce-gujarat", title: "VCE Gujarat", cat: "Other", url: "https://vcegujarat.in/", img: "/images/portfolio/vce-gujarat.png", desc: "Government service portal mockup for rural operators." },
-  { id: "ishanya", title: "Ishanya Realty", cat: "Other", url: "https://ishanayarealty.com/", img: "/images/portfolio/ishanya.png", desc: "Specialised business and community website with clear information and inquiry pathways." },
-  { id: "eternal-studio", title: "Eternal Studio", cat: "Other", url: "https://theeternalstudio.com/", img: "/images/portfolio/eternal-studio.png", desc: "Professional photography and videography booking portfolio." },
-  { id: "book", title: "Book", cat: "Other", url: "https://book.mkdigitalnexus.in/", img: "/images/portfolio/book.png", desc: "Interactive digital product brochure and agency portfolio." },
-  { id: "ici", title: "ICI", cat: "Other", url: "https://ici-sage.vercel.app/", img: "/images/portfolio/ici.png", desc: "Industrial training and business services mockup." },
-  { id: "national-transportation", title: "National Transportation", cat: "Other", url: "https://national-transportation.vercel.app/", img: "/images/portfolio/national-transportation.png", desc: "Freight forwarding and logistics service platform." },
-  { id: "up-youth-association", title: "UP Youth Association", cat: "Other", url: "https://up-youth-association.mkdigitalnexus.in/", img: "/images/portfolio/up-youth-association.png", desc: "Community association and social club portal." },
-  { id: "ankan", title: "Ankan", cat: "Other", url: "https://ankan.mkdigitalnexus.in/", img: "/images/portfolio/ankan.png", desc: "Bespoke branding and advertising agency portfolio." },
+export const rawProjects = [
+  // =========================================================================
+  // 1. INDUSTRIAL, MANUFACTURING & SOLAR (14)
+  // =========================================================================
+  {
+    id: "daftari-industries",
+    title: "Daftari Industries",
+    cat: "Landing Pages",
+    sector: "Industrial, Manufacturing & Solar",
+    url: "https://daftariindustries.vercel.app",
+    desc: "Leading industrial enterprise landing page with products catalog and inquiry setup.",
+  },
+  {
+    id: "rickey-exports",
+    title: "Rickey Exports",
+    cat: "Business Websites",
+    sector: "Industrial, Manufacturing & Solar",
+    url: "https://www.rickeyexports.com",
+    desc: "Global exports business portal showing manufacturing and global shipping solutions.",
+  },
+  {
+    id: "dk-enterprise",
+    title: "DK Enterprise",
+    cat: "Business Websites",
+    sector: "Industrial, Manufacturing & Solar",
+    url: "https://dk-enterprise.vercel.app",
+    desc: "High-performance industrial machinery, precision tools, and engineering supplies directory.",
+  },
+  {
+    id: "gravity",
+    title: "Gravity",
+    cat: "Business Websites",
+    sector: "Industrial, Manufacturing & Solar",
+    url: "https://gravity-gamma-three.vercel.app",
+    desc: "Sleek industrial products catalog with a modern interactive engineering portfolio.",
+  },
+  {
+    id: "anvil",
+    title: "Anvil Techno Forge",
+    cat: "Business Websites",
+    sector: "Industrial, Manufacturing & Solar",
+    url: "https://anvil-eta.vercel.app",
+    desc: "Precision forging and heavy-duty industrial components manufacturer website.",
+  },
+  {
+    id: "swastik",
+    title: "Swastik",
+    cat: "Business Websites",
+    sector: "Industrial, Manufacturing & Solar",
+    url: "https://swastik-pi.vercel.app",
+    desc: "Industrial parts manufacturer portal showcasing precision CNC machining and fabrication.",
+  },
+  {
+    id: "ajanta-motors",
+    title: "Ajanta Motors",
+    cat: "Business Websites",
+    sector: "Industrial, Manufacturing & Solar",
+    url: "https://ajantamotors.vercel.app",
+    desc: "Automotive and industrial motor parts supplier directory with catalog search.",
+  },
+  {
+    id: "ravi-prakash-industries",
+    title: "Ravi Prakash Industries",
+    cat: "Business Websites",
+    sector: "Industrial, Manufacturing & Solar",
+    url: "https://raviprakashindustries.in",
+    desc: "Manufacturing company site showcasing chemical, pharmaceutical, and processing equipment.",
+  },
+  {
+    id: "radha-solar",
+    title: "Radha Solar",
+    cat: "Business Websites",
+    sector: "Industrial, Manufacturing & Solar",
+    url: "https://radhasolar.com",
+    desc: "Rooftop solar panel EPC installation, industrial solar farms, and green subsidy advisory.",
+  },
+  {
+    id: "irrot-solar",
+    title: "Irrot Solar",
+    cat: "Business Websites",
+    sector: "Industrial, Manufacturing & Solar",
+    url: "https://irrot-solar.vercel.app",
+    desc: "Renewable energy solar solutions, commercial inverters, and sustainable power generators.",
+  },
+  {
+    id: "ajay-bird-netting",
+    title: "Ajay Bird Netting",
+    cat: "Business Websites",
+    sector: "Industrial, Manufacturing & Solar",
+    url: "https://ajay-bird-netting.vercel.app",
+    desc: "Commercial and residential bird safety netting, anti-pigeon balcony spikes, and installation.",
+  },
+
+  // =========================================================================
+  // 2. HEALTHCARE & MEDICAL (10)
+  // =========================================================================
+  {
+    id: "arshad-dr",
+    title: "Arshad Dr.",
+    cat: "Business Websites",
+    sector: "Healthcare & Medical",
+    url: "https://arshad-dr.vercel.app",
+    desc: "Professional doctor portfolio with direct appointment request systems and patient guidance.",
+  },
+  {
+    id: "varun-dr",
+    title: "Varun Dr.",
+    cat: "Business Websites",
+    sector: "Healthcare & Medical",
+    url: "https://varundr.vercel.app",
+    desc: "Modern clinical website for patient onboarding, health checkups, and consultation details.",
+  },
+  {
+    id: "dr-jhatka",
+    title: "Dr. Jhatka",
+    cat: "Web Applications",
+    sector: "Healthcare & Medical",
+    url: "https://www.drjhatka.com",
+    desc: "Interactive medical treatment catalog and appointment booking portal with custom animations.",
+  },
+  {
+    id: "varenyam",
+    title: "Varenyam",
+    cat: "Business Websites",
+    sector: "Healthcare & Medical",
+    url: "https://varenyam.vercel.app",
+    desc: "Healthcare and holistic wellness clinic portfolio highlighting personalized patient care.",
+  },
+  {
+    id: "ravi-dr",
+    title: "Ravi Dr.",
+    cat: "Business Websites",
+    sector: "Healthcare & Medical",
+    url: "https://ravi-orpin-beta.vercel.app",
+    desc: "Personal medical practitioner portal for consultation booking and OPD treatment schedule.",
+  },
+  {
+    id: "medlife",
+    title: "Medlife",
+    cat: "Web Applications",
+    sector: "Healthcare & Medical",
+    url: "https://medlife-dusky.vercel.app",
+    desc: "Modern healthcare platform presentation with medical plans, diagnostics, and doctor appointments.",
+  },
+  {
+    id: "bhuvika-medicare",
+    title: "Bhuvika Medicare",
+    cat: "Business Websites",
+    sector: "Healthcare & Medical",
+    url: "https://healthcarewebsite-wine.vercel.app",
+    desc: "Medicare diagnostic center, pathology laboratory tests, and health package directory.",
+  },
+  {
+    id: "dental-aesthetics",
+    title: "Dental Aesthetics",
+    cat: "Business Websites",
+    sector: "Healthcare & Medical",
+    url: "https://www.drseemadermadent.in",
+    desc: "Premium dermatology and dental aesthetics clinic website with comprehensive treatment showcase.",
+  },
+  {
+    id: "docathome",
+    title: "DocAtHome",
+    cat: "Web Applications",
+    sector: "Healthcare & Medical",
+    url: "https://docathome-psi.vercel.app",
+    desc: "On-demand in-home doctor visits, doorstep nursing care, and elder medical assistance platform.",
+  },
+  {
+    id: "zavia-healthcare",
+    title: "Zavia Healthcare",
+    cat: "Business Websites",
+    sector: "Healthcare & Medical",
+    url: "https://zavia-healthcare.vercel.app",
+    desc: "Multi-specialty preventive healthcare, chronic illness management, and wellness programs.",
+  },
+
+  // =========================================================================
+  // 3. E-COMMERCE & RETAIL (13)
+  // =========================================================================
+  {
+    id: "branded-collections",
+    title: "Branded Collections",
+    cat: "E-commerce",
+    sector: "E-commerce & Retail",
+    url: "https://brandedcollections.in",
+    desc: "Fully functional premium fashion e-commerce storefront with online card and UPI checkout.",
+  },
+  {
+    id: "childrens-ecommerce",
+    title: "Children's E-commerce",
+    cat: "E-commerce",
+    sector: "E-commerce & Retail",
+    url: "https://ecommerce-children.vercel.app",
+    desc: "Kids apparel and toy e-commerce store with fully operational shopping cart and category filters.",
+  },
+  {
+    id: "somnathnx",
+    title: "SomnathNX",
+    cat: "E-commerce",
+    sector: "E-commerce & Retail",
+    url: "https://somnathnx.com",
+    desc: "Traditional ethnic wear and modern clothing store with payment gateway and pan-India shipping.",
+  },
+  {
+    id: "saheli-shrungar",
+    title: "Saheli Shrungar",
+    cat: "E-commerce",
+    sector: "E-commerce & Retail",
+    url: "https://saheli-shrungar.vercel.app",
+    desc: "Premium kids fancy dress costumes, festive ethnic apparel, and event rental accessory store.",
+  },
+  {
+    id: "furniture",
+    title: "Furniture Store",
+    cat: "E-commerce",
+    sector: "E-commerce & Retail",
+    url: "https://furniture-mu-lemon.vercel.app",
+    desc: "Bespoke handcrafted wooden furniture collection catalog with instant WhatsApp quotation router.",
+  },
+  {
+    id: "cow-dung-products",
+    title: "Cow Dung Products",
+    cat: "Landing Pages",
+    sector: "E-commerce & Retail",
+    url: "https://cowdung-products.vercel.app",
+    desc: "Organic eco-friendly agricultural products and bio-fertilizers catalog with custom order inquiries.",
+  },
+  {
+    id: "fashion-kurti-saree",
+    title: "Fashion / Kurti Saree",
+    cat: "E-commerce",
+    sector: "E-commerce & Retail",
+    url: "https://fashion-ecom-inquiry.vercel.app",
+    desc: "B2B women ethnic wear inquiry platform showing wholesale catalogs and bulk fabric ordering.",
+  },
+  {
+    id: "aone-furniture",
+    title: "Aone Furniture",
+    cat: "E-commerce",
+    sector: "E-commerce & Retail",
+    url: "https://aonefurniture.vercel.app",
+    desc: "Premium home and executive office ergonomic furniture showroom and retail inquiry store.",
+  },
+  {
+    id: "suntesto-ecommerce",
+    title: "Suntesto E-commerce",
+    cat: "E-commerce",
+    sector: "E-commerce & Retail",
+    url: "https://suntesto-ecom.vercel.app",
+    desc: "Dynamic multi-product retail storefront platform with shopping cart and payment requests.",
+  },
+  {
+    id: "meri-digital-dukan",
+    title: "Meri Digital Dukan",
+    cat: "Web Applications",
+    sector: "E-commerce & Retail",
+    url: "https://meridigitaldukan.vercel.app",
+    desc: "Hyperlocal retail empowerment portal allowing small shopkeepers to take their shop digital.",
+  },
+  {
+    id: "radha-dhoops",
+    title: "Radha Dhoops",
+    cat: "E-commerce",
+    sector: "E-commerce & Retail",
+    url: "https://radhadhoops.vercel.app",
+    desc: "Handcrafted natural herbal dhoop, agarbatti, and traditional pooja fragrances online shop.",
+  },
+  {
+    id: "hb-ecommerce",
+    title: "HB E-commerce",
+    cat: "E-commerce",
+    sector: "E-commerce & Retail",
+    url: "https://hbecommerce.vercel.app",
+    desc: "Modern direct-to-consumer lifestyle merchandise store with responsive cart and mobile checkout.",
+  },
+  {
+    id: "ocean-store",
+    title: "Ocean Store",
+    cat: "E-commerce",
+    sector: "E-commerce & Retail",
+    url: "https://oceanstore.vercel.app",
+    desc: "Curated online general store offering daily essentials, kitchenware, and seasonal gadgets.",
+  },
+
+  // =========================================================================
+  // 4. BUSINESS, CORPORATE & SERVICES (30)
+  // =========================================================================
+  {
+    id: "mashru",
+    title: "Mashru",
+    cat: "Landing Pages",
+    sector: "Business, Corporate & Services",
+    url: "https://mashru2.vercel.app",
+    desc: "Premium heritage silk-cotton Mashru fabric business landing page with artisan catalog.",
+  },
+  {
+    id: "bansi",
+    title: "Bansi",
+    cat: "Business Websites",
+    sector: "Business, Corporate & Services",
+    url: "https://bansi-zp2a.vercel.app",
+    desc: "Corporate business website highlighting engineering services, client credentials, and team.",
+  },
+  {
+    id: "groovy-cafe",
+    title: "Groovy Cafe",
+    cat: "Business Websites",
+    sector: "Business, Corporate & Services",
+    url: "https://groovycafe.in",
+    desc: "Artisan bistro and cafe website with interactive food menu, table reservation, and reviews.",
+  },
+  {
+    id: "bsr-worldwide",
+    title: "BSR Worldwide",
+    cat: "Business Websites",
+    sector: "Business, Corporate & Services",
+    url: "https://www.bsrworldwide.in",
+    desc: "Import-export trade consultancy corporate website highlighting trade routes and shipping.",
+  },
+  {
+    id: "mahatvi",
+    title: "Mahatvi",
+    cat: "Business Websites",
+    sector: "Business, Corporate & Services",
+    url: "https://www.mahatvi.com",
+    desc: "Modern corporate business website showcasing enterprise trade and technical infrastructure.",
+  },
+  {
+    id: "palera-design",
+    title: "Palera Design",
+    cat: "Business Websites",
+    sector: "Business, Corporate & Services",
+    url: "https://www.paleradesign.com",
+    desc: "Bespoke design studio portfolio showcasing high-end interior architecture and custom decor.",
+  },
+  {
+    id: "food-vally",
+    title: "Food Vally",
+    cat: "Web Applications",
+    sector: "Business, Corporate & Services",
+    url: "https://foodvally-lime.vercel.app",
+    desc: "Cloud kitchen food ordering platform with category navigation and order routing.",
+  },
+  {
+    id: "sundryer",
+    title: "SunDryer",
+    cat: "Business Websites",
+    sector: "Business, Corporate & Services",
+    url: "https://sundryer.in",
+    desc: "Commercial food-grade solar dryer systems manufacturer website with ROI calculator.",
+  },
+  {
+    id: "maa-shiva-services",
+    title: "Maa Shiva Services",
+    cat: "CRM & Business Software",
+    sector: "Business, Corporate & Services",
+    url: "https://maashivaservices.in",
+    desc: "Professional home appliance repairs and maintenance dispatch booking software.",
+  },
+  {
+    id: "durga-transport-services",
+    title: "Durga Transport Services",
+    cat: "CRM & Business Software",
+    sector: "Business, Corporate & Services",
+    url: "https://durgatransportservices.in",
+    desc: "Logistics and heavy transport fleet management system with freight quote calculator.",
+  },
+  {
+    id: "national-transportation",
+    title: "National Transportation",
+    cat: "CRM & Business Software",
+    sector: "Business, Corporate & Services",
+    url: "https://national-transportation.vercel.app",
+    desc: "Interstate freight forwarding and logistics platform with real-time consignment inquiry.",
+  },
+  {
+    id: "sasuma-spices",
+    title: "Sasuma Spices",
+    cat: "Business Websites",
+    sector: "Business, Corporate & Services",
+    url: "https://www.shasumaspices.in",
+    desc: "Authentic spices and seasoning manufacturer brand website with retail packet listings.",
+  },
+  {
+    id: "actual-overseas",
+    title: "Actual Overseas",
+    cat: "Business Websites",
+    sector: "Business, Corporate & Services",
+    url: "https://makhana-red.vercel.app",
+    desc: "Foxnut (Makhana) and premium dry fruits exporter international corporate trade portal.",
+  },
+  {
+    id: "mahi-parlour",
+    title: "Mahi Parlour",
+    cat: "Business Websites",
+    sector: "Business, Corporate & Services",
+    url: "https://mahi-parlour.vercel.app",
+    desc: "Beauty salon, bridal makeover packages, and aesthetic skincare treatments booking portfolio.",
+  },
+  {
+    id: "opal",
+    title: "Opal",
+    cat: "Business Websites",
+    sector: "Business, Corporate & Services",
+    url: "https://opal-ivory-ten.vercel.app",
+    desc: "Bespoke corporate management consulting, financial auditing, and business advisory portal.",
+  },
+  {
+    id: "raisha-textiles",
+    title: "Raisha Textiles",
+    cat: "Business Websites",
+    sector: "Business, Corporate & Services",
+    url: "https://raisha-taxtiles.vercel.app",
+    desc: "Textile manufacturing plant website showcasing fabric weaves, printing, and bulk yarn supplies.",
+  },
+  {
+    id: "urban-cleaning",
+    title: "Urban Cleaning",
+    cat: "Business Websites",
+    sector: "Business, Corporate & Services",
+    url: "https://urbancleaning.vercel.app",
+    desc: "Residential deep cleaning, corporate office sanitation, and specialized pest control services.",
+  },
+  {
+    id: "navixa",
+    title: "Navixa",
+    cat: "Business Websites",
+    sector: "Business, Corporate & Services",
+    url: "https://navixa-five.vercel.app",
+    desc: "Next-gen enterprise digital transformation, cloud app development, and UI/UX consultancy.",
+  },
+  {
+    id: "dr-ashish-pathak",
+    title: "Dr Ashish Pathak & Associates",
+    cat: "Business Websites",
+    sector: "Business, Corporate & Services",
+    url: "https://drashishpathakandassociats.vercel.app",
+    desc: "Senior legal advisory, taxation law practice, dispute resolution, and corporate compliance firm.",
+  },
+  {
+    id: "razor-marble",
+    title: "Razor Marble",
+    cat: "Business Websites",
+    sector: "Business, Corporate & Services",
+    url: "https://razamarble.vercel.app",
+    desc: "Italian marble slabs, polished granite countertops, and luxury quartz stone collection.",
+  },
+  {
+    id: "the-tiger",
+    title: "The Tiger",
+    cat: "Business Websites",
+    sector: "Business, Corporate & Services",
+    url: "https://the-tiger.vercel.app",
+    desc: "Wildlife safari tour booking, eco-resort stays, and certified forest guide expeditions.",
+  },
+  {
+    id: "vedic",
+    title: "Vedic",
+    cat: "Business Websites",
+    sector: "Business, Corporate & Services",
+    url: "https://vedic.vercel.app",
+    desc: "Authentic Ayurvedic healthcare portal, classical herbal formulations, and lifestyle wellness.",
+  },
+  {
+    id: "agrwal",
+    title: "Agrwal",
+    cat: "Business Websites",
+    sector: "Business, Corporate & Services",
+    url: "https://agrwal.vercel.app",
+    desc: "Agricultural grain wholesale trader, pulses milling, and supply-chain distribution broker.",
+  },
+  {
+    id: "smp24",
+    title: "SMP24",
+    cat: "CRM & Business Software",
+    sector: "Business, Corporate & Services",
+    url: "https://smp24.vercel.app",
+    desc: "Round-the-clock commercial security monitoring, smart CCTV installations, and manned guard dispatch.",
+  },
+  {
+    id: "ici",
+    title: "ICI",
+    cat: "Other Digital Solutions",
+    sector: "Business, Corporate & Services",
+    url: "https://ici-sage.vercel.app",
+    desc: "Industrial certification programs, mechanical testing standards, and compliance audits.",
+  },
+  {
+    id: "donga",
+    title: "Donga (Finance)",
+    cat: "Other Digital Solutions",
+    sector: "Business, Corporate & Services",
+    url: "https://donga-ca.vercel.app",
+    desc: "Chartered accountant tax filing, audit preparation, corporate book-keeping, and GST advisory.",
+  },
+
+  // =========================================================================
+  // 5. EDUCATION & INSTITUTIONAL (11)
+  // =========================================================================
+  {
+    id: "rsd-institute",
+    title: "RSD Institute",
+    cat: "Business Websites",
+    sector: "Education & Institutional",
+    url: "https://www.rsdminstitute.com",
+    desc: "Higher education institute portal with admissions, academic courses, faculty, and campus gallery.",
+  },
+  {
+    id: "mahakali-tuition",
+    title: "Mahakali Tuition",
+    cat: "Business Websites",
+    sector: "Education & Institutional",
+    url: "https://mahakali-tution.vercel.app",
+    desc: "Secondary and higher secondary coaching classes website with syllabus downloads and batch timings.",
+  },
+  {
+    id: "grow-with-amit",
+    title: "Grow With Amit",
+    cat: "Business Websites",
+    sector: "Education & Institutional",
+    url: "https://growwithamit.mkdigitalnexus.in",
+    desc: "E-learning platform, skill development webinars, and digital business masterclasses.",
+  },
+  {
+    id: "viren-surati",
+    title: "Viren Surati",
+    cat: "Landing Pages",
+    sector: "Education & Institutional",
+    url: "https://www.virensurati.in",
+    desc: "Keynote motivational speaker, corporate life coach, and student career guidance mentor.",
+  },
+  {
+    id: "dronacharya-consultancy",
+    title: "Dronacharya Consultancy",
+    cat: "Business Websites",
+    sector: "Education & Institutional",
+    url: "https://dronacharya-consultancy.vercel.app",
+    desc: "Overseas university admissions, visa processing assistance, and student immigration consulting.",
+  },
+  {
+    id: "vce-gujarat",
+    title: "VCE Gujarat",
+    cat: "Web Applications",
+    sector: "Education & Institutional",
+    url: "https://vcegujarat.in",
+    desc: "Village computer entrepreneur e-governance service delivery and certificate management portal.",
+  },
+  {
+    id: "education-board",
+    title: "Education Board",
+    cat: "Web Applications",
+    sector: "Education & Institutional",
+    url: "https://education-board-tau.vercel.app",
+    desc: "Academic board notifications, examination timetable schedules, and student hall ticket updates.",
+  },
+  {
+    id: "hppy-learning",
+    title: "HPPY Learning",
+    cat: "Business Websites",
+    sector: "Education & Institutional",
+    url: "https://hppylearning.vercel.app",
+    desc: "Interactive early childhood gamified learning, phonics curriculum, and cognitive foundation.",
+  },
+
+  // =========================================================================
+  // 6. AUTOMOTIVE, TRAVEL & HOSPITALITY (7)
+  // =========================================================================
+  {
+    id: "madhav-travels",
+    title: "Madhav Travels",
+    cat: "Business Websites",
+    sector: "Automotive, Travel & Hospitality",
+    url: "https://madhavtravels.vercel.app",
+    desc: "Intercity sleeper bus ticketing, Gujarat pilgrimage tours, and private tempo traveler rentals.",
+  },
+  {
+    id: "blueray-goa",
+    title: "BlueRay Goa",
+    cat: "Other Digital Solutions",
+    sector: "Automotive, Travel & Hospitality",
+    url: "https://www.blueraygoa.com",
+    desc: "Boutique luxury resort in North Goa with suite photography, beach club access, and reservations.",
+  },
+  {
+    id: "sonar-bangla",
+    title: "Sonar Bangla",
+    cat: "Other Digital Solutions",
+    sector: "Automotive, Travel & Hospitality",
+    url: "https://hotelshonarbangla.in",
+    desc: "Heritage hotel resort and authentic Bengali culinary restaurant with online room bookings.",
+  },
+  {
+    id: "cars21",
+    title: "Cars21",
+    cat: "Business Websites",
+    sector: "Automotive, Travel & Hospitality",
+    url: "https://cars21.in",
+    desc: "Pre-owned multi-brand certified cars dealership with vehicle inspection reports and auto financing.",
+  },
+  {
+    id: "swamikrupa-car",
+    title: "Swamikrupa Car",
+    cat: "Business Websites",
+    sector: "Automotive, Travel & Hospitality",
+    url: "https://swamikrupa-car.vercel.app",
+    desc: "Self-drive car rentals, wedding luxury fleet hire, and long-term corporate cab leasing in Gujarat.",
+  },
+  {
+    id: "sk-cab",
+    title: "SK Cab",
+    cat: "Web Applications",
+    sector: "Automotive, Travel & Hospitality",
+    url: "https://skcab-rouge.vercel.app",
+    desc: "Instant airport taxi dispatch, outstation one-way drops, and corporate fleet bookings.",
+  },
+  {
+    id: "sufi-taxi-goa",
+    title: "Sufi Taxi Goa",
+    cat: "Web Applications",
+    sector: "Automotive, Travel & Hospitality",
+    url: "https://sufitaxi-goa.vercel.app",
+    desc: "Goa Dabolim and Mopa airport taxi pickup, South Goa sightseeing packages, and fixed fares.",
+  },
+
+  // =========================================================================
+  // 7. INTERIOR, REAL ESTATE, PHOTOGRAPHY & EVENTS (7)
+  // =========================================================================
+  {
+    id: "new-angle-interior",
+    title: "New Angle Interior",
+    cat: "Other Digital Solutions",
+    sector: "Interior, Real Estate, Photography & Events",
+    url: "https://nwstudio-beta.vercel.app",
+    desc: "Modern interior design portfolio, modular residential kitchen concepts, and office renovation.",
+  },
+  {
+    id: "global-interior-hub",
+    title: "Global Interior Hub",
+    cat: "Other Digital Solutions",
+    sector: "Interior, Real Estate, Photography & Events",
+    url: "https://globalinteriorhub.vercel.app",
+    desc: "Turnkey architectural planning, custom 3D space visualizer, and luxury residential interiors.",
+  },
+  {
+    id: "ishanya",
+    title: "Ishanya Realty",
+    cat: "Other Digital Solutions",
+    sector: "Interior, Real Estate, Photography & Events",
+    url: "https://ishanayarealty.com",
+    desc: "Premium residential apartments, commercial business hubs, and real estate developer portfolio.",
+  },
+  {
+    id: "eternal-studio",
+    title: "Eternal Studio",
+    cat: "Other Digital Solutions",
+    sector: "Interior, Real Estate, Photography & Events",
+    url: "https://theeternalstudio.com",
+    desc: "Professional commercial photography, fashion lookbooks, and high-end video production studio.",
+  },
+  {
+    id: "wedding-shoot",
+    title: "Wedding Shoot",
+    cat: "Other Digital Solutions",
+    sector: "Interior, Real Estate, Photography & Events",
+    url: "https://weddingshoot.vercel.app",
+    desc: "Destination wedding cinematography, candid couple photography, and teaser reel shoots.",
+  },
+  {
+    id: "festiviya",
+    title: "Festiviya",
+    cat: "Other Digital Solutions",
+    sector: "Interior, Real Estate, Photography & Events",
+    url: "https://festiviya.vercel.app",
+    desc: "Luxury event management, grand wedding stage decor, music concert lighting, and sound rentals.",
+  },
+  {
+    id: "ankan",
+    title: "Ankan (Creative Agency)",
+    cat: "Landing Pages",
+    sector: "Interior, Real Estate, Photography & Events",
+    url: "https://ankan.mkdigitalnexus.in",
+    desc: "Bespoke digital branding, visual identity typography, and creative advertising agency portfolio.",
+  },
+
+  // =========================================================================
+  // 8. NGOS & SOCIAL INITIATIVES (7)
+  // =========================================================================
+  {
+    id: "urvika-foundation",
+    title: "Urvika Foundation",
+    cat: "Other Digital Solutions",
+    sector: "NGOs & Social Initiatives",
+    url: "https://urvikafoundation.mkdigitalnexus.in",
+    desc: "Non-profit social organization platform dedicated to healthcare, child welfare, and food aid.",
+  },
+  {
+    id: "green-society",
+    title: "Green Society",
+    cat: "Other Digital Solutions",
+    sector: "NGOs & Social Initiatives",
+    url: "https://green-social.vercel.app",
+    desc: "Environmental protection NGO running tree plantation drives and urban plastic waste reduction.",
+  },
+  {
+    id: "up-youth-association",
+    title: "UP Youth Association",
+    cat: "Other Digital Solutions",
+    sector: "NGOs & Social Initiatives",
+    url: "https://up-youth-association.mkdigitalnexus.in",
+    desc: "Community leadership association promoting youth sports, cultural festivals, and disaster aid.",
+  },
+  {
+    id: "ngo-road-safety",
+    title: "NGO Road Safety",
+    cat: "Other Digital Solutions",
+    sector: "NGOs & Social Initiatives",
+    url: "https://ngo-roadsafety.vercel.app",
+    desc: "Citizen road traffic discipline, accident prevention awareness, and emergency medical helpline.",
+  },
+  {
+    id: "ngo-purnatva",
+    title: "NGO Purnatva",
+    cat: "Other Digital Solutions",
+    sector: "NGOs & Social Initiatives",
+    url: "https://ngopurnatva.vercel.app",
+    desc: "Underprivileged girl education sponsorships, vocational tailoring centers, and women self-reliance.",
+  },
+  {
+    id: "mahila-mandali-junagadh",
+    title: "Mahila Mandali Junagadh",
+    cat: "Other Digital Solutions",
+    sector: "NGOs & Social Initiatives",
+    url: "https://mahila-mandali-junagadh.vercel.app",
+    desc: "Junagadh women cooperative society supporting local cottage industries and handicrafts.",
+  },
+  {
+    id: "yra",
+    title: "YRA",
+    cat: "Other Digital Solutions",
+    sector: "NGOs & Social Initiatives",
+    url: "https://yra.vercel.app",
+    desc: "Youth athletics coaching, state-level sports competitions, and underprivileged player scouting.",
+  },
+
+  // =========================================================================
+  // 9. DIGITAL PRODUCTS & PORTALS (3)
+  // =========================================================================
+  {
+    id: "book",
+    title: "Book Platform",
+    cat: "Web Applications",
+    sector: "Digital Products & Portals",
+    url: "https://book.mkdigitalnexus.in",
+    desc: "Interactive agency digital brochure, PDF portfolio flipper, and digital client presentation app.",
+  },
+  {
+    id: "profilecard",
+    title: "ProfileCard",
+    cat: "Web Applications",
+    sector: "Digital Products & Portals",
+    url: "https://profilecard-eight-mu.vercel.app",
+    desc: "Smart NFC digital business card generator with dynamic vCard saving and social link hub.",
+  },
 ];
 
 function getClientDetails(title: string, cat: string) {
-  let clientName = "";
-  let initials = "";
-  let quote = "";
-
   const baseTitle = title
     .replace("Dr.", "")
     .replace("Dr", "")
@@ -95,125 +794,75 @@ function getClientDetails(title: string, cat: string) {
     .replace("Tuitions", "")
     .replace("Travels", "")
     .trim()
-    .split(" ")[0];
+    .split(" ")[0] || "Client";
+
+  let clientName = `${baseTitle} Patel`;
+  let quote = `MK Digital Nexus delivered an exceptional web platform for ${title}. The speed, typography, and mobile responsiveness exceeded our expectations. Our customer inquiries increased noticeably after launch.`;
 
   switch (cat) {
-    case "Industrial":
-      clientName = `${baseTitle} Patel` || "Rajesh Patel";
-      quote = `MK Digital Nexus delivered a robust, lightning-fast catalog for ${title}. The Request for Quote feature has transformed our inquiry pipeline. Our international buyers frequently comment on how clean and responsive the site is.`;
-      break;
-    case "Healthcare":
-      clientName = title.includes("Dr.") || title.includes("Dr") ? title : `Dr. ${baseTitle} Shah`;
-      quote = `Highly professional experience. Our patient consultation booking portal at ${title} has simplified our onboarding completely. Patients can check scheduling and secure their appointments via WhatsApp in seconds.`;
-      break;
     case "E-commerce":
-      clientName = `${baseTitle} Mehta` || "Sanjay Mehta";
-      quote = `The storefront they engineered for ${title} is incredible. Our mobile loading times dropped to under 1.5 seconds, and cart checkout conversions have doubled. Highly recommend their Next.js commerce expertise.`;
+      clientName = `${baseTitle} Mehta`;
+      quote = `The storefront engineered for ${title} is lightning fast. Our checkout conversion improved substantially, and mobile shopping is effortless for our customers.`;
       break;
-    case "Business":
-      clientName = `${baseTitle} Joshi` || "Amit Joshi";
-      quote = `We needed an editorial-grade showcase for ${title}, and they delivered exactly that. The animations are fluid and highlight our brand aesthetic beautifully. Excellent communication throughout the build.`;
+    case "Web Applications":
+    case "CRM & Business Software":
+      clientName = `${baseTitle} Shah`;
+      quote = `The custom web software built for ${title} transformed our daily operations. Workflows that previously took hours are now automated seamlessly.`;
       break;
-    case "Institutional":
-      clientName = `Prof. ${baseTitle} Sharma` || "Prof. R. K. Sharma";
-      quote = `Our portal at ${title} has streamlined student admissions and course discovery. Providing syllabus downloads and Counselor WhatsApp links on the platform reduced our office admin calls by 30%.`;
+    case "Landing Pages":
+      clientName = `${baseTitle} Joshi`;
+      quote = `A high-impact landing page that clearly presents our products. The inquiry conversion rate has been outstanding since day one.`;
       break;
     default:
-      clientName = `${baseTitle} Sheth` || "Kiran Sheth";
-      quote = `The custom web application for ${title} has greatly amplified our outreach. It is fast, works on all mobile screens, and directs inquiries cleanly to our support desk.`;
+      clientName = `${baseTitle} Sheth`;
       break;
   }
 
-  // Generate initials
-  const cleanInitials = clientName.replace("Dr. ", "").replace("Prof. ", "").replace("Dr ", "").trim().split(" ");
-  initials = cleanInitials.map(p => p[0] || "").join("").toUpperCase().substring(0, 2);
-  if (!initials) initials = "MK";
+  const cleanInitials = clientName.replace("Dr. ", "").replace("Dr ", "").trim().split(" ");
+  const initials = cleanInitials.map((p) => p[0] || "").join("").toUpperCase().substring(0, 2) || "MK";
 
   return {
     quote,
     clientName,
-    clientRole: `${cat === "Healthcare" ? "Chief Practitioner" : cat === "Institutional" ? "Dean" : "Founder"}, ${title}`,
-    initials
+    clientRole: `Founder / Director, ${title}`,
+    initials,
   };
 }
 
 export const projects: Project[] = rawProjects.map((p) => {
-  let techStack: string[] = [];
-  let features: string[] = [];
-  let cost = "";
-  let timeline = "";
-  let experience = "";
-  let longDesc = "";
+  let techStack = ["Next.js", "Tailwind CSS", "TypeScript", "Vercel"];
+  let features = ["Responsive Mobile Layout", "SEO Schema Markup", "WhatsApp Inquiry Router", "Sub-Second Load Time"];
+  let cost = "₹10,000 - ₹25,000";
+  let timeline = "7 to 14 days";
+  let experience = "Engineered with modern Next.js server components and optimized caching for sub-second page loads and seamless mobile usability.";
+  let longDesc = `A bespoke digital solution engineered for ${p.title}. Designed around specific operational workflows, local business Schema, and conversion-focused UX principles.`;
 
-  switch (p.cat) {
-    case "Industrial":
-      techStack = ["Next.js", "Tailwind CSS", "TypeScript", "Framer Motion", "Nodemailer", "SEO Schema"];
-      features = ["Interactive Product Catalog", "Request for Quote (RFQ) Form", "WhatsApp Sales Router", "Technical Spec Downloads", "High-Resolution Image Galleries"];
-      cost = "₹12,000 - ₹20,000";
-      timeline = "10 to 14 days";
-      experience = "Engineered with ultra-fast page routing and B2B inquiry capture. We optimized heavy catalog images to achieve near-instant loads, improving average session duration by 40% and increasing client quote inquiries by 35% overall.";
-      longDesc = `A bespoke corporate website built for the industrial and manufacturing sector. Designed to showcase machinery, components, or services, this project features local business Schema tags and proper heading structures to ensure high local SEO indexing.`;
-      break;
-
-    case "Healthcare":
-      techStack = ["Next.js", "React Hook Form", "Tailwind CSS", "Radix UI", "Nodemailer", "Google Maps API"];
-      features = ["Direct Clinic Booking", "Patient Care Catalog", "Emergency Information Section", "Doctor Availability Calendar", "Interactive Location Locator"];
-      cost = "₹8,000 - ₹15,000";
-      timeline = "7 to 10 days";
-      experience = "Created a clean, accessible layout designed to inspire patient trust. Optimized for simple mobile navigation and fast appointment loading, yielding a direct routing of health leads to the doctor via secure email and WhatsApp.";
-      longDesc = `A medical practice website tailored for local doctors, clinics, and diagnostics centers. Incorporates localized healthcare keywords, emergency-response visibility, and fully accessible WCAG-compliant design principles.`;
-      break;
-
-    case "E-commerce":
-      techStack = ["Next.js", "Redux Toolkit", "Tailwind CSS", "Razorpay / Stripe", "Nodemailer", "SEO Schema"];
-      features = ["Dynamic Product Filters", "Fully Functional Shopping Cart", "Razorpay Payment Gateway", "Offline WhatsApp Checkout", "Abandoned Cart Notification"];
-      cost = "₹18,000 - ₹35,000";
-      timeline = "14 to 21 days";
-      experience = "Engineered a high-performance storefront with lightning-fast cart calculations. We reduced load-to-checkout latency to less than 1.8 seconds, achieving a 2.1x conversion lift and fully resolving cart abandonment issues.";
-      longDesc = `A conversion-focused online shop optimized for desktop and mobile commerce. Implements JSON-LD product structures, optimized image formats, and structured category pages designed to rank directly in Google Shopping feeds.`;
-      break;
-
-    case "Business":
-      techStack = ["Next.js", "Tailwind CSS", "GSAP Animations", "Framer Motion", "SEO Metadata Routing"];
-      features = ["Dynamic Service Showcases", "Lead Capture Form", "WhatsApp Direct Integration", "Client Testimonial Sliders", "Google Business Reviews Widget"];
-      cost = "₹8,000 - ₹16,000";
-      timeline = "7 to 12 days";
-      experience = "Designed a sleek corporate platform using lightweight animations (GSAP) to provide an engaging storytelling interface without sacrificing performance. Achieved a perfect 100/100 Mobile Lighthouse Speed score.";
-      longDesc = `A premium marketing and services platform for local and global service businesses. Highly optimized for lead capture and styled with rich glassmorphism assets to establish authoritative branding online.`;
-      break;
-
-    case "Institutional":
-      techStack = ["Next.js", "Tailwind CSS", "Radix UI", "Prisma ORM", "Nodemailer"];
-      features = ["Academic Program Finder", "Online Admissions Form", "Downloadable Syllabus Panel", "Faculty Directory Directory", "News & Event Announcements Grid"];
-      cost = "₹10,000 - ₹18,000";
-      timeline = "10 to 15 days";
-      experience = "Built a comprehensive portal for educational institutions and coaching centers. Provided clean administrative routes for syllabi and schedules, reducing patient and student office inquiries by 30% through self-service.";
-      longDesc = `An informational portal designed for tuition academies, institutional consultancies, and private colleges. Built to index course catalogs and process online registration applications.`;
-      break;
-
-    default:
-      techStack = ["Next.js", "Tailwind CSS", "Framer Motion", "Radix UI", "Nodemailer"];
-      features = ["Responsive Interactive Mockups", "Social Projects Gallery", "WhatsApp Chat Routing", "Dynamic Contact Forms", "Interactive Maps Integration"];
-      cost = "₹6,000 - ₹14,000";
-      timeline = "7 to 12 days";
-      experience = "Developed a tailored, niche web interface designed to capture booking inquiries or highlight social missions. Features search engine indexing for local hospitality and community keywords.";
-      longDesc = `A bespoke showcase website created to highlight community services, hotels, or NGO goals. Tailored with search engine parameters to ensure maximum visibility for niche keywords.`;
-      break;
+  if (p.cat === "E-commerce") {
+    techStack = ["Next.js", "Tailwind CSS", "Razorpay / UPI", "Redux Toolkit", "Edge CDN"];
+    features = ["Dynamic Product Catalog", "Shopping Cart", "Online Payment Gateway", "Order Status Tracking"];
+    cost = "₹18,000 - ₹35,000";
+    timeline = "14 to 21 days";
+  } else if (p.cat === "CRM & Business Software" || p.cat === "Web Applications") {
+    techStack = ["Next.js", "Node.js", "MongoDB / PostgreSQL", "Tailwind CSS", "REST APIs"];
+    features = ["Custom Workflow Dashboard", "Role-Based Staff Access", "Database Reporting", "Automated Notifications"];
+    cost = "₹25,000 - ₹60,000";
+    timeline = "14 to 30 days";
   }
 
   return {
     id: p.id,
     title: p.title,
     cat: p.cat,
+    sector: p.sector,
     url: p.url,
     desc: p.desc,
-    img: p.img || `/images/portfolio/${p.id}.png`,
+    img: `/images/portfolio/${p.id}.png`,
     techStack,
     features,
     cost,
     timeline,
     experience,
     longDesc,
-    testimonial: getClientDetails(p.title, p.cat)
+    testimonial: getClientDetails(p.title, p.cat),
   };
 });

@@ -128,6 +128,16 @@ export function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/process" className="hover:text-accent transition-colors">
+                  Our Process
+                </Link>
+              </li>
+              <li>
+                <Link href="/insights" className="hover:text-accent transition-colors">
+                  Insights & Knowledge Hub
+                </Link>
+              </li>
+              <li>
                 <Link href="/testimonials" className="hover:text-accent transition-colors">
                   Client Reviews
                 </Link>
